@@ -143,24 +143,247 @@ const ChatComponent = () => {
   };
 
   return (
-    <Box className="flex overflow-hidden min-h-full max-h-full">
+    // <Box className="flex overflow-hidden min-h-full max-h-full">
+    //   <Box
+    //     component="aside"
+    //     className="w-1/4 bg-gray-100 border-r border-gray-300 p-4 overflow-y-auto"
+    //   >
+    //     <Typography variant="h6" gutterBottom>
+    //       Companies
+    //     </Typography>
+    //     {loadingCompanies ? (
+    //       <CircularProgress />
+    //     ) : (
+    //       <List>
+    //         <ListItem>
+    //           <SearchInput
+    //             placeholder="Search by name or email"
+    //             value={searchQuery}
+    //             onChange={(e) => setSearchQuery(e.target.value)}
+    //             inputProps={{ "aria-label": "search" }}
+    //           />
+    //         </ListItem>
+    //         {companies
+    //           .filter((company) =>
+    //             company.Name.toLowerCase().includes(searchQuery.toLowerCase())
+    //           )
+    //           .map((company) => (
+    //             <ListItem
+    //               key={company._id}
+    //               button
+    //               selected={company._id === currentCompany?._id}
+    //               onClick={() => handleCompanyClick(company._id, company)}
+    //             >
+    //               <ListItemText
+    //                 primary={company.Name}
+    //                 secondary={onlineUsers[company._id] ? "Online" : "Offline"}
+    //               />
+    //             </ListItem>
+    //           ))}
+    //       </List>
+    //     )}
+    //   </Box>
+    //   <Box className="w-3/4 flex flex-col relative max-h-[86vh] overflow-hidden">
+    //     {currentCompany && (
+    //       <Box className="p-2 bg-blue-400 text-white text-lg font-semibold rounded-t flex flex-col">
+    //         <Typography variant="h6">{currentCompany.Name}</Typography>
+    //         <Typography variant="body2">{currentCompany.Email}</Typography>
+    //       </Box>
+    //     )}
+    //     <Box
+    //       className="flex-1 p-4 overflow-y-auto bg-gray-100"
+    //       style={{ paddingBottom: "4rem" }}
+    //     >
+    //       {loadingMessages ? (
+    //         <CircularProgress />
+    //       ) : (
+    //         <Box className="messages flex flex-col p-2">
+    //           {showOldMessages && (
+    //             <Button
+    //               onClick={loadOldMessages}
+    //               variant="text"
+    //               color="primary"
+    //               className="mb-2 self-center"
+    //             >
+    //               Load older messages
+    //             </Button>
+    //           )}
+    //           {messages.slice(-10).map((msg, index) => (
+    //             <Box
+    //               key={index}
+    //               className={`p-2 my-2 rounded-lg inline-block max-w-xs ${
+    //                 msg.senderId === studentId
+    //                   ? "bg-blue-200 self-end text-right"
+    //                   : "bg-gray-200 text-left self-start"
+    //               }`}
+    //             >
+    //               <Typography variant="body1">{msg.message}</Typography>
+    //               <Typography variant="caption" color="textSecondary">
+    //                 {new Date(msg.timestamp).toLocaleString()}
+    //               </Typography>
+    //             </Box>
+    //           ))}
+    //           <div ref={messagesEndRef}></div>
+    //         </Box>
+    //       )}
+    //     </Box>
+    //     <Box className="absolute bottom-0 left-0 w-full flex p-4 bg-white border-t border-gray-300">
+    //       <InputBase
+    //         value={message}
+    //         onChange={(e) => setMessage(e.target.value)}
+    //         placeholder="Type a message..."
+    //         fullWidth
+    //         sx={{ padding: 1, borderRadius: 1, border: "1px solid #ccc" }}
+    //       />
+    //       <Button
+    //         onClick={sendMessage}
+    //         variant="contained"
+    //         color="primary"
+    //         sx={{ ml: 2 }}
+    //       >
+    //         Send
+    //       </Button>
+    //     </Box>
+    //   </Box>
+    // </Box>
+
+    // <Box className="flex overflow-hidden overflow-y-hidden min-h-full max-h-full bg-white shadow-lg rounded-lg">
+    //   <Box
+    //     component="aside"
+    //     className="w-1/4 bg-gray-50 border-r max-h-[600px] border-gray-300 p-4 overflow-y-scroll "
+    //   >
+    //     <Typography variant="h6" className="text-gray-800 font-semibold" gutterBottom>
+    //       Companies
+    //     </Typography>
+    //     {loadingCompanies ? (
+    //         <CircularProgress className="text-blue-900 " />
+    //     ) : (
+    //       <List className="space-y-2">
+    //         <ListItem className="pb-4">
+    //           <SearchInput
+    //             placeholder="Search by name or email"
+    //             value={searchQuery}
+    //             onChange={(e) => setSearchQuery(e.target.value)}
+    //             inputProps={{ "aria-label": "search" }}
+    //             className="border border-gray-300 rounded-lg p-2 w-full"
+    //           />
+    //         </ListItem>
+    //         {companies
+    //           .filter((company) =>
+    //             company.Name.toLowerCase().includes(searchQuery.toLowerCase())
+    //           )
+    //           .map((company) => (
+    //             <ListItem
+    //               key={company._id}
+    //               button
+    //               selected={company._id === currentCompany?._id}
+    //               onClick={() => handleCompanyClick(company._id, company)}
+    //               className={`p-3 rounded-lg ${
+    //                 company._id === currentCompany?._id
+    //                   ? "bg-blue-100"
+    //                   : "hover:bg-gray-200"
+    //               }`}
+    //             >
+    //               <ListItemText
+    //                 primary={company.Name}
+    //                 secondary={onlineUsers[company._id] ? "Online" : "Offline"}
+    //                 className="text-gray-700"
+    //               />
+    //             </ListItem>
+    //           ))}
+    //       </List>
+    //     )}
+    //   </Box>
+
+    // <Box className="w-3/4 flex  flex-col relative max-h-[86vh] overflow-hidden">
+    //   {currentCompany && (
+    //     <Box className="p-3 bg-blue-500 text-white text-lg font-semibold rounded-t-md">
+    //       <Typography variant="h6">{currentCompany.Name}</Typography>
+    //       <Typography variant="body2" className="text-blue-200">{currentCompany.Email}</Typography>
+    //     </Box>
+    //   )}
+    //   <Box
+    //     className="flex-1 p-6 overflow-y-auto bg-gray-50"
+    //     style={{ paddingBottom: "4rem" }}
+    //   >
+    //     {loadingMessages ? (
+    //       <CircularProgress className="text-blue-500" />
+    //     ) : (
+    //       <Box className="messages flex flex-col space-y-4 p-2">
+    //         {showOldMessages && (
+    //           <Button
+    //             onClick={loadOldMessages}
+    //             variant="text"
+    //             color="primary"
+    //             className="mb-2 self-center text-blue-500"
+    //           >
+    //             Load older messages
+    //           </Button>
+    //         )}
+    //         {messages.slice(-10).map((msg, index) => (
+    //           <Box
+    //             key={index}
+    //             className={`p-3 my-2 rounded-lg inline-block max-w-xs shadow-md ${
+    //               msg.senderId === studentId
+    //                 ? "bg-blue-100 self-end text-right"
+    //                 : "bg-gray-200 text-left self-start"
+    //             }`}
+    //           >
+    //             <Typography variant="body1">{msg.message}</Typography>
+    //             <Typography variant="caption" className="text-gray-600">
+    //               {new Date(msg.timestamp).toLocaleString()}
+    //             </Typography>
+    //           </Box>
+    //         ))}
+    //         <div ref={messagesEndRef}></div>
+    //       </Box>
+    //     )}
+    //   </Box>
+    //   <Box className="absolute bottom-0 left-0 w-full flex p-4 bg-white border-t border-gray-300">
+    //     <InputBase
+    //       value={message}
+    //       onChange={(e) => setMessage(e.target.value)}
+    //       placeholder="Type a message..."
+    //       fullWidth
+    //       className="p-3 border border-gray-300 rounded-md"
+    //         onKeyPress={(e) => {
+    //           if (e.key === 'Enter') {
+    //             sendMessage();
+    //           }
+    //         }}
+    //     />
+    //     <Button
+    //       onClick={sendMessage}
+    //       variant="contained"
+    //       color="primary"
+    //       className="ml-2 bg-blue-500 hover:bg-blue-600"
+    //     >
+    //       Send
+    //     </Button>
+    //   </Box>
+
+    // </Box>
+    // </Box>
+
+    <Box className="flex overflow-hidden overflow-y-hidden min-h-full max-h-full bg-white shadow-lg rounded-lg">
       <Box
         component="aside"
-        className="w-1/4 bg-gray-100 border-r border-gray-300 p-4 overflow-y-auto"
+        className="w-1/4 bg-gray-50 border-r max-h-[600px] border-gray-300 p-4 overflow-y-scroll"
       >
-        <Typography variant="h6" gutterBottom>
+        <Typography variant="h6" className="text-gray-800 font-semibold" gutterBottom>
           Companies
         </Typography>
         {loadingCompanies ? (
-          <CircularProgress />
+          <CircularProgress className="text-blue-900" />
         ) : (
-          <List>
-            <ListItem>
+          <List className="space-y-2">
+            <ListItem className="pb-4">
               <SearchInput
                 placeholder="Search by name or email"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 inputProps={{ "aria-label": "search" }}
+                className="border border-gray-300 rounded-lg p-2 w-full"
               />
             </ListItem>
             {companies
@@ -173,55 +396,84 @@ const ChatComponent = () => {
                   button
                   selected={company._id === currentCompany?._id}
                   onClick={() => handleCompanyClick(company._id, company)}
+                  className={`p-3 rounded-lg ${
+                    company._id === currentCompany?._id
+                      ? "bg-blue-100"
+                      : "hover:bg-gray-200"
+                  }`}
                 >
                   <ListItemText
                     primary={company.Name}
                     secondary={onlineUsers[company._id] ? "Online" : "Offline"}
+                    className="text-gray-700"
                   />
                 </ListItem>
               ))}
           </List>
         )}
       </Box>
+
       <Box className="w-3/4 flex flex-col relative max-h-[86vh] overflow-hidden">
         {currentCompany && (
-          <Box className="p-2 bg-blue-400 text-white text-lg font-semibold rounded-t flex flex-col">
+          <Box className="p-3 bg-blue-500 text-white text-lg font-semibold rounded-t-md">
             <Typography variant="h6">{currentCompany.Name}</Typography>
-            <Typography variant="body2">{currentCompany.Email}</Typography>
+            <Typography variant="body2" className="text-blue-200">
+              {currentCompany.Email}
+            </Typography>
           </Box>
         )}
         <Box
-          className="flex-1 p-4 overflow-y-auto bg-gray-100"
+          className="flex-1 p-6 overflow-y-auto bg-gray-50"
           style={{ paddingBottom: "4rem" }}
         >
           {loadingMessages ? (
-            <CircularProgress />
+            <CircularProgress className="text-blue-500" />
           ) : (
-            <Box className="messages flex flex-col p-2">
+            <Box className="messages flex flex-col space-y-4 p-2">
               {showOldMessages && (
                 <Button
                   onClick={loadOldMessages}
                   variant="text"
                   color="primary"
-                  className="mb-2 self-center"
+                  className="mb-2 self-center text-blue-500"
                 >
                   Load older messages
                 </Button>
               )}
-              {messages.slice(-10).map((msg, index) => (
-                <Box
-                  key={index}
-                  className={`p-2 my-2 rounded-lg inline-block max-w-xs ${
-                    msg.senderId === studentId
-                      ? "bg-blue-200 self-end text-right"
-                      : "bg-gray-200 text-left self-start"
-                  }`}
-                >
-                  <Typography variant="body1">{msg.message}</Typography>
-                  <Typography variant="caption" color="textSecondary">
-                    {new Date(msg.timestamp).toLocaleString()}
+
+              {Object.entries(
+                messages.reduce((acc, msg) => {
+                  const messageDate = new Date(msg.timestamp).toLocaleDateString();
+                  if (!acc[messageDate]) {
+                    acc[messageDate] = [];
+                  }
+                  acc[messageDate].push(msg);
+                  return acc;
+                }, {})
+              ).map(([date, msgs]) => (
+                <React.Fragment key={date}>
+                  <Typography
+                    variant="subtitle2"
+                    className="text-gray-500 text-center my-4"
+                  >
+                    {date}
                   </Typography>
-                </Box>
+                  {msgs.map((msg, index) => (
+                    <Box
+                      key={msg._id || index}
+                      className={`p-3 my-2 rounded-lg inline-block max-w-xs shadow-md ${
+                        msg.senderId === studentId
+                          ? "bg-blue-100 self-end text-right"
+                          : "bg-gray-200 text-left self-start"
+                      }`}
+                    >
+                      <Typography variant="body1 ">{msg.message}</Typography>
+                      <Typography variant="caption" className="text-gray-600 ml-5">
+                        {new Date(msg.timestamp).toLocaleTimeString()}
+                      </Typography>
+                    </Box>
+                  ))}
+                </React.Fragment>
               ))}
               <div ref={messagesEndRef}></div>
             </Box>
@@ -233,19 +485,35 @@ const ChatComponent = () => {
             onChange={(e) => setMessage(e.target.value)}
             placeholder="Type a message..."
             fullWidth
-            sx={{ padding: 1, borderRadius: 1, border: "1px solid #ccc" }}
+            className="p-3 border border-gray-300 rounded-md"
+            onKeyPress={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                // Prevents the default behavior of Enter key, which is to create a new line
+                e.preventDefault();
+                sendMessage();
+              }
+            }}
+            onKeyDown={(e) => {
+              if (e.shiftKey && e.key === 'Enter') {
+                // Allows the creation of a new line when Shift + Enter is pressed
+                setMessage(message + "\n");
+              }
+            }}
           />
           <Button
             onClick={sendMessage}
             variant="contained"
             color="primary"
-            sx={{ ml: 2 }}
+            className="ml-2 bg-blue-500 hover:bg-blue-600"
           >
             Send
           </Button>
         </Box>
       </Box>
     </Box>
+
+
+     
   );
 };
 

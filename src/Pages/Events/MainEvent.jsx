@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router';
 import { GetApi } from "../utilis/Api_Calling";
 
 import { LuPencilLine } from "react-icons/lu";
+// import { FaFileAlt } from "react-icons/fa";
 import { FaFileAlt } from "react-icons/fa";
+import EventCarousel from './EventCarousel';
 
 
 const applications = [
@@ -28,61 +30,68 @@ const applications = [
     // Add more data as needed
   ];
 
-  const trainings = [
+  const jobData = [
     {
-      id:1,
-      image: "https://via.placeholder.com/300x200?text=UI+UX+Designer",
-      title: "UI UX DESIGNER",
-      work:"Part time",
-      salary:"10000-20000",
-      company:"Google",
-      location: "Indore",
-      description: "INTERVIEW QUESTIONS AND ANSWERS in 2023",
-      time: "3:00 AM",
-      details: "As the field of UI/UX design continues to grow and evolve, it’s important for both designers",
+      title: "Technical Specialist",
+      type: "PART-TIME",
+      salary: "20,000 INR - 25,000 INR",
+      companyLogo: "https://tse1.mm.bing.net/th?id=OIP.AfKMLf4rKX7EqOSAVpujIQHaEK&pid=Api&P=0&h=180",
+      companyName: "Google Inc.",
+      location: "New Delhi, India",
+      applicants: [
+        { image: "https://path-to-applicant1-image.png" },
+        { image: "https://path-to-applicant2-image.png" },
+        { image: "https://path-to-applicant3-image.png" },
+        { image: "https://path-to-applicant4-image.png" },
+      ],
     },
     {
-      id:2,
-      image: "https://via.placeholder.com/300x200?text=Resume+Paper",
-      title: "What Is Resume Paper? (And How To Choose The Best Kind)",
-      work:"Part time",
-      salary:"10000-20000",
-      company:"Google",
-      location: "Indore",
-      applicants:"4",
-      description: "",
-      time: "3:00 AM",
-      details: "As the field of UI/UX design continues to grow and evolve, it’s important for both designers",
+      title: "Backend Developer",
+      type: "FULL-TIME",
+      salary: "10,000 INR - 20,000 INR",
+      companyLogo: "https://tse2.mm.bing.net/th?id=OIP.ZtrNE9GnhsrUDpGXFZ2gagHaJG&pid=Api&P=0&h=180",
+      companyName: "Apple",
+      location: "Bangalore, India",
+      applicants: [
+        { image: "https://path-to-applicant1-image.png" },
+        { image: "https://path-to-applicant2-image.png" },
+        { image: "https://path-to-applicant3-image.png" },
+        { image: "https://path-to-applicant4-image.png" },
+        { image: "https://path-to-applicant4-image.png" },
+        { image: "https://path-to-applicant4-image.png" },
+      ],
+    },
+    // Add more job objects here
+    {
+      title: "Frontend Engineer",
+      type: "PART-TIME",
+      salary: "10,000 INR - 20,000 INR",
+      companyLogo: "https://tse4.mm.bing.net/th?id=OIP.l55ETJUkcgE1M3wmL6V2_gAAAA&pid=Api&P=0&h=180",
+      companyName: "SkillGenic",
+      location: "Bangalore, India",
+      applicants: [
+        { image: "https://path-to-applicant1-image.png" },
+        { image: "https://path-to-applicant2-image.png" },
+        { image: "https://path-to-applicant3-image.png" },
+        { image: "https://path-to-applicant4-image.png" },
+      ],
     },
     {
-      id:3,
-      image: "https://via.placeholder.com/300x200?text=UI+UX+Designer",
-      title: "UI UX DESIGNER",
-      work:"Part time",
-      salary:"10000-20000",
-      company:"Google",
-      location: "Indore",
-      applicants:"4",
-      description: "INTERVIEW QUESTIONS AND ANSWERS in 2023",
-      time: "3:00 AM",
-      details: "As the field of UI/UX design continues to grow and evolve, it’s important for both designers",
+      title: "Software Engineer",
+      type: "FULL-TIME",
+      salary: "50,000 INR - 70,000 INR",
+      companyLogo: "https://tse2.mm.bing.net/th?id=OIP.PWoq1WvDQDxc_MPv4Jt0GwHaHa&pid=Api&P=0&h=180",
+      companyName: "Microsoft",
+      location: "Bangalore, India",
+      applicants: [
+        { image: "https://path-to-applicant1-image.png" },
+        { image: "https://path-to-applicant2-image.png" },
+        { image: "https://path-to-applicant3-image.png" },
+        { image: "https://path-to-applicant4-image.png" },
+      ],
     },
-    {
-      id:4,
-      image: "https://via.placeholder.com/300x200?text=Graphic+Designer",
-      title: "Graphic Designer",
-      work:"Part time",
-      salary:"10000-20000",
-      company:"Google",
-      location: "Bhopal",
-      applicants:"4",
-      description: "Best Practices in 2023",
-      time: "4:00 PM",
-      details: "Learn the latest design techniques and tools in the field of Graphic Design.",
-    },
-    // Add more training cards as needed
+    // Continue adding jobs to test the carousel functionality
   ];
-
 const skillsData = [
   { skill: 'Adobe Illustrator', level: 'Beginner', years: '2 Year' },
   { skill: 'Figma', level: 'Advanced', years: '2 Year' },
@@ -111,28 +120,28 @@ function MainEvent() {
     setEditedSkill({ ...editedSkill, [e.target.name]: e.target.value });
   };
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [selectedTraining, setSelectedTraining] = useState(null);
+  // const [currentIndex, setCurrentIndex] = useState(0);
+  // const [selectedTraining, setSelectedTraining] = useState(null);
 
-  const handlePrev = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex > 0 ? prevIndex - 1 : trainings.length - 3
-    );
-  };
+  // const handlePrev = () => {
+  //   setCurrentIndex((prevIndex) =>
+  //     prevIndex > 0 ? prevIndex - 1 : trainings.length - 3
+  //   );
+  // };
 
-  const handleNext = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex < trainings.length - 3 ? prevIndex + 1 : 0
-    );
-  };
+  // const handleNext = () => {
+  //   setCurrentIndex((prevIndex) =>
+  //     prevIndex < trainings.length - 3 ? prevIndex + 1 : 0
+  //   );
+  // };
 
-  const handleReadMore = (training) => {
-    setSelectedTraining(training);
-  };
+  // const handleReadMore = (training) => {
+  //   setSelectedTraining(training);
+  // };
 
-  const handleCloseModal = () => {
-    setSelectedTraining(null);
-  };
+  // const handleCloseModal = () => {
+  //   setSelectedTraining(null);
+  // };
 
 // ----------------
   const navigate = useNavigate();
@@ -247,84 +256,33 @@ function MainEvent() {
         <div className="flex flex-col mt-6 items-center justify-center">
             <h2 className="text-2xl font-semibold mb-4">Suggested Training</h2>
             <div className="relative w-full max-w-4xl">
-                <div className="absolute inset-y-0 left-0 flex items-center">
+                {/* <div className="absolute inset-y-0 left-0 flex items-center">
                     <button
                     onClick={handlePrev}
                     className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l"
                     >
                     &#8249;
                     </button>
-                </div>
-                <div className="absolute inset-y-0 right-0 flex items-center">
+                </div> */}
+                {/* <div className="absolute inset-y-0 right-0 flex items-center">
                     <button
                     onClick={handleNext}
                     className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-r"
                     >
                     &#8250;
                     </button>
+                </div> */}
+
+                <div className="p-10">
+                  <EventCarousel jobs={jobData} />
                 </div>
-                <div className="flex justify-center space-x-4 overflow-hidden">
-                    {trainings.slice(currentIndex, currentIndex + 3).map((training, idx) => (
-                    <div
-                        key={idx}
-                        className="flex flex-col items-center bg-white shadow-md rounded-lg p-4 w-64 h-80 max-w-xs"
-                    >
-                        {/* <img
-                        src={training.image}
-                        alt={training.title}
-                        className="rounded-md mb-4 h-32 w-full object-cover"
-                        /> */}
-                        <p className="text-lg font-semibold mb-2 truncate w-full">
-                        {training.title}
-                        </p>
-                        <div>
-                          <p>{training.work}</p>
-                          <p>Salary:INR{training.salary}</p>
-                        </div>
-                        <div>
-                          <div>
-                               <img
-                                src={training.image}
-                                alt={training.title}
-                                className="rounded-md mb-4 h-2  w-full object-cover"
-                               />
-                          </div>
-                          <div>
-                            <p>{training.company}</p>
-                            <p>{training.location}</p>
-                            <p></p>
-                          </div>
-                        </div>
-                        <div>
-                          <p>{training.applicants}</p>
-                        </div>
-                        {/* <p className="text-gray-500 mb-4 truncate w-full">
-                        {training.details}
-                        </p> */}
-                        {/* <div className="flex items-center justify-between w-full text-gray-500 mb-4 text-sm">
-                        <span className="flex items-center">
-                            <i className="fas fa-map-marker-alt mr-2"></i>
-                            {training.location}
-                        </span>
-                        <span className="flex items-center">
-                            <i className="fas fa-clock mr-2"></i>
-                            {training.time}
-                        </span>
-                        </div> */}
-                        <button
-                        onClick={() => handleReadMore(training)}
-                        className="text-blue-500 hover:underline text-sm font-semibold"
-                        >
-                        Read More &rarr;
-                        </button>
-                    </div>
-                    ))}
-                </div>
+
+
             </div>
 
 
             {/* Modal */}
-            {selectedTraining && (
+            {/* {selectedTraining && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                 <div className="bg-white w-1/2 p-6 rounded-lg">
                     <button
@@ -355,7 +313,7 @@ function MainEvent() {
                     <p className="text-gray-700">{selectedTraining.description}</p>
                 </div>
                 </div>
-            )}
+            )} */}
        </div>
 
 
@@ -394,14 +352,15 @@ function MainEvent() {
                     </tr>
                     ))}
                 </tbody> */}
-                <tbody className="text-[16px] bg-[#fff] font-[400] font-[Outfit] text-center">
+                <tbody className="text-[16px] bg-[#fff] font-[400] font-[Outfit] text-center ">
                 {allappiledjobs.map((Application, index) => (
                   <tr
                     key={index}
-                    onClick={() => {
-                      navigate(`/blank/allrounds/${Application.JobId._id}`);
-                    }}
-                    className="cursor-pointer"
+                    // onClick={() => {
+                    //   navigate(`/blank/allrounds/${Application.JobId._id}`);
+                    // }}
+                    // className="cursor-pointer "
+                    className=' '
                   >
                     <td className="px-[25px] py-[30px] text-black text-opacity-[50%] text-left">
                       {Application?.CompanyId?.Name}
@@ -409,13 +368,17 @@ function MainEvent() {
                     <td className="px-[25px] flex gap-[29px] py-[30px] text-black text-opacity-[50%] text-left">
                       {Application.JobId?.positionName}
                     </td>
-                    <td className=" bg-[#e3eff7] px-[19px] py-[7px] text-left ">
+                    <td className=" px-[19px] py-[7px]  items-center rounded-[5px] text-left ">
                       {/* {Application.createdAt} */}
-                      <p className="text-[#4234a2]">{Application.status}</p>
+                      <p className="text-[#4234a2] ">{Application.status}</p>
                     </td>
-                    <td className="px-[25px] py-[30px] text-left">
-                      <div className="bg-[#e3eff7] px-[19px] py-[7px] flex  justify-center items-center rounded-[5px]">
-                        <p className="text-[#4234a2]">{Application.status}</p>
+                    <td className="px-[25px] py-[30px] text-left hover:cursor-pointer" 
+                      onClick={() => {
+                        navigate(`/blank/allrounds/${Application.JobId._id}`);
+                      }}
+                     >
+                      <div className=" px-[19px] py-[7px] flex  justify-center items-center rounded-[5px]">
+                        <p className="text-[#4234a2]"><FaFileAlt size={20}/></p>
                         <p className="text-[#97969d] text-[14.52px] ml-[17px]">
                           {Application.applicationStatusB}
                         </p>
