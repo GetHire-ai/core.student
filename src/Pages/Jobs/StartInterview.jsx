@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from "react";
 import useScreenAudioRecorder from "../utilis/useScreenAudioRecorder";
-import { Box, Typography, Container } from "@mui/material";
+import { Box, Typography, Container, CircularProgress } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { GetApi, PostApi, Api_Url } from "../utilis/Api_Calling";
 import axios from "axios";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Button,
+} from "@mui/material";
 import { toast } from "react-toastify";
 
 const StartInterview = () => {
@@ -20,6 +27,8 @@ const StartInterview = () => {
   } = useScreenAudioRecorder();
 
   const { jobId } = useParams();
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState("");
   const [loading, setLoading] = useState(false);
   const [inLoading, setInLoading] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -80,30 +89,35 @@ const StartInterview = () => {
 
   const handleSubmitVideo = async () => {
     setInLoading(true);
-
-
     try {
       if (audioBlobUrl) {
         setSubmissionStatus("submitting");
         const videoBlob = await fetch(mediaBlobUrl).then((res) => res.blob());
-        const audioBlob = new Blob([videoBlob], { type: "audio/vaw" });
+        const audioBlob = new Blob([videoBlob], { type: "audio/wav" });
         const formData = new FormData();
         formData.append("audio", audioBlob);
-        formData.append("audio1", "audioBlob");
-        const aitext = await getTextFromAudio(formData);
-        const points = await getResult(aitext);
-        await submitResult(points, aitext);
-        setSubmissionStatus("submitted");
-        toast.success("Video submitted successfully!", { autoClose: 1000 });
-      }
 
+        // Process audio for transcription
+        const aitext = await getTextFromAudio(formData);
+        if (!aitext) throw new Error("Transcription failed.");
+        // Evaluate the transcribed text
+        const points = await getResult(aitext);
+        if (!points) throw new Error("Failed to evaluate transcription.");
+
+        const evaluateText = await getTexResult(aitext);
+        // Submit the result
+        await submitResult(points, aitext);
+        setModalContent(
+          `Your score is ${points}. \nDetails: ${JSON.stringify(evaluateText)}`
+        );
+      } else {
+        throw new Error("No audio recorded.");
+      }
     } catch (error) {
       console.error("Error submitting video:", error);
-      toast.error("Failed to submit video. Please try again.", {
-        autoClose: 1000,
-      });
-      setSubmissionStatus("idle");
+      setModalContent(`Failed to submit video: ${error.message}`);
     } finally {
+      setShowModal(true);
       setInLoading(false);
     }
   };
@@ -146,6 +160,26 @@ const StartInterview = () => {
     return jsonData?.points;
   };
 
+  const getTexResult = async (aitext) => {
+    const data = {
+      interviewQuestions: aitext,
+      criteria: criteria,
+    };
+    const response = await fetch(
+      "https://shining-needed-bug.ngrok-free.app/evaluate-interview",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    const jsonData = await response.json();
+    console.log(jsonData);
+    return jsonData?.points;
+  };
+
   const submitResult = async (points, aitext) => {
     try {
       const data = {
@@ -167,7 +201,6 @@ const StartInterview = () => {
     );
   }
   return (
-    
     <div className="flex flex-col items-center p-4">
       <div className="mb-2">
         {status === "idle" ? (
@@ -277,7 +310,37 @@ const StartInterview = () => {
           </>
         )}
       </div>
+      {inLoading && (
+        <ResultModal
+          open={showModal}
+          onClose={() => setShowModal(false)}
+          content={modalContent}
+          isLoading={inLoading}
+        />
+      )}
     </div>
   );
 };
 export default StartInterview;
+
+const ResultModal = ({ open, onClose, content, isLoading }) => (
+  <Dialog open={open} onClose={onClose}>
+    <DialogTitle>{isLoading ? "Processing" : "Submission Result"}</DialogTitle>
+    <DialogContent>
+      {isLoading ? (
+        <div className="flex justify-center items-center min-h-[100px]">
+          <CircularProgress />
+        </div>
+      ) : (
+        <Typography variant="body1">{content}</Typography>
+      )}
+    </DialogContent>
+    {!isLoading && (
+      <DialogActions>
+        <Button onClick={onClose} color="primary">
+          Close
+        </Button>
+      </DialogActions>
+    )}
+  </Dialog>
+);
