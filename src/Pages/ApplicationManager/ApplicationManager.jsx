@@ -19,7 +19,7 @@ const ApplicationManager = () => {
       console.log(error);
     }
   };
-
+   
   useEffect(() => {
     Getallappiledjob();
   }, []);

@@ -6,7 +6,7 @@ const TotalInternship = () => {
 
   const handleChange = (event) => {
     setValue(event.target.value);
-  };
+  }; 
   return (
     <>
       <div className="p-[28px] font-[Outfit] flex flex-col justify-center items-center w-full">
@@ -289,7 +289,7 @@ const TotalInternship = () => {
                         <img src="/images/nimbus_money.svg" alt="" />
                         <p>STIPEND</p>
                       </div>
-                      <p>$7,000/month</p>
+                      <p>₹ 7,000/month</p>
                     </div>
                   </div>
                   <div className="flex mt-[28px] gap-[28px] border-b-[1px] border-[#ebe6e6] pb-[13px]">
@@ -370,7 +370,7 @@ const TotalInternship = () => {
                         <img src="/images/nimbus_money.svg" alt="" />
                         <p>STIPEND</p>
                       </div>
-                      <p>$7,000/month</p>
+                      <p>₹ 7,000/month</p>
                     </div>
                   </div>
                   <div className="flex mt-[28px] gap-[28px] border-b-[1px] border-[#ebe6e6] pb-[13px]">

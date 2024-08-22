@@ -63,7 +63,7 @@ const InternshipViewDetails = () => {
                   <img src="/images/nimbus_money (1).svg" alt="" />
                   <p>STIPEND</p>
                 </div>
-                <p>5000/month</p>
+                <p>₹ 5000/month</p>
               </div>
               <div className="flex flex-col gap-[8px]">
                 <div className="flex gap-[4px]">

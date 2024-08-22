@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
+import { useNavigate } from 'react-router';
+import { GetApi } from "../utilis/Api_Calling";
 
 import { LuPencilLine } from "react-icons/lu";
 import { FaFileAlt } from "react-icons/fa";
@@ -28,34 +30,53 @@ const applications = [
 
   const trainings = [
     {
+      id:1,
       image: "https://via.placeholder.com/300x200?text=UI+UX+Designer",
       title: "UI UX DESIGNER",
-      description: "INTERVIEW QUESTIONS AND ANSWERS in 2023",
+      work:"Part time",
+      salary:"10000-20000",
+      company:"Google",
       location: "Indore",
+      description: "INTERVIEW QUESTIONS AND ANSWERS in 2023",
       time: "3:00 AM",
       details: "As the field of UI/UX design continues to grow and evolve, it’s important for both designers",
     },
     {
+      id:2,
       image: "https://via.placeholder.com/300x200?text=Resume+Paper",
       title: "What Is Resume Paper? (And How To Choose The Best Kind)",
-      description: "",
+      work:"Part time",
+      salary:"10000-20000",
+      company:"Google",
       location: "Indore",
+      applicants:"4",
+      description: "",
       time: "3:00 AM",
       details: "As the field of UI/UX design continues to grow and evolve, it’s important for both designers",
     },
     {
+      id:3,
       image: "https://via.placeholder.com/300x200?text=UI+UX+Designer",
       title: "UI UX DESIGNER",
-      description: "INTERVIEW QUESTIONS AND ANSWERS in 2023",
+      work:"Part time",
+      salary:"10000-20000",
+      company:"Google",
       location: "Indore",
+      applicants:"4",
+      description: "INTERVIEW QUESTIONS AND ANSWERS in 2023",
       time: "3:00 AM",
       details: "As the field of UI/UX design continues to grow and evolve, it’s important for both designers",
     },
     {
+      id:4,
       image: "https://via.placeholder.com/300x200?text=Graphic+Designer",
       title: "Graphic Designer",
-      description: "Best Practices in 2023",
+      work:"Part time",
+      salary:"10000-20000",
+      company:"Google",
       location: "Bhopal",
+      applicants:"4",
+      description: "Best Practices in 2023",
       time: "4:00 PM",
       details: "Learn the latest design techniques and tools in the field of Graphic Design.",
     },
@@ -112,6 +133,27 @@ function MainEvent() {
   const handleCloseModal = () => {
     setSelectedTraining(null);
   };
+
+// ----------------
+  const navigate = useNavigate();
+
+  const [allappiledjobs, setallappiledjobs] = useState([]);
+  const [Loading, setLoading] = useState(true);
+
+  const Getallappiledjob = async () => {
+    try {
+      const res = await GetApi(`api/StudentRoutes/GetAllAppiledJobsofaStudent`);
+      setallappiledjobs(res?.data?.data);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
+  };
+   
+  useEffect(() => {
+    Getallappiledjob();
+  }, []);
 
 
   return (
@@ -200,6 +242,8 @@ function MainEvent() {
         </div>
         </div>
          
+
+
         <div className="flex flex-col mt-6 items-center justify-center">
             <h2 className="text-2xl font-semibold mb-4">Suggested Training</h2>
             <div className="relative w-full max-w-4xl">
@@ -225,18 +269,39 @@ function MainEvent() {
                         key={idx}
                         className="flex flex-col items-center bg-white shadow-md rounded-lg p-4 w-64 h-80 max-w-xs"
                     >
-                        <img
+                        {/* <img
                         src={training.image}
                         alt={training.title}
                         className="rounded-md mb-4 h-32 w-full object-cover"
-                        />
-                        <h3 className="text-lg font-semibold mb-2 truncate w-full">
+                        /> */}
+                        <p className="text-lg font-semibold mb-2 truncate w-full">
                         {training.title}
-                        </h3>
-                        <p className="text-gray-500 mb-4 truncate w-full">
-                        {training.details}
                         </p>
-                        <div className="flex items-center justify-between w-full text-gray-500 mb-4 text-sm">
+                        <div>
+                          <p>{training.work}</p>
+                          <p>Salary:INR{training.salary}</p>
+                        </div>
+                        <div>
+                          <div>
+                               <img
+                                src={training.image}
+                                alt={training.title}
+                                className="rounded-md mb-4 h-2  w-full object-cover"
+                               />
+                          </div>
+                          <div>
+                            <p>{training.company}</p>
+                            <p>{training.location}</p>
+                            <p></p>
+                          </div>
+                        </div>
+                        <div>
+                          <p>{training.applicants}</p>
+                        </div>
+                        {/* <p className="text-gray-500 mb-4 truncate w-full">
+                        {training.details}
+                        </p> */}
+                        {/* <div className="flex items-center justify-between w-full text-gray-500 mb-4 text-sm">
                         <span className="flex items-center">
                             <i className="fas fa-map-marker-alt mr-2"></i>
                             {training.location}
@@ -245,7 +310,7 @@ function MainEvent() {
                             <i className="fas fa-clock mr-2"></i>
                             {training.time}
                         </span>
-                        </div>
+                        </div> */}
                         <button
                         onClick={() => handleReadMore(training)}
                         className="text-blue-500 hover:underline text-sm font-semibold"
@@ -294,6 +359,10 @@ function MainEvent() {
        </div>
 
 
+
+
+
+
         <div className="w-full  mx-auto my-8 p-8  rounded-lg">
             <h2 className="text-2xl font-semibold mb-4">Application Manager</h2>
             <div className="overflow-x-auto rounded-lg ">
@@ -306,7 +375,7 @@ function MainEvent() {
                     <th className="py-2 px-4">REVIEW APPLICATION</th>
                     </tr>
                 </thead>
-                <tbody>
+                {/* <tbody>
                     {applications.map((application, index) => (
                     <tr key={index} className="border-t">
                         <td className="py-3 px-4">{application.company}</td>
@@ -324,7 +393,42 @@ function MainEvent() {
                         </td>
                     </tr>
                     ))}
-                </tbody>
+                </tbody> */}
+                <tbody className="text-[16px] bg-[#fff] font-[400] font-[Outfit] text-center">
+                {allappiledjobs.map((Application, index) => (
+                  <tr
+                    key={index}
+                    onClick={() => {
+                      navigate(`/blank/allrounds/${Application.JobId._id}`);
+                    }}
+                    className="cursor-pointer"
+                  >
+                    <td className="px-[25px] py-[30px] text-black text-opacity-[50%] text-left">
+                      {Application?.CompanyId?.Name}
+                    </td>
+                    <td className="px-[25px] flex gap-[29px] py-[30px] text-black text-opacity-[50%] text-left">
+                      {Application.JobId?.positionName}
+                    </td>
+                    <td className=" bg-[#e3eff7] px-[19px] py-[7px] text-left ">
+                      {/* {Application.createdAt} */}
+                      <p className="text-[#4234a2]">{Application.status}</p>
+                    </td>
+                    <td className="px-[25px] py-[30px] text-left">
+                      <div className="bg-[#e3eff7] px-[19px] py-[7px] flex  justify-center items-center rounded-[5px]">
+                        <p className="text-[#4234a2]">{Application.status}</p>
+                        <p className="text-[#97969d] text-[14.52px] ml-[17px]">
+                          {Application.applicationStatusB}
+                        </p>
+                        {Application.applicationStatusC === "2" && (
+                          <p className="text-[#97969d] ml-[5px] border-[0.85px] border-[#97969d] rounded-[50%] w-[18.67px] h-[18.67px] flex justify-center items-center">
+                            {Application.applicationStatusC}
+                          </p>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
                 </table>
             </div>
         </div>
