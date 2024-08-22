@@ -581,7 +581,7 @@ const Header = () => {
             </Link> */}
 
            <div className=" flex flex-row gap-6 justify-center items-center ">
-            <Link to={"/chat"}>
+            <Link to={"/blank/chats"}>
               <BiMessage size={25} color="#6082B6" />
               {/* <img
                           src="/images/tabler_message-2.svg"
@@ -590,7 +590,7 @@ const Header = () => {
                         /> */}
             </Link>
             {/* <MdOutlineNotifications size={25} color="#6082B6" onClick={()=>{navigate('/Notification')}} />  */}
-            <Link to={"/notification"}>
+            <Link to={"/blank/notification"}>
               {/* <i className="fa-regular fa-bell cursor-pointer"></i> */}
               <MdOutlineNotifications size={25} color="#6082B6" />
             </Link>
@@ -980,6 +980,8 @@ const Header = () => {
                         <div
                           className="w-full text-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md mb-2 cursor-pointer flex items-center justify-center"
                           onMouseEnter={() => setOpportunities(true)}
+                          // onClick={() => navigate('/blank/TotalInternship')}
+                          onClick={() => navigate('/blank/mainIntership')}
                         >
                           Internships
                         </div>
@@ -999,6 +1001,7 @@ const Header = () => {
                         <div
                           className="w-full text-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md mb-2 cursor-pointer flex items-center justify-center"
                           onMouseEnter={() => setOpportunities(true)}
+                          onClick={()=>navigate('/blank/applicationManager')}
                         >
                           My Applications
                         </div>

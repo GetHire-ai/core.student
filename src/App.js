@@ -7,8 +7,8 @@ import {
 } from "react-router-dom";
 import Layout from "./Layouts/Layout";
 import Home from "./Pages/Home/Home";
-import Notification from "./Pages/Notification/Notification";
-import ApplicationManager from "./Pages/ApplicationManager/ApplicationManager";
+// import Notification from "./Pages/Notification/Notification";
+// import ApplicationManager from "./Pages/ApplicationManager/ApplicationManager";
 import Training from "./Pages/Training/Training";
 import MyBoard from "./Pages/MyBoard/MyBoard";
 import CollegeBoard from "./Pages/MyBoard/CollegeBoard";
@@ -39,7 +39,7 @@ import EndInterview from "./Pages/Jobs/EndInterview";
 import Question from "./Pages/Jobs/Question";
 import Report from "./Pages/Jobs/Report";
 import Premium from "./Pages/Premium";
-import Chat from "./Pages/Chat/Chat.jsx";
+// import Chat from "./Pages/Chat/Chat.jsx";
 import AllRounds from "./Pages/Jobs/AllRounds";
 import Todo from "./Pages/Todo/Index";
 import ResumeAnalyser from "./Pages/AI Tools/ResumeAnalyser.jsx";
@@ -47,6 +47,10 @@ import ResumeBuilder from "./Pages/AI Tools/ResumeBuilder.jsx";
 import MockInterview from "./Pages/AI Tools/MockInterview.jsx";
 
 import AITools from "./Pages/AiTools/AiTools.js";
+
+import Chat from "./Pages/Chat/Chat.jsx"
+import Notification from "./Pages/Notification/Notification";
+import ApplicationManager from "./Pages/ApplicationManager/ApplicationManager";
 
 // imporint all the pages of carrer blogs
 import CareerMain from "./Pages/CarearBlogs/CareerMain.jsx";
@@ -66,6 +70,9 @@ import CoverLetterGenerator from "./Pages/AI Tools/CoverLetterGenerator.jsx";
 
 // importing invite
 import Invite from './Pages/Invite/Invite';
+
+// importign main interships section
+import AllInternship from "./Pages/MainInternShip/AllRoundsInter.jsx";
 
 const ProjectRoutes = () => {
   const [loading, setLoading] = useState(false);
@@ -110,9 +117,9 @@ const ProjectRoutes = () => {
           element={isAuthenticated ? <Layout /> : <Navigate to="/login" />}
         >
           <Route index element={<Home />} />
-          <Route path="/Notification" element={<Notification />} />
+          {/* <Route path="/Notification" element={<Notification />} /> */}
           <Route path="/premium" element={<Premium />} />
-          <Route path="/ApplicationManager" element={<ApplicationManager />} />
+          {/* <Route path="/ApplicationManager" element={<ApplicationManager />} /> */}
           <Route
             path="/ReviewApplication/:id"
             element={<ReviewApplication />}
@@ -121,7 +128,7 @@ const ProjectRoutes = () => {
           <Route path="/todo" element={<Todo />} />
           <Route path="/MyBoard" element={<MyBoard />} />
           <Route path="/CollegeBoard" element={<CollegeBoard />} />
-          <Route path="/chat" element={<Chat />} />
+          {/* <Route path="/chat" element={<Chat />} /> */}
           <Route path="/AICounsellor" element={<AICounsellor />} />
           <Route path="/SkillManager" element={<SkillsManager />} />
           <Route path="/Suggestion" element={<Suggestion />} />
@@ -168,6 +175,12 @@ const ProjectRoutes = () => {
           <Route path="/blank/ai-tools/coverLetterGen" element={<CoverLetterGenerator />} />
           {/* invite page  */}
           <Route path="/blank/invite" element={<Invite />} />
+          {/* imporitng main intership sections here */}
+          <Route path="/blank/mainIntership" element={<AllInternship />} />
+
+          <Route path="/blank/chats" element={<Chat />} />
+          <Route path="/blank/notification" element={<Notification />} />
+          <Route path="/blank/applicationManager" element={<ApplicationManager />} />
           
 
 
