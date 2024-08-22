@@ -1,34 +1,73 @@
-import React, { useState } from 'react';
-
-// Importing components from Portfolio
-import PersonalDetails from '../Portfolio/PersonalDetails';
-import Sidebar from '../../Components/Sidebar/Sidebar';
-import Skills from './Skills';
-import Experience from './Experience';
-import EducationForm from './Education';
-import ProjectDetails from './ProjectDetails';
-import SocialMediaForm from './SocialLink';
-import CertificationForm from './CertificationSection';
+import React, { useEffect, useState } from "react";
+import { GetApi, PutApi } from "../utilis/Api_Calling";
+import PersonalDetails from "../Portfolio/PersonalDetails";
+import Sidebar from "../../Components/Sidebar/Sidebar";
+import Skills from "./Skills";
+import Experience from "./Experience";
+import EducationForm from "./Education";
+import ProjectDetails from "./ProjectDetails";
+import SocialMediaForm from "./SocialLink";
+import CertificationForm from "./CertificationSection";
 
 const Portfolio = () => {
-  const [activeTab, setActiveTab] = useState('about');
+  const [activeTab, setActiveTab] = useState("about");
+  const [profile, setProfile] = useState({});
+  const [Loading, setLoading] = useState(false);
+
+  const Getstudentprofile = async () => {
+    try {
+      const Getjobdata = await GetApi(`api/StudentRoutes/GetStudentProfile`);
+      setProfile(Getjobdata?.data?.data);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
+  };
+
+  const updateProfile = async (data) => {
+    try {
+      const response = await PutApi(
+        "api/StudentRoutes/UpdateStudentProfile",
+        data
+      );
+      alert("Skill_Set updated successfully.");
+    } catch (error) {
+      console.log(error.response);
+      alert("Error updating ");
+    }
+  };
+
+  useEffect(() => {
+    Getstudentprofile();
+  }, []);
 
   const renderContent = () => {
     switch (activeTab) {
-      case 'about':
-        return <PersonalDetails />;
-      case 'skills':
-        return <Skills/>;
-      case 'experience':
-        return <Experience/>;
-      case 'education':
-        return <EducationForm/>;
-      case 'projects':
-        return <ProjectDetails/>;
-      case 'certifications&Awards':
-        return <CertificationForm/>;
-      case 'social_links':
-        return <SocialMediaForm/>;
+      case "about":
+        return (
+          <PersonalDetails profile={profile} updateProfile={updateProfile} loading={Loading} />
+        );
+      case "skills":
+        return <Skills />;
+      case "experience":
+        return <Experience profile={profile} updateProfile={updateProfile} loading={Loading} />;
+      case "education":
+        return (
+          <EducationForm profile={profile} updateProfile={updateProfile} loading={Loading} />
+        );
+      case "projects":
+        return (
+          <ProjectDetails profile={profile} updateProfile={updateProfile} loading={Loading} />
+        );
+      case "certifications&Awards":
+        return (
+          <CertificationForm profile={profile} updateProfile={updateProfile} loading={Loading} />
+        );
+      case "social_links":
+        return (
+          <SocialMediaForm profile={profile} updateProfile={updateProfile} loading={Loading} />
+        );
       default:
         return null;
     }
@@ -44,46 +83,38 @@ const Portfolio = () => {
       <div className="lg:w-3/4 w-full lg:ml-8">
         {/* Navigation Bar - Now Aligned to the Top Left */}
         <nav className="flex flex-wrap space-x-6 p-4  pb-5 rounded justify-start gap-[3.5%] ">
-          {['about', 'skills', 'experience', 'education', 'projects', 'certifications&Awards', 'social_links'].map((tab) => (
+          {[
+            "about",
+            "skills",
+            "experience",
+            "education",
+            "projects",
+            "certifications&Awards",
+            "social_links",
+          ].map((tab) => (
             <button
-            key={tab}
-            className={`relative group hover:text-blue-500 pb-2 ${activeTab === tab ? 'text-blue-500' : 'text-gray-600'}`}
-            onClick={() => setActiveTab(tab)}
-          >
-            {tab.charAt(0).toUpperCase() + tab.slice(1).replace('&', ' & ')}
-            <span className={`absolute bottom-0 left-0 right-0 h-1 bg-indigo-500 transition-all duration-300 ${activeTab === tab ? 'w-full' : 'w-0 group-hover:w-3/6'}`}></span>
-          </button>
-          
+              key={tab}
+              className={`relative group hover:text-blue-500 pb-2 ${activeTab === tab ? "text-blue-500" : "text-gray-600"}`}
+              onClick={() => setActiveTab(tab)}
+            >
+              {tab.charAt(0).toUpperCase() + tab.slice(1).replace("&", " & ")}
+              <span
+                className={`absolute bottom-0 left-0 right-0 h-1 bg-indigo-500 transition-all duration-300 ${activeTab === tab ? "w-full" : "w-0 group-hover:w-3/6"}`}
+              ></span>
+            </button>
           ))}
         </nav>
-          
-          <hr className="border-1 -mt-5 w-[84%] border-gray-300" />
+
+        <hr className="border-1 -mt-5 w-[84%] border-gray-300" />
 
         {/* Content Section */}
-        <div className="mt-6">
-          {renderContent()}
-        </div>
+        <div className="mt-6">{renderContent()}</div>
       </div>
     </div>
   );
 };
 
 export default Portfolio;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, { useEffect, useState } from "react";
 // import { IoMdInformationCircleOutline } from "react-icons/io";
@@ -244,8 +275,6 @@ export default Portfolio;
 //     const formattedDate = moment(dateString).format("D MMM YY");
 //     return formattedDate;
 //   };
-
-  
 
 //   return (
 //     <>

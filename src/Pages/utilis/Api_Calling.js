@@ -1,8 +1,6 @@
 import axios from "axios";
-// const Api_Url = 'https://get-hire.vercel.app/'
-const Api_Url = 'https://gethire-backend.onrender.com/'
-// const Api_Url = 'https://get-hire-backend.vercel.app/'
-// const Api_Url = "http://localhost:5000/";
+// const Api_Url = 'https://gethire-backend.onrender.com/'
+const Api_Url = "http://localhost:5000/";
 
 const GetApi = async (apiEndpoint) => {
   try {
