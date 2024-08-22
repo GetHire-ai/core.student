@@ -992,6 +992,7 @@ const Header = () => {
                         <div
                           className="w-full text-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md mb-2 cursor-pointer flex items-center justify-center"
                           onMouseEnter={() => setOpportunities(true)}
+                          onClick={()=>navigate('/blank/invite')}
                         >
                           Invites
                         </div>

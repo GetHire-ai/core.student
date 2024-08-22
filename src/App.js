@@ -64,6 +64,9 @@ import MainEvent from "./Pages/Events/MainEvent.jsx";
 // importing coevr letter
 import CoverLetterGenerator from "./Pages/AI Tools/CoverLetterGenerator.jsx";
 
+// importing invite
+import Invite from './Pages/Invite/Invite';
+
 const ProjectRoutes = () => {
   const [loading, setLoading] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -163,7 +166,9 @@ const ProjectRoutes = () => {
           <Route path="/blank/mainEvent" element={<MainEvent />} />
           {/* cover letter */}
           <Route path="/blank/ai-tools/coverLetterGen" element={<CoverLetterGenerator />} />
-            
+          {/* invite page  */}
+          <Route path="/blank/invite" element={<Invite />} />
+          
 
 
           <Route
