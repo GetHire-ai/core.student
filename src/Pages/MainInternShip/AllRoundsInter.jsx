@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { GetApi } from "../utilis/Api_Calling";
-import {Triangle} from 'react-loader-spinner'
+import { Triangle } from "react-loader-spinner";
+import internshipCard from "../Jobs/JobCard";
 
-import JobCard from "../Jobs/JobCard";
 
 const AllInternship = () => {
   const navigate = useNavigate();
@@ -19,17 +19,16 @@ const AllInternship = () => {
     setShowAll(!showAll);
   };
 
-
-  const [AllJobs, setAllJobs] = useState([]);
+  const [Allinternships, setAllinternships] = useState([]);
   const [Loading, setLoading] = useState(true);
-  const [appiledjobs, setappiledjobs] = useState([]);
-  const [totaljob, Settotaljob] = useState("");
+  const [appiledinternships, setappiledinternships] = useState([]);
+  const [totalinternship, Settotalinternship] = useState("");
 
-  const GetAllJobs = async () => {
+  const GetAllinternships = async () => {
     try {
-      const Getjobdata = await GetApi(`api/AdminRoutes/GetAllJobs`);
-      setAllJobs(Getjobdata?.data?.data);
-      Settotaljob(Getjobdata?.data?.data?.length);
+      const Getinternshipdata = await GetApi(`api/AdminRoutes/GetAllinternships`);
+      setAllinternships(Getinternshipdata?.data?.data?.filter((internship) => internship?.type !== "internship"));
+      Settotalinternship(Allinternships.length);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -37,20 +36,20 @@ const AllInternship = () => {
     }
   };
 
-  const Getallappiledjob = async () => {
+  const Getallappiledinternship = async () => {
     try {
       const Getbookmark = await GetApi(
-        `api/StudentRoutes/GetAllAppiledJobidsofaStudent`
+        `api/StudentRoutes/GetAllAppiledinternshipidsofaStudent`
       );
-      setappiledjobs(Getbookmark?.data?.data?.appliedJobIds);
+      setappiledinternships(Getbookmark?.data?.data?.appliedinternshipIds);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    GetAllJobs();
-    Getallappiledjob();
+    GetAllinternships();
+    Getallappiledinternship();
   }, []);
 
   const formatSalary = (salary) => {
@@ -68,8 +67,8 @@ const AllInternship = () => {
     return formattedDate;
   }
 
-  const jobDetail = async (id) => {
-    navigate(`/blank/JobViewDetails/${id}`);
+  const internshipDetail = async (id) => {
+    navigate(`/blank/internshipViewDetails/${id}`);
   };
 
   const [profileFilter, setProfileFilter] = useState("");
@@ -81,26 +80,26 @@ const AllInternship = () => {
   const [salaryFilter, setSalaryFilter] = useState(0);
   const [experienceFilter, setExperienceFilter] = useState("");
 
-  const applyFilters = (jobs) => {
-    return jobs.filter((job) => {
+  const applyFilters = (internships) => {
+    return internships.filter((internship) => {
       // Apply individual filters
       const profileMatch =
         !profileFilter ||
-        job.positionName.toLowerCase().includes(profileFilter.toLowerCase());
+        internship.positionName.toLowerCase().includes(profileFilter.toLowerCase());
       const locationMatch =
         !locationFilter ||
-        job.location.toLowerCase().includes(locationFilter.toLowerCase());
+        internship.location.toLowerCase().includes(locationFilter.toLowerCase());
       const workFromHomeMatch =
         !workFromHomeFilter ||
-        job.contractDetails.toLowerCase() === "work from home";
+        internship.contractDetails.toLowerCase() === "work from home";
       const partTimeMatch =
-        !partTimeFilter || job.contractDetails.toLowerCase() === "part-time";
+        !partTimeFilter || internship.contractDetails.toLowerCase() === "part-time";
       const includeInternshipsMatch =
         !includeInternshipsFilter ||
-        job.jobPipeline.toLowerCase() === "internship";
-      const salaryMatch = job.maxSalary >= salaryFilter * 1000; // assuming salary is in thousands
+        internship.internshipPipeline.toLowerCase() === "internship";
+      const salaryMatch = internship.maxSalary >= salaryFilter * 1000; // assuming salary is in thousands
       const experienceMatch =
-        !experienceFilter || job?.minExp === experienceFilter;
+        !experienceFilter || internship?.minExp === experienceFilter;
 
       return (
         profileMatch &&
@@ -124,8 +123,8 @@ const AllInternship = () => {
     setExperienceFilter("");
   };
 
- const  WHATSAPP_GROUP_LINK  = 'https://whatsapp.com/channel/0029Va7Rxc32ER6hBAuIL222';
-
+  const WHATSAPP_GROUP_LINK =
+    "https://whatsapp.com/channel/0029Va7Rxc32ER6hBAuIL222";
 
   return (
     <>
@@ -133,14 +132,14 @@ const AllInternship = () => {
         <div className="bg-white flex justify-center pt-20 min-w-[100vw] text-2xl">
           {/* Loading... */}
           <Triangle
-              visible={true}
-              height="90"
-              width="80"
-              color="blue"
-              ariaLabel="triangle-loading"
-              wrapperStyle={{}}
-              wrapperClass=""
-              />
+            visible={true}
+            height="90"
+            width="80"
+            color="blue"
+            ariaLabel="triangle-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+          />
         </div>
       ) : (
         <div
@@ -258,53 +257,54 @@ const AllInternship = () => {
               <div className="flex gap-[10px] flex-col w-3/5 max-h-[80vh] overflow-scroll px-2 bg-[#f8f9fa]">
                 <div className="w-full flex justify-between items-center my-2 px-4">
                   <span className="text-sm text-gray-600">
-                    {totaljob} Jobs Available
+                    {totalinternship} internships Available
                   </span>
                   <span className="text-sm text-blue-600 hover:underline duration-200 cursor-pointer font-semibold">
                     Ai auto applier
                   </span>
                 </div>
-                {applyFilters(AllJobs)?.length > 0 ? (
-                    applyFilters(AllJobs)?.map((job, index) => {
-                      const isJobApplied = appiledjobs.includes(job._id);
-                      return (
-                        <JobCard
-                          key={index}
-                          job={job}
-                          isJobApplied={isJobApplied}
-                          jobDetail={jobDetail} // Pass the necessary props
-                        />
-                      );
-                    })
-                  ) : (
-                    <div className="bg-white rounded-[16px] border-[1px] border-[#efecec] p-[27px]">
-                      No Jobs Found With This Query
-                    </div>
-                  )}
+                {applyFilters(Allinternships)?.length > 0 ? (
+                  applyFilters(Allinternships)?.map((internship, index) => {
+                    const isinternshipApplied = appiledinternships.includes(internship._id);
+                    return (
+                      <internshipCard
+                        key={index}
+                        internship={internship}
+                        isinternshipApplied={isinternshipApplied}
+                        internshipDetail={internshipDetail} // Pass the necessary props
+                      />
+                    );
+                  })
+                ) : (
+                  <div className="bg-white rounded-[16px] border-[1px] border-[#efecec] p-[27px]">
+                    No internships Found With This Query
+                  </div>
+                )}
               </div>
               <div className=" min-h-[100] w-1/5 rounded-[8px]  flex flex-col  items-start p-[26px]  ">
-                   <div className="flex flex-col items-center justify-center bg-gradient-to-r from-blue-300 to-blue-600 text-white p-6 rounded-lg shadow-lg max-w-md mx-auto">
-                      <div className="flex items-center">
-                        <img
-                          src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" // Link to a WhatsApp logo
-                          alt="WhatsApp Logo"
-                          className="w-10 h-10 mr-4"
-                        />
-                        <h3 className="text-xl font-bold">Join Our WhatsApp Community</h3>
-                      </div>
-                      <p className="mt-4 text-center text-sm">
-                        Get daily updates and stay connected with our community!
-                      </p>
-                      <a
-                        href={WHATSAPP_GROUP_LINK} // Replace with your WhatsApp group link
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mt-6 px-4 py-2 bg-white text-blue-600 font-semibold rounded-full shadow-lg hover:bg-gray-100 transition duration-200"
-                      >
-                        Join Now
-                      </a>
-                    </div>
-
+                <div className="flex flex-col items-center justify-center bg-gradient-to-r from-blue-300 to-blue-600 text-white p-6 rounded-lg shadow-lg max-w-md mx-auto">
+                  <div className="flex items-center">
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" // Link to a WhatsApp logo
+                      alt="WhatsApp Logo"
+                      className="w-10 h-10 mr-4"
+                    />
+                    <h3 className="text-xl font-bold">
+                      Join Our WhatsApp Community
+                    </h3>
+                  </div>
+                  <p className="mt-4 text-center text-sm">
+                    Get daily updates and stay connected with our community!
+                  </p>
+                  <a
+                    href={WHATSAPP_GROUP_LINK} // Replace with your WhatsApp group link
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-6 px-4 py-2 bg-white text-blue-600 font-semibold rounded-full shadow-lg hover:bg-gray-100 transition duration-200"
+                  >
+                    Join Now
+                  </a>
+                </div>
               </div>
             </div>
           </>
@@ -315,8 +315,6 @@ const AllInternship = () => {
 };
 
 export default AllInternship;
-
-
 
 /*
 
