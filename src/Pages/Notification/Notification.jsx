@@ -376,7 +376,7 @@ const NotificationItem = ({ notification, handleDelete }) => {
     //   </div>
     // </div>
 
-    <div className="bg-gradient-to-r from-blue-600 to-blue-300 rounded-2xl w-full py-6 px-6 flex flex-col md:flex-row justify-between items-center shadow-xl hover:shadow-2xl transition-all duration-300">
+    <div className="bg-white rounded-2xl w-full py-6 px-6 flex flex-col md:flex-row justify-between items-center shadow-xl hover:shadow-2xl transition-all duration-300">
       <div className="flex gap-6 justify-center items-center">
         <img
           src={
@@ -386,20 +386,20 @@ const NotificationItem = ({ notification, handleDelete }) => {
           alt="Notification Logo"
         />
         <div className="flex flex-col justify-center items-start gap-4">
-          <p className="text-xl font-bold text-white font-[Outfit]">
+          <p className="text-xl font-semibold text-gray-400 font-[Outfit]">
             {notification?.text}
           </p>
           <div className="flex gap-3">
-            <button className="bg-white text-blue-600 font-semibold rounded-full py-2 px-5 shadow-sm hover:bg-blue-100 transition-colors duration-300">
+            <button className="bg-blue-100 text-blue-500 font-semibold rounded-full py-2 px-5 shadow-lg hover:bg-blue-200 transition-colors duration-300">
               Rectify
             </button>
             <button
-              className="bg-white text-blue-600 font-semibold rounded-full py-2 px-5 shadow-sm hover:bg-blue-100 transition-colors duration-300"
+              className="bg-red-50 text-red-300 font-semibold rounded-full py-2 px-5 shadow-lg hover:bg-red-100 transition-colors duration-300"
               onClick={() => handleDelete(notification?._id)}
             >
               Delete
             </button>
-            <button className="bg-white text-blue-600 font-semibold rounded-full py-2 px-5 shadow-sm hover:bg-blue-100 transition-colors duration-300">
+            <button className="bg-white text-blue-500 font-semibold rounded-full py-2 px-5 shadow-lg hover:bg-blue-100 transition-colors duration-300">
               Archive
             </button>
           </div>
@@ -407,11 +407,11 @@ const NotificationItem = ({ notification, handleDelete }) => {
       </div>
       <div className="flex gap-6 justify-center items-center mt-6 md:mt-0">
         <div className="flex flex-col gap-3 items-center md:items-end">
-          <div className="flex gap-3 items-center text-sm font-[Outfit] text-white opacity-80">
+          <div className="flex gap-3 items-center text-sm font-[Outfit] text-gray-400 opacity-80">
             <img src="/images/carbon_time.svg" alt="Time Icon" />
             <p>{moment(notification.createdAt).fromNow()}</p>
           </div>
-          <p className="py-2 px-4 bg-white bg-opacity-20 rounded-md text-sm font-[Outfit] text-white">
+          <p className="py-2 px-4 bg-white bg-opacity-20 rounded-md text-sm font-[Outfit] text-gray-400">
             {moment(notification.createdAt).format("Do MMMM YYYY")}
           </p>
         </div>
