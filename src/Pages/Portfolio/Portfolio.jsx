@@ -31,7 +31,7 @@ const Portfolio = () => {
         "api/StudentRoutes/UpdateStudentProfile",
         data
       );
-      alert("Skill_Set updated successfully.");
+      alert("Profile updated successfully.");
     } catch (error) {
       console.log(error.response);
       alert("Error updating ");
@@ -46,27 +46,53 @@ const Portfolio = () => {
     switch (activeTab) {
       case "about":
         return (
-          <PersonalDetails profile={profile} updateProfile={updateProfile} loading={Loading} />
+          <PersonalDetails
+            profile={profile}
+            updateProfile={updateProfile}
+            loading={Loading}
+          />
         );
       case "skills":
-        return <Skills />;
+        return <Skills updateProfile={updateProfile} loading={Loading} />;
       case "experience":
-        return <Experience profile={profile} updateProfile={updateProfile} loading={Loading} />;
+        return (
+          <Experience
+            profile={profile}
+            updateProfile={updateProfile}
+            loading={Loading}
+          />
+        );
       case "education":
         return (
-          <EducationForm profile={profile} updateProfile={updateProfile} loading={Loading} />
+          <EducationForm
+            profile={profile}
+            updateProfile={updateProfile}
+            loading={Loading}
+          />
         );
       case "projects":
         return (
-          <ProjectDetails profile={profile} updateProfile={updateProfile} loading={Loading} />
+          <ProjectDetails
+            profile={profile}
+            updateProfile={updateProfile}
+            loading={Loading}
+          />
         );
       case "certifications&Awards":
         return (
-          <CertificationForm profile={profile} updateProfile={updateProfile} loading={Loading} />
+          <CertificationForm
+            profile={profile}
+            updateProfile={updateProfile}
+            loading={Loading}
+          />
         );
       case "social_links":
         return (
-          <SocialMediaForm profile={profile} updateProfile={updateProfile} loading={Loading} />
+          <SocialMediaForm
+            profile={profile}
+            updateProfile={updateProfile}
+            loading={Loading}
+          />
         );
       default:
         return null;

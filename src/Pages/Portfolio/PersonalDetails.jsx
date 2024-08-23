@@ -302,143 +302,6 @@ const PersonalDetails = ({ profile, updateProfile, loading }) => {
         </button>
       )}
 
-      {/* <div className="p-4 space-y-4 mt-8">
-                <p className="text-lg -ml-4 font-semibold">Your professional details?</p>
-                <div className="flex justify-between items-center">
-                        <div className=" flex flex-col">
-                            <p className="text-sm font-medium">locations</p>
-                            {isEditingField === 'locations' ? (
-                            <input
-                                type="text"
-                                Name="locations"
-                                value={details.locations}
-                                onChange={handleFieldChange}
-                                className="border border-gray-300 p-2 rounded w-full"
-                            />
-                            ) : (
-                            <div><p>{details.locations}</p></div>
-                            )}
-                        </div>   
-
-                    {!isEditingField && (
-                    <button
-                        onClick={() => handleEditFieldClick('locations')}
-                        className="ml-2 text-gray-500 hover:text-gray-700"
-                    >
-                        ✏️
-                    </button>
-                    )}
-                    {isEditingField === 'locations' && (
-                    <button
-                        onClick={handleSaveFieldClick}
-                        className="ml-2 bg-blue-500 text-white px-4 py-2 rounded"
-                    >
-                        Save
-                    </button>
-                    )}
-                </div>
-
-                <div className="flex justify-between items-center">
-                        <div className="flex flex-col">
-                            <p className="text-sm font-medium">Job Title</p>  
-                            {isEditingField === 'jobTitles' ? (
-                            <input
-                                type="text"
-                                Name="jobTitles"
-                                value={details.jobTitles}
-                                onChange={handleFieldChange}
-                                className="border border-gray-300 p-2 rounded w-full"
-                            />
-                            ) : (
-                            <span>{details.jobTitles}</span>
-                            )}
-                        </div>
-                    {!isEditingField && (
-                    <button
-                        onClick={() => handleEditFieldClick('jobTitles')}
-                        className="ml-2 text-gray-500 hover:text-gray-700"
-                    >
-                        ✏️
-                    </button>
-                    )}
-                    {isEditingField === 'jobTitles' && (
-                    <button
-                        onClick={handleSaveFieldClick}
-                        className="ml-2 bg-blue-500 text-white px-4 py-2 rounded"
-                    >
-                        Save
-                    </button>
-                    )}
-                </div>
-
-                <div className="flex justify-between items-center">
-                    <div className="flex flex-col">
-                            <p className="text-sm font-medium">Work Experience</p>
-                            {isEditingField === 'Experience' ? (
-                            <input
-                                type="text"
-                                Name="Experience"
-                                value={details.Experience}
-                                onChange={handleFieldChange}
-                                className="border border-gray-300 p-2 rounded w-full"
-                            />
-                            ) : (
-                            <span>{details.Experience}</span>
-                            )}
-                    </div>       
-                    {!isEditingField && (
-                    <button
-                        onClick={() => handleEditFieldClick('Experience')}
-                        className="ml-2 text-gray-500 hover:text-gray-700"
-                    >
-                        ✏️
-                    </button>
-                    )}
-                    {isEditingField === 'Experience' && (
-                    <button
-                        onClick={handleSaveFieldClick}
-                        className="ml-2 bg-blue-500 text-white px-4 py-2 rounded"
-                    >
-                        Save
-                    </button>
-                    )}
-                </div>
-
-                <div className="flex justify-between items-center">
-                    <div className="flex flex-col">
-                        <p className="text-sm font-medium">Annual Compensation</p>
-                        {isEditingField === 'Current_Salary' ? (
-                        <input
-                            type="text"
-                            Name="Current_Salary"
-                            value={details.Current_Salary}
-                            onChange={handleFieldChange}
-                            className="border border-gray-300 p-2 rounded w-full"
-                        />
-                        ) : (
-                        <span>{details.Current_Salary}</span>
-                        )}
-                    </div>
-                    {!isEditingField && (
-                    <button
-                        onClick={() => handleEditFieldClick('Current_Salary')}
-                        className="ml-2 text-gray-500 hover:text-gray-700"
-                    >
-                        ✏️
-                    </button>
-                    )}
-                    {isEditingField === 'Current_Salary' && (
-                    <button
-                        onClick={handleSaveFieldClick}
-                        className="ml-2 bg-blue-500 text-white px-4 py-2 rounded-md"
-                    >
-                        Save
-                    </button>
-                    )}
-                </div>
-
-            </div> */}
-
       <div className="p-4 space-y-4 mt-8">
         <p className="text-lg -ml-9 font-semibold">
           Your professional details?
@@ -447,13 +310,16 @@ const PersonalDetails = ({ profile, updateProfile, loading }) => {
           <div className="flex flex-col">
             <p className="text-sm font-medium">locations</p>
             {isEditingField === "locations" ? (
-              <Autocomplete
-                multiple
-                options={locations}
-                value={details.locations}
-                onChange={handlelocationsChange}
-                renderInput={(params) => <TextField {...params} />}
-              />
+              <div className="w-[50vw] ">
+                <Autocomplete
+                  multiple
+                  fullWidth
+                  options={locations}
+                  value={details.locations}
+                  onChange={handlelocationsChange}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+              </div>
             ) : (
               <div>
                 <p>{details.locations}</p>
@@ -523,13 +389,13 @@ const PersonalDetails = ({ profile, updateProfile, loading }) => {
                 onChange={handleFieldChange}
                 className=" border-b-2 border-gray-300 focus:outline-none focus:border-blue-500 p-2 w-full transition-colors duration-300"
               >
-                <option value="1-2 Years">1-2 Years</option>
-                <option value="3-5 Years">3-5 Years</option>
-                <option value="5-7 Years">5-7 Years</option>
-                <option value="7+ Years">7+ Years</option>
+                <option value="1-2">1-2 Years</option>
+                <option value="3-5">3-5 Years</option>
+                <option value="5-7">5-7 Years</option>
+                <option value="7+">7+ Years</option>
               </select>
             ) : (
-              <span>{details.Experience}</span>
+              <span>{details.Experience} Years</span>
             )}
           </div>
 
@@ -561,13 +427,13 @@ const PersonalDetails = ({ profile, updateProfile, loading }) => {
                 onChange={handleFieldChange}
                 className=" border-b-2 border-gray-300 focus:outline-none focus:border-blue-500 p-2 w-full transition-colors duration-300"
               >
-                <option value="1.2-3 LPA">1.2-3 LPA</option>
-                <option value="3-5 LPA">3-5 LPA</option>
-                <option value="5-7 LPA">5-7 LPA</option>
-                <option value="7-10 LPA">7-10 LPA</option>
+                <option value="1.2-3">1.2-3 LPA</option>
+                <option value="3-5">3-5 LPA</option>
+                <option value="5-7">5-7 LPA</option>
+                <option value="7-10">7-10 LPA</option>
               </select>
             ) : (
-              <span>{details.Current_Salary}</span>
+              <span>{details.Current_Salary} LPA</span>
             )}
           </div>
 
@@ -594,340 +460,3 @@ const PersonalDetails = ({ profile, updateProfile, loading }) => {
 };
 
 export default PersonalDetails;
-
-// import React, { useState } from "react";
-// const PersonalDetails? = () => {
-//   const [isEditing, setIsEditing] = useState(false);
-//   const [details?, setDetails?] = useState({
-//     Name: "deepshikha goud",
-//     Email: "deepshikha@skillgenic.in",
-//     summary:
-//       "Results-driven Recruiter with 2.6 years of proven expertise in talent acquisition. Demonstrated success in developing and executing strategic recruitment plans, fostering strong stakeholder relationships, and driving the growth of high-performing teams. Committed to delivering exceptional candidate experiences and contributing to organizational success through effective hiring solutions.",
-//     dob: "01/01/2001",
-//     Number: "7987550330",
-//     gender: "Female",
-//   });
-
-//   const handleEdit = () => {
-//     setIsEditing(!isEditing);
-//   };
-
-//   const handleChange = (e) => {
-//     setDetails?({
-//       ...details?,
-//       [e.target.Name]: e.target.value,
-//     });
-//   };
-
-//   const handleSave = () => {
-//     setIsEditing(false);
-//     alert("Details? saved successfully!");
-//   };
-
-// // for next ---------------------------------------
-// const [details, setDetails] = useState({
-//     locations: 'Indore, Madhya Pradesh, India',
-//     jobTitles: 'Recruiter',
-//     Experience: '3-5 Years',
-//     Current_Salary: '1.2-3 LPA',
-// });
-
-// const handleEditClick = (field) => {
-//     setIsEditing(field); // Set the field to be edited
-// };
-
-// const handleInputChange = (e) => {
-//     const { Name, value } = e.target;
-//     setDetails({
-//         ...details,
-//         [Name]: value,
-//     });
-// };
-
-// const handleSaveClick = () => {
-//     setIsEditing(null); // Exit editing mode after saving
-// };
-
-//   return (
-//     <div className="bg-white shadow-md rounded-lg p-6 max-w-4xl mx-auto mt-6">
-//       <div className="flex justify-between items-center mb-4">
-//         <h2 className="text-xl -ml-4 font-semibold">Your personal details?</h2>
-//         <button
-//           className="text-blue-600 hover:text-blue-800 focus:outline-none"
-//           onClick={handleEdit}
-//         >
-//           <svg
-//             xmlns="http://www.w3.org/2000/svg"
-//             className="h-6 w-6"
-//             fill="none"
-//             viewBox="0 0 24 24"
-//             stroke="currentColor"
-//             strokeWidth={2}
-//           >
-//             <path
-//               strokeLinecap="round"
-//               strokeLinejoin="round"
-//               d="M15.232 5.232l3.536 3.536m-2.036-6.036a2.5 2.5 0 113.536 3.536L7.5 21H3v-4.5L16.732 3.732z"
-//             />
-//           </svg>
-//         </button>
-//       </div>
-
-//       <div className="space-y-4 mt-9">
-
-//             <div className=" flex flex-row justify-between ">
-//                 <div className="flex flex-col items-start justify-center">
-//                 <label className="text-sm font-medium">Name</label>
-//                 {isEditing ? (
-//                     <input
-//                     type="text"
-//                     Name="Name"
-//                     value={details?.Name}
-//                     onChange={handleChange}
-//                     className="border border-gray-300 rounded-lg p-2 w-full ml-4"
-//                     />
-//                 ) : (
-//                     <p className=" text-stone-600 from-neutral-500">{details?.Name}</p>
-//                 )}
-//                 </div>
-
-//                 <div className="flex flex-col items-start justify-center">
-//                 <label className="text-sm font-medium">Email</label>
-//                 {isEditing ? (
-//                     <input
-//                     type="Email"
-//                     Name="Email"
-//                     value={details?.Email}
-//                     onChange={handleChange}
-//                     className="border border-gray-300 rounded-lg p-2 w-full ml-4"
-//                     />
-//                 ) : (
-//                     <p className="text-stone-600 from-neutral-500">{details?.Email}</p>
-//                 )}
-//                 </div>
-//             </div>
-
-//             <div className=" pt-7">
-//             <label className="text-sm font-medium">Your profile summary</label>
-//             {isEditing ? (
-//                 <textarea
-//                 Name="summary"
-//                 value={details?.summary}
-//                 onChange={handleChange}
-//                 className="border border-gray-300 rounded-lg p-2 w-full mt-2"
-//                 />
-//             ) : (
-//                 <p className="text-stone-600 border-2 p-4 rounded-md mt-2 border-gray-400 from-neutral-500">{details?.summary}</p>
-//             )}
-//             </div>
-
-//         <div className="flex flex-row justify-between pt-5">
-//             <div className="flex flex-col gap-4">
-//                 <div className="flex flex-col  justify-start">
-//                 <label className="text-sm font-medium">Your DOB</label>
-//                 {isEditing ? (
-//                     <input
-//                     type="text"
-//                     Name="dob"
-//                     placeholder="dd-mm-yyyy"
-//                     value={details?.dob}
-//                     onChange={handleChange}
-//                     className="border border-gray-300 rounded-lg p-2 w-full"
-//                     />
-//                 ) : (
-//                     <p className="text-stone-600 from-neutral-500">{details?.dob}</p>
-//                 )}
-//                 </div>
-
-//                 <div className="flex flex-col  justify-between">
-//                 <label className="text-sm font-medium"> Number number</label>
-//                 {isEditing ? (
-//                     <input
-//                     type="text"
-//                     Name="Number"
-//                     value={details?.Number}
-//                     onChange={handleChange}
-//                     className="border border-gray-300 rounded-lg p-2 w-full "
-//                     />
-//                 ) : (
-//                     <p className="text-stone-600 from-neutral-500">{details?.Number}</p>
-//                 )}
-//                 </div>
-//             </div>
-//             <div>
-//                 <div className="flex flex-col justify-between">
-//                 <label className="text-sm font-medium">Your gender</label>
-//                 {isEditing ? (
-//                     <div className="ml-4">
-//                     <label className="inline-flex items-center ">
-//                         <input
-//                         type="radio"
-//                         Name="gender"
-//                         value="Male"
-//                         checked={details?.gender === "Male"}
-//                         onChange={handleChange}
-//                         className="form-radio"
-//                         />
-//                         <span className="">Male</span>
-//                     </label>
-//                     <label className="inline-flex items-center mr-6">
-//                         <input
-//                         type="radio"
-//                         Name="gender"
-//                         value="Female"
-//                         checked={details?.gender === "Female"}
-//                         onChange={handleChange}
-//                         className="form-radio"
-//                         />
-//                         <span className="ml-2">Female</span>
-//                     </label>
-//                     <label className="inline-flex items-center">
-//                         <input
-//                         type="radio"
-//                         Name="gender"
-//                         value="Other"
-//                         checked={details?.gender === "Other"}
-//                         onChange={handleChange}
-//                         className="form-radio"
-//                         />
-//                         <span className="ml-2">Other</span>
-//                     </label>
-//                     </div>
-//                 ) : (
-//                     <p className="text-stone-600 from-neutral-500">{details?.gender}</p>
-//                 )}
-//                 </div>
-//             </div>
-//         </div>
-
-//       </div>
-
-//       {isEditing && (
-//         <button
-//           className="mt-6 bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-200"
-//           onClick={handleSave}
-//         >
-//           Save
-//         </button>
-//       )}
-
-//           <div className="p-4 space-y-4">
-
-//             <div className="flex items-center">
-//                 {isEditing === 'locations' ? (
-//                     <input
-//                         type="text"
-//                         Name="locations"
-//                         value={details.locations}
-//                         onChange={handleInputChange}
-//                         className="border border-gray-300 p-2 rounded w-full"
-//                     />
-//                 ) : (
-//                     <span>{details.locations}</span>
-//                 )}
-//                 <button
-//                     onClick={() => handleEditClick('locations')}
-//                     className="ml-2 text-gray-500 hover:text-gray-700"
-//                 >
-//                     ✏️
-//                 </button>
-//                 {isEditing === 'locations' && (
-//                     <button
-//                         onClick={handleSaveClick}
-//                         className="ml-2 bg-blue-500 text-white px-4 py-2 rounded"
-//                     >
-//                         Save
-//                     </button>
-//                 )}
-//             </div>
-
-//             <div className="flex items-center">
-//                 {isEditing === 'jobTitles' ? (
-//                     <input
-//                         type="text"
-//                         Name="jobTitles"
-//                         value={details.jobTitles}
-//                         onChange={handleInputChange}
-//                         className="border border-gray-300 p-2 rounded w-full"
-//                     />
-//                 ) : (
-//                     <span>{details.jobTitles}</span>
-//                 )}
-//                 <button
-//                     onClick={() => handleEditClick('jobTitles')}
-//                     className="ml-2 text-gray-500 hover:text-gray-700"
-//                 >
-//                     ✏️
-//                 </button>
-//                 {isEditing === 'jobTitles' && (
-//                     <button
-//                         onClick={handleSaveClick}
-//                         className="ml-2 bg-blue-500 text-white px-4 py-2 rounded"
-//                     >
-//                         Save
-//                     </button>
-//                 )}
-//             </div>
-
-//             <div className="flex items-center">
-//                 {isEditing === 'Experience' ? (
-//                     <input
-//                         type="text"
-//                         Name="Experience"
-//                         value={details.Experience}
-//                         onChange={handleInputChange}
-//                         className="border border-gray-300 p-2 rounded w-full"
-//                     />
-//                 ) : (
-//                     <span>{details.Experience}</span>
-//                 )}
-//                 <button
-//                     onClick={() => handleEditClick('Experience')}
-//                     className="ml-2 text-gray-500 hover:text-gray-700"
-//                 >
-//                     ✏️
-//                 </button>
-//                 {isEditing === 'Experience' && (
-//                     <button
-//                         onClick={handleSaveClick}
-//                         className="ml-2 bg-blue-500 text-white px-4 py-2 rounded"
-//                     >
-//                         Save
-//                     </button>
-//                 )}
-//             </div>
-
-//             <div className="flex items-center">
-//                 {isEditing === 'Current_Salary' ? (
-//                     <input
-//                         type="text"
-//                         Name="Current_Salary"
-//                         value={details.Current_Salary}
-//                         onChange={handleInputChange}
-//                         className="border border-gray-300 p-2 rounded w-full"
-//                     />
-//                 ) : (
-//                     <span>{details.Current_Salary}</span>
-//                 )}
-//                 <button
-//                     onClick={() => handleEditClick('Current_Salary')}
-//                     className="ml-2 text-gray-500 hover:text-gray-700"
-//                 >
-//                     ✏️
-//                 </button>
-//                 {isEditing === 'Current_Salary' && (
-//                     <button
-//                         onClick={handleSaveClick}
-//                         className="ml-2 bg-blue-500 text-white px-4 py-2 rounded"
-//                     >
-//                         Save
-//                     </button>
-//                 )}
-//             </div>
-//         </div>
-
-//     </div>
-//   );
-// };
-
-// export default PersonalDetails?;
