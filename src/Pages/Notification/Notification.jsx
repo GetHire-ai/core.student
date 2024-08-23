@@ -199,7 +199,7 @@ const Notification = () => {
                 Important
               </button>
             </div>
-            <div className="flex items-center gap-2 text-gray-500 hover:text-gray-700 transition-colors duration-300 cursor-pointer">
+            <div className="flex items-center gap-2 text-gray-500 hover:text-gray-700 underline transition-colors duration-300 cursor-pointer">
               <img src="/images/charm_tick-double.svg" alt="Tick Icon" />
               <p className="text-base font-[Outfit]">
                 Mark all as read
@@ -376,7 +376,7 @@ const NotificationItem = ({ notification, handleDelete }) => {
     //   </div>
     // </div>
 
-    <div className="bg-gradient-to-r from-blue-100 to-blue-200 rounded-2xl w-full py-6 px-6 flex flex-col md:flex-row justify-between items-center shadow-xl hover:shadow-2xl transition-all duration-300">
+    <div className="bg-gradient-to-r from-blue-600 to-blue-300 rounded-2xl w-full py-6 px-6 flex flex-col md:flex-row justify-between items-center shadow-xl hover:shadow-2xl transition-all duration-300">
       <div className="flex gap-6 justify-center items-center">
         <img
           src={

@@ -14,7 +14,7 @@ const EventCard = ({ job }) => {
         </div>
       </div>
       <div className='flex flex-row items-center gap-6'>
-         <p className={`text-green-500 text-[12px] mt-2 p-1 rounded-md ${job.type === 'FULL-TIME' ? 'bg-green-100' : 'bg-blue-200'} `}>{job.type}</p>
+         <p className={`text-green-500 text-[11px] mt-2 p-1 rounded-md ${job.type === 'FULL-TIME' ? 'bg-green-100' : 'bg-blue-200'} `}>{job.type}</p>
          <p className="text-gray-500 text-[12px] mt-1">{job.salary}</p>
       </div>
       <div className="flex items-center mt-3">
