@@ -73,6 +73,7 @@ import Invite from './Pages/Invite/Invite';
 
 // importign main interships section
 import AllInternship from "./Pages/MainInternShip/AllRoundsInter.jsx";
+import Jobs2 from "./Pages/Jobs/Jobs2.jsx";
 
 const ProjectRoutes = () => {
   const [loading, setLoading] = useState(false);
@@ -138,6 +139,7 @@ const ProjectRoutes = () => {
         <Route path="/blank" element={<HeaderLayout />}>
           <Route path="/blank/Portfolio" element={<Portfolio />} />
           <Route path="/blank/Jobs" element={<Jobs />} />
+          <Route path="/blank/Jobs/:query" element={<Jobs2 />} />
           <Route
             path="/blank/ai-tools/resume-analyser"
             element={<ResumeAnalyser />}
