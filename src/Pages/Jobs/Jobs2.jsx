@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { GetApi } from "../utilis/Api_Calling";
 import { Triangle } from "react-loader-spinner";
-import internshipCard from "../Jobs/JobCard";
 
-const AllInternship = () => {
+import JobCard from "./JobCard";
+
+const Jobs2 = () => {
+  let { query } = useParams();
   const navigate = useNavigate();
   const [value, setValue] = useState(50);
 
@@ -18,21 +20,23 @@ const AllInternship = () => {
     setShowAll(!showAll);
   };
 
-  const [Allinternships, setAllinternships] = useState([]);
+  const [AllJobs, setAllJobs] = useState([]);
   const [Loading, setLoading] = useState(true);
-  const [appiledinternships, setappiledinternships] = useState([]);
-  const [totalinternship, Settotalinternship] = useState("");
+  const [appiledjobs, setappiledjobs] = useState([]);
+  const [totaljob, Settotaljob] = useState("");
 
-  const GetAllinternships = async () => {
+  const GetAllJobs = async () => {
     try {
-      const res = await GetApi(`api/AdminRoutes/GetAlljobs`);
-      setAllinternships(
-        res?.data?.data?.filter(
-          (internship) => internship?.type === "internship"
-        )
-      );
+      const Getjobdata = await GetApi(`api/AdminRoutes/GetAllJobs`);
+      let str = query.toLowerCase().trim();
+      let data = Getjobdata?.data?.data || [];
 
-      Settotalinternship(Allinternships.length);
+      let filteredData = data.filter((job) => {
+        let positionName = job.positionName || "";
+        return positionName.toLowerCase().trim().includes(str);
+      });
+      setAllJobs(filteredData);
+      Settotaljob(filteredData?.length);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -40,20 +44,20 @@ const AllInternship = () => {
     }
   };
 
-  const Getallappiledinternship = async () => {
+  const Getallappiledjob = async () => {
     try {
       const Getbookmark = await GetApi(
-        `api/StudentRoutes/GetAllAppiledinternshipidsofaStudent`
+        `api/StudentRoutes/GetAllAppiledJobidsofaStudent`
       );
-      setappiledinternships(Getbookmark?.data?.data?.appliedinternshipIds);
+      setappiledjobs(Getbookmark?.data?.data?.appliedJobIds);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    GetAllinternships();
-    Getallappiledinternship();
+    GetAllJobs();
+    Getallappiledjob();
   }, []);
 
   const formatSalary = (salary) => {
@@ -71,8 +75,8 @@ const AllInternship = () => {
     return formattedDate;
   }
 
-  const internshipDetail = async (id) => {
-    navigate(`/blank/internshipViewDetails/${id}`);
+  const jobDetail = async (id) => {
+    navigate(`/blank/JobViewDetails/${id}`);
   };
 
   const [profileFilter, setProfileFilter] = useState("");
@@ -84,31 +88,26 @@ const AllInternship = () => {
   const [salaryFilter, setSalaryFilter] = useState(0);
   const [experienceFilter, setExperienceFilter] = useState("");
 
-  const applyFilters = (internships) => {
-    return internships.filter((internship) => {
+  const applyFilters = (jobs) => {
+    return jobs.filter((job) => {
       // Apply individual filters
       const profileMatch =
         !profileFilter ||
-        internship.positionName
-          .toLowerCase()
-          .includes(profileFilter.toLowerCase());
+        job.positionName.toLowerCase().includes(profileFilter.toLowerCase());
       const locationMatch =
         !locationFilter ||
-        internship.location
-          .toLowerCase()
-          .includes(locationFilter.toLowerCase());
+        job.location.toLowerCase().includes(locationFilter.toLowerCase());
       const workFromHomeMatch =
         !workFromHomeFilter ||
-        internship.contractDetails.toLowerCase() === "work from home";
+        job.contractDetails.toLowerCase() === "work from home";
       const partTimeMatch =
-        !partTimeFilter ||
-        internship.contractDetails.toLowerCase() === "part-time";
+        !partTimeFilter || job.contractDetails.toLowerCase() === "part-time";
       const includeInternshipsMatch =
         !includeInternshipsFilter ||
-        internship.internshipPipeline.toLowerCase() === "internship";
-      const salaryMatch = internship.maxSalary >= salaryFilter * 1000;
+        job.jobPipeline.toLowerCase() === "internship";
+      const salaryMatch = job.maxSalary >= salaryFilter * 1000; // assuming salary is in thousands
       const experienceMatch =
-        !experienceFilter || internship?.minExp === experienceFilter;
+        !experienceFilter || job?.minExp === experienceFilter;
 
       return (
         profileMatch &&
@@ -159,7 +158,8 @@ const AllInternship = () => {
           <>
             <div className="w-full flex justify-start  items-center bg-[#f8f9fa] py-2">
               <p className="text-[16px] font-[400] text-[#000] text-opacity-[50%] px-[34px] cursor-pointer">
-                Home &gt; Interships
+                Home &gt;{" "}
+                <span onClick={() => navigate("/blank/jobs")}>Jobs</span>
               </p>
             </div>
             <div className="flex flex-col justify-start items-start w-full md:flex-row gap-[34px] mt-[16px] px-[34px] bg-[#f8f9fa]">
@@ -266,29 +266,31 @@ const AllInternship = () => {
               <div className="flex gap-[10px] flex-col w-3/5 max-h-[80vh] overflow-scroll px-2 bg-[#f8f9fa]">
                 <div className="w-full flex justify-between items-center my-2 px-4">
                   <span className="text-sm text-gray-600">
-                    {totalinternship} internships Available
+                    {totaljob} Jobs Available for &nbsp;
+                    <b>" {query} "</b>
                   </span>
                   <span className="text-sm text-blue-600 hover:underline duration-200 cursor-pointer font-semibold">
                     Ai auto applier
                   </span>
                 </div>
-                {applyFilters(Allinternships)?.length > 0 ? (
-                  applyFilters(Allinternships)?.map((internship, index) => {
-                    const isinternshipApplied = appiledinternships.includes(
-                      internship._id
-                    );
+                {applyFilters(AllJobs)?.length > 0 ? (
+                  applyFilters(AllJobs)?.map((job, index) => {
+                    const isJobApplied = appiledjobs.includes(job._id);
                     return (
-                      <internshipCard
+                      <JobCard
                         key={index}
-                        internship={internship}
-                        isinternshipApplied={isinternshipApplied}
-                        internshipDetail={internshipDetail}
+                        job={job}
+                        isJobApplied={isJobApplied}
+                        jobDetail={jobDetail} // Pass the necessary props
                       />
                     );
                   })
                 ) : (
                   <div className="bg-white rounded-[16px] border-[1px] border-[#efecec] p-[27px]">
-                    No internships Found With This Query
+                    No Jobs Found With title {query} go to{" "}
+                    <button onClick={() => navigate("/blank/jobs")}>
+                      All Jobs
+                    </button>
                   </div>
                 )}
               </div>
@@ -325,11 +327,4 @@ const AllInternship = () => {
   );
 };
 
-export default AllInternship;
-
-/*
-
-
-
-
-*/
+export default Jobs2;

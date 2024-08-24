@@ -31,20 +31,20 @@ const Layout = () => {
         <div className=" fixed w-full z-10">
           <Header />
         </div>
-        <div className="flex justify-center w-full mt-[73px] bg-[#fafbff]">
-          <div className="  hidden md:block p-3 bg-[#fafbff] w-1/5">
+        <div className="flex justify-around w-full mt-[73px] bg-[#fafbff]">
+          <div className="  hidden md:block p-3 bg-[#fafbff] w-1/4">
             <Sidebar
               activeSection={activeSection}
               scrollToSection={scrollToSection}
             />
           </div>
-          <div className="w-[55%] -mr-[260px] max-2xl:-mr-[250px]">
+          <div className="w-1/2">
             <Home
               onSectionVisible={handleSectionVisible}
               onSectionHidden={handleSectionHidden}
             />
           </div>
-          <div className="hidden md:block p-3 bg-[#fafbff] w-1/5 max-2xl:ml-2 ">
+          <div className="hidden md:block p-3 bg-[#fafbff] w-1/4 max-2xl:ml-2 ">
             <Sidebar2 />
           </div>
         </div>

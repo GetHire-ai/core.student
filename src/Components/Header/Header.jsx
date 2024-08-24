@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FiAlignJustify } from "react-icons/fi";
 import InternshipModal from "../../Pages/Internship/InternshipModal";
 import Logo from "../../assets/Images/Gethire SVG.svg";
@@ -11,8 +11,6 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { styled, alpha } from "@mui/material/styles";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-
-// importing react icons
 import { TbArrowsExchange2 } from "react-icons/tb";
 import { PiNotebookLight } from "react-icons/pi";
 import { IoSearchCircleSharp } from "react-icons/io5";
@@ -20,9 +18,7 @@ import { BiMessage } from "react-icons/bi";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { MdOutlineSort } from "react-icons/md";
 import { MdOutlineNotifications } from "react-icons/md";
-
 import { FaRegStar } from "react-icons/fa";
-
 import AIToolsModal from "../../Pages/AI Tools/AIToolsModal";
 
 const DropdownLink = styled(Link)(({ theme }) => ({
@@ -105,8 +101,10 @@ const workItems = [
 ];
 
 const Header = () => {
+  let path = useLocation();
   const navigate = useNavigate();
   const [aiModal, setAiModal] = useState(false);
+  const [input, setInput] = useState("");
   const [showFullNavbar, setShowFullNavbar] = useState(false);
   const [showInternshipDropDown, setShowInternshipDropDown] = useState(false);
   const [selectInternshipOption, setSelectInternshipOption] =
@@ -402,92 +400,6 @@ const Header = () => {
             Opportunities
           </div>
 
-          {/* <div className=""> */}
-          {/* <p
-                  // onClick={(event) => setAnchorEl2(event.currentTarget)}
-                  onMouseEnter={(event) => {
-                    setAnchorEl2(event.currentTarget);
-                    setShowInternshipDropDown(false);
-                    setMode(false);
-                  }}
-                  // onMouseLeave={()=> setAnchorEl2(null)}
-                  // onMouseLeave={() => {setAnchorEl2(null)}}
-                  // sx={{ cursor: "pointer" }}
-                  className="hover:text-blue-700 hover:cursor-pointer cursor-pointer "
-                >
-                  Jobs
-                </p> */}
-
-          {/* <div className="absolute top-2" style={{ left: "-5rem" }}>
-                  <Popover
-                    id={id}
-                    open={open2}
-                    anchorEl={anchorEl2}
-                    onClose={() => setAnchorEl2(null)}
-                    anchorOrigin={{
-                      vertical: "bottom",
-                      horizontal: "right",
-                    }}
-                  >
-                    <Typography sx={{ p: 2 }}>
-                      The content of the Popover.
-                    </Typography>
-                    <Link to="/blank/Jobs">Jobs</Link>
-                  </Popover>
-                </div> */}
-          {/* <div className=" top-3 left-[-5rem]">
-                  <Popover
-                    id={id}
-                    open={open2}
-                    anchorEl={anchorEl2}
-                    onClose={() => setAnchorEl2(null)}
-                    // onMouseLeave={() => setAnchorEl2(null)}
-                    anchorOrigin={{
-                      vertical: "bottom",
-                      horizontal: "right",
-                    }}
-                    classes={{
-                      paper: "rounded-lg shadow-lg bg-white",
-                    }}
-                    className="transition-transform duration-300 ease-in-out"
-                  >
-                    <div
-                      className="p-4 flex flex-col "
-                      onMouseLeave={() => setAnchorEl2(null)}
-                    >
-                      <Typography className="text-gray-800 text-sm font-medium">
-                       
-                      </Typography>
-                      <Link
-                        to="/blank/Jobs"
-                        className="mt-2 inline-block text-blue-600 hover:underline text-base font-semibold transition-all duration-200"
-                      >
-                        All Jobs
-                      </Link>
-                      <Link
-                        to="/blank/Jobs"
-                        className="mt-2 inline-block text-blue-600 hover:underline text-base font-semibold transition-all duration-200"
-                      >
-                        Recommended Jobs
-                      </Link>
-                      <Link
-                        to="/blank/Jobs"
-                        className="mt-2 inline-block text-blue-600 hover:underline text-base font-semibold transition-all duration-200"
-                      >
-                        Invites
-                      </Link>
-                      <Link
-                        to="/ApplicationManager"
-                        className="mt-2 inline-block text-blue-600 hover:underline text-base font-semibold transition-all duration-200"
-                      >
-                        Application Manage
-                      </Link>
-                    </div>
-                  </Popover>
-                </div> */}
-          {/* </div> */}
-
-          {/* Switch mode div */}
           <div
             className=" hover:cursor-pointer bg-blue-100 rounded-md p-1 h-10 flex justify-center items-center "
             // onClick={switchModeClicked}
@@ -519,59 +431,58 @@ const Header = () => {
               </div>
             )}
           </div>
+          <div className="flex items-center w-[350px] h-[50px] max-xl:h-[40px] max-xl:-mr-4 max-xl:-ml-5 max-xl:w-[220px] rounded-full border border-gray-300 bg-white shadow-md transition-shadow duration-300 cursor-pointer hover:shadow-lg overflow-hidden">
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyUp={(e) => {
+                if (e.key === "Enter") {
+                  const pathname = path.pathname;
+                  if (pathname.startsWith("/blank/jobs")) {
+                    const remainingPath = pathname.substring(
+                      "/blank/jobs".length
+                    );
+                    const lastPart = remainingPath.split("/").pop();
+                    alert(lastPart);
+                  }
 
-          {/* 
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ "aria-label": "search" }}
+                  if (input === "") return;
+                  setInput("");
+                  navigate(`/blank/jobs/${input}`);
+                }
+              }}
+              placeholder="Search…"
+              className="flex-1 border-none ml-3 px-1 h-full text-gray-800 text-base outline-none rounded-full rounded-r-none"
+            />
+            <div className="w-[50px] max-xl:w-[40px] max-xl:-ml-24 max-xl:h-3/4 h-full flex items-center justify-center  rounded-full rounded-l-none">
+              <IoSearchCircleSharp
+                size={45}
+                color="#3B82F6"
+                onClick={() => {
+                  if (input === "") return;
+                  navigate(`/blank/jobs/${input}`);
+                  setInput("");
+                }}
               />
-            </Search> */}
-
-            {/* search baar */}
-              <div className="flex items-center w-[280px] h-[50px] max-xl:h-[40px] max-xl:-mr-4 max-xl:-ml-5 max-xl:w-[220px] rounded-full border border-gray-300 bg-white shadow-md transition-shadow duration-300 cursor-pointer hover:shadow-lg overflow-hidden">
-                <input
-                  type="text"
-                  placeholder="Search…"
-                  className="flex-1 border-none ml-3 px-1 h-full text-gray-800 text-base outline-none rounded-full rounded-r-none"
-                />
-                <div className="w-[50px] max-xl:w-[40px] max-xl:-ml-24 max-xl:h-3/4 h-full flex items-center justify-center  rounded-full rounded-l-none">
-                  <IoSearchCircleSharp
-                    size={45}
-                    color="#3B82F6"
-                    onClick={() => {
-                      alert("search button clicked");
-                    }}
-                  />
-                </div>
-              </div>
-
-
-              {/* onClick={()=>{navigate('/blank/aitools')}}> */}
-              {/* Ai tool section */}
-           
-
-          {/* onClick={()=>{navigate('/blank/aitools')}}> */}
-          {/* Ai tool section */}
-              <div
-                className="  border flex justify-center max-xl:text-[10px] hover:bg-blue-700 hover:text-white duration-300 items-center  rounded-2xl text-sm py-1 px-2 font-semibold text-blue-500 cursor-pointer"
-                onClick={() => setAiModal(true)}
-              >
-                <img
-                  src="https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg"
-                  alt="ai logo"
-                  className=" h-5"
-                />
-                <img
-                  src="https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg"
-                  alt="logo"
-                  className=" w-3 -mt-3 -ml-2"
-                />
-                <p>AI Tools</p>
-              </div>
+            </div>
+          </div>
+          <div
+            className="  border flex justify-center max-xl:text-[10px] hover:bg-blue-700 hover:text-white duration-300 items-center  rounded-2xl text-sm py-1 px-2 font-semibold text-blue-500 cursor-pointer"
+            onClick={() => setAiModal(true)}
+          >
+            <img
+              src="https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg"
+              alt="ai logo"
+              className=" h-5"
+            />
+            <img
+              src="https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg"
+              alt="logo"
+              className=" w-3 -mt-3 -ml-2"
+            />
+            <p>AI Tools</p>
+          </div>
           {/* <Link to="/blank/bookmarked">
               <img
                 src="/images/iconoir_bookmark.svg"
@@ -580,7 +491,7 @@ const Header = () => {
               />
             </Link> */}
 
-           <div className=" flex flex-row gap-6 justify-center items-center ">
+          <div className=" flex flex-row gap-6 justify-center items-center ">
             <Link to={"/blank/chats"}>
               <BiMessage size={25} color="#6082B6" />
               {/* <img
@@ -594,7 +505,7 @@ const Header = () => {
               {/* <i className="fa-regular fa-bell cursor-pointer"></i> */}
               <MdOutlineNotifications size={25} color="#6082B6" />
             </Link>
-           </div>
+          </div>
           {/* </Link> */}
           {/* <Link to={"/notification"}> */}
           {/* <i className="fa-regular fa-bell cursor-pointer"></i> */}
@@ -602,7 +513,7 @@ const Header = () => {
           {/* </Link> */}
           {/* </div> */}
 
-            <div
+          <div
             className=" inline-block text-left cursor-pointer"
             onMouseEnter={(event) => setAnchorEl(event.currentTarget)}
             // onMouseLeave={() => setAnchorEl(null)}
@@ -624,40 +535,37 @@ const Header = () => {
                   /> */}
             </DropdownLink>
 
-              <Menu
-                id={id}
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                MenuListProps={{
-                  "aria-labelledby": id,
-                }}
-                className=" right-0"
-                // onMouseLeave={() => setAnchorEl(null)}
+            <Menu
+              id={id}
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{
+                "aria-labelledby": id,
+              }}
+              className=" right-0"
+              // onMouseLeave={() => setAnchorEl(null)}
+            >
+              <MenuItem
+                onClick={() => navigate("/blank/Portfolio")}
+                className="hover:bg-blue-100 hover:text-blue-700 transition-colors duration-200 px-4 py-2 rounded-lg"
               >
-                <MenuItem
-                  onClick={() => navigate("/blank/Portfolio")}
-                  className="hover:bg-blue-100 hover:text-blue-700 transition-colors duration-200 px-4 py-2 rounded-lg"
-                >
-                  Portfolio
-                </MenuItem>
-                <MenuItem
-                  onClick={() => navigate("/SkillManager")}
-                  className="hover:bg-blue-100 hover:text-blue-700 transition-colors duration-200 px-4 py-2 rounded-lg"
-                >
-                  My Skills
-                </MenuItem>
-                <MenuItem
-                  onClick={handleLogout}
-                  className="hover:bg-red-100 hover:text-red-700 transition-colors duration-200 px-4 py-2 rounded-lg"
-                >
-                  Logout
-                </MenuItem>
-              </Menu>
-            </div>
-
-      
-    
+                Portfolio
+              </MenuItem>
+              <MenuItem
+                onClick={() => navigate("/SkillManager")}
+                className="hover:bg-blue-100 hover:text-blue-700 transition-colors duration-200 px-4 py-2 rounded-lg"
+              >
+                My Skills
+              </MenuItem>
+              <MenuItem
+                onClick={handleLogout}
+                className="hover:bg-red-100 hover:text-red-700 transition-colors duration-200 px-4 py-2 rounded-lg"
+              >
+                Logout
+              </MenuItem>
+            </Menu>
+          </div>
 
           {/* <div className="md:hidden">
             <div
@@ -903,9 +811,8 @@ const Header = () => {
         </div>
       </div>
 
-
-         {/* for opportunities section */}
-         {/* {opportunities && (
+      {/* for opportunities section */}
+      {/* {opportunities && (
             <div 
               onMouseEnter={() => setOpportunities(true)} 
               onMouseLeave={() => setOpportunities(false)}
@@ -963,70 +870,72 @@ const Header = () => {
               </div>
           </div> 
              )} */}
-                 {opportunities && (
-                      <div 
-                        onMouseEnter={() => setOpportunities(true)} 
-                        onMouseLeave={() => setOpportunities(false)}
-                        className="flex flex-col w-52 ml-56 -mt-5 bg-white shadow-md cursor-pointer"
-                        style={{ minHeight: '50px' }}
-                      >
-                         <div
-                            className="w-full text-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md mb-2 cursor-pointer flex items-center justify-center"
-                            onMouseEnter={() => setOpportunities(true)}
-                            onClick={() => navigate('/blank/Jobs')}
-                          >
-                            Jobs
-                          </div>
-                        <div
-                          className="w-full text-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md mb-2 cursor-pointer flex items-center justify-center"
-                          onMouseEnter={() => setOpportunities(true)}
-                          // onClick={() => navigate('/blank/TotalInternship')}
-                          onClick={() => navigate('/blank/mainIntership')}
-                        >
-                          Internships
-                        </div>
-                        {/* <div
+      {opportunities && (
+        <div
+          onMouseEnter={() => setOpportunities(true)}
+          onMouseLeave={() => setOpportunities(false)}
+          className="flex flex-col w-52 ml-56 -mt-5 bg-white shadow-md cursor-pointer"
+          style={{ minHeight: "50px" }}
+        >
+          <div
+            className="w-full text-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md mb-2 cursor-pointer flex items-center justify-center"
+            onMouseEnter={() => setOpportunities(true)}
+            onClick={() => navigate("/blank/Jobs")}
+          >
+            Jobs
+          </div>
+          <div
+            className="w-full text-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md mb-2 cursor-pointer flex items-center justify-center"
+            onMouseEnter={() => setOpportunities(true)}
+            // onClick={() => navigate('/blank/TotalInternship')}
+            onClick={() => navigate("/blank/mainIntership")}
+          >
+            Internships
+          </div>
+          {/* <div
                           className="w-full text-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md mb-2 cursor-pointer flex items-center justify-center"
                           onMouseEnter={() => setOpportunities(true)}
                         >
                           Events
                         </div> */}
-                        <div
-                          className="w-full text-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md mb-2 cursor-pointer flex items-center justify-center"
-                          onMouseEnter={() => setOpportunities(true)}
-                          onClick={()=>navigate('/blank/invite')}
-                        >
-                          Invites
-                        </div>
-                        <div
-                          className="w-full text-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md mb-2 cursor-pointer flex items-center justify-center"
-                          onMouseEnter={() => setOpportunities(true)}
-                          onClick={()=>navigate('/blank/applicationManager')}
-                        >
-                          My Applications
-                        </div>
-                        <div 
-                          className="w-full text-lg gap-1 text-gray-800 hover:text-white bg-gradient-to-r from-blue-300 to-blue-500 hover:from-blue-600 hover:to-blue-800 rounded-lg px-1 py-2 cursor-pointer flex items-center justify-center shadow-lg transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl"
-                          onMouseEnter={() => setOpportunities(true)}
-                          onClick={() => navigate('/blank/mainEvent')}
-                        >
-                          <img src="https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg" alt="logo" className="w-5" />
-                          <img src="https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg" alt="logo" className="w-3 -mt-3 -ml-2" />
-                          <div>
-                            <p>AI Recommended</p>
-                            <p className="text-xs font-normal -mt-2">profile matched</p>
-                          </div>
-                        </div>
-                      </div>
-                    )}
+          <div
+            className="w-full text-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md mb-2 cursor-pointer flex items-center justify-center"
+            onMouseEnter={() => setOpportunities(true)}
+            onClick={() => navigate("/blank/invite")}
+          >
+            Invites
+          </div>
+          <div
+            className="w-full text-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md mb-2 cursor-pointer flex items-center justify-center"
+            onMouseEnter={() => setOpportunities(true)}
+            onClick={() => navigate("/blank/applicationManager")}
+          >
+            My Applications
+          </div>
+          <div
+            className="w-full text-lg gap-1 text-gray-800 hover:text-white bg-gradient-to-r from-blue-300 to-blue-500 hover:from-blue-600 hover:to-blue-800 rounded-lg px-1 py-2 cursor-pointer flex items-center justify-center shadow-lg transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl"
+            onMouseEnter={() => setOpportunities(true)}
+            onClick={() => navigate("/blank/mainEvent")}
+          >
+            <img
+              src="https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg"
+              alt="logo"
+              className="w-5"
+            />
+            <img
+              src="https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg"
+              alt="logo"
+              className="w-3 -mt-3 -ml-2"
+            />
+            <div>
+              <p>AI Recommended</p>
+              <p className="text-xs font-normal -mt-2">profile matched</p>
+            </div>
+          </div>
+        </div>
+      )}
 
-
-
-
-
-
-                 
-                    {/* <div 
+      {/* <div 
        {opportunities && (
         <div
           onMouseEnter={() => setOpportunities(true)}
@@ -1090,9 +999,8 @@ const Header = () => {
               >
                 AI Recommended
               </div> */}
- 
 
-                  {/* <p 
+      {/* <p 
                     className="text-lg text-gray-700 hover:bg-blue-50 rounded-md px-2 py-1 cursor-pointer"
                     onMouseEnter={() => setShowInternshipDropDown(true)} 
                     onMouseLeave={() => setShowInternshipDropDown(false)}
@@ -1103,11 +1011,11 @@ const Header = () => {
                   <p className="text-lg text-gray-700 hover:bg-blue-50 rounded-md px-2 py-1 cursor-pointer">Invites</p>
                   <p className="text-lg text-gray-700 hover:bg-blue-50 rounded-md px-2 py-1 cursor-pointer">My Applications</p>
                   <p className="text-lg text-gray-700 hover:bg-blue-50 rounded-md px-2 py-1 cursor-pointer">AI Recommended</p> */}
-                {/* </div> */}
-          {/* //  </div> */}
-           
-          {/* for jobs */}
-          {/* { anchorEl2 && (
+      {/* </div> */}
+      {/* //  </div> */}
+
+      {/* for jobs */}
+      {/* { anchorEl2 && (
                <div className=" -mt-[18%] ml-[25%] max-2xl:ml-[28%] max-2xl:-mt-[20%] " 
                 onMouseEnter={()=>{setAnchorEl2(true);setOpportunities(true)}} onMouseLeave={()=>{setAnchorEl2(false);}}>
                      <div className=" bg-white shadow-xl w-[20%] rounded-lg ">
@@ -1146,80 +1054,78 @@ const Header = () => {
                      </div>
                </div>
           )} */}
-          {/* for interships */}
-           {showInternshipDropDown && (
-                  <div
-                    className="bg-white shadow-xl ml-[428px] flex top-[90px] absolute w-[485px] h-[431px] rounded-xl overflow-hidden transform transition-transform duration-300 ease-in-out hover:shadow-2xl"
-                    onMouseEnter={() => {
-                      setShowInternshipDropDown(true);
-                      setOpportunities(true);
-                    }}
-                    onMouseLeave={() => {
-                      setShowInternshipDropDown(false);
-                      setOpportunities(false)
-                    }}
-                  >
-                    <div className="py-5 w-[223px] text-[16px] font-medium pr-2">
-                      <p
-                        onClick={() => handleSelectInternshipOption("location")}
-                        className={`${
-                          selectInternshipOption === "location"
-                            ? "bg-[#4234a2] bg-opacity-20 rounded-tr-[39px] rounded-br-[39px] w-full flex items-center text-[#4234a2] font-semibold"
-                            : "hover:bg-gray-100 hover:rounded-tr-[39px] hover:rounded-br-[39px] text-gray-700"
-                        } px-4 py-3 cursor-pointer transition-all duration-200 ease-in-out`}
-                      >
-                        Top Location
-                      </p>
-                      <p
-                        onClick={() => handleSelectInternshipOption("profile")}
-                        className={`${
-                          selectInternshipOption === "profile"
-                            ? "bg-[#4234a2] bg-opacity-20 rounded-tr-[39px] rounded-br-[39px] w-full flex items-center text-[#4234a2] font-semibold"
-                            : "hover:bg-gray-100 hover:rounded-tr-[39px] hover:rounded-br-[39px] text-gray-700"
-                        } px-4 py-3 cursor-pointer transition-all duration-200 ease-in-out`}
-                      >
-                        Profile
-                      </p>
-                      <p
-                        onClick={() => handleSelectInternshipOption("categories")}
-                        className={`${
-                          selectInternshipOption === "categories"
-                            ? "bg-[#4234a2] bg-opacity-20 rounded-tr-[39px] rounded-br-[39px] w-full flex items-center text-[#4234a2] font-semibold"
-                            : "hover:bg-gray-100 hover:rounded-tr-[39px] hover:rounded-br-[39px] text-gray-700"
-                        } px-4 py-3 cursor-pointer transition-all duration-200 ease-in-out`}
-                      >
-                        Top Categories
-                      </p>
-                      <p
-                        onClick={() => handleSelectInternshipOption("moreInternship")}
-                        className={`${
-                          selectInternshipOption === "moreInternship"
-                            ? "bg-[#4234a2] bg-opacity-20 rounded-tr-[39px] rounded-br-[39px] w-full flex items-center text-[#4234a2] font-semibold"
-                            : "hover:bg-gray-100 hover:rounded-tr-[39px] hover:rounded-br-[39px] text-gray-700"
-                        } px-4 py-3 cursor-pointer transition-all duration-200 ease-in-out`}
-                      >
-                        Explore More Internships
-                      </p>
-                    </div>
-                    <div className="border-l border-gray-200 h-full"></div>
-                    <div className="py-[36px] px-[18px] overflow-auto w-[262px] scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-gray-300">
-                      <ul className="flex flex-col gap-4 text-[15px] cursor-pointer text-gray-600 font-medium">
-                        {internshipListItem().map((item, index) => (
-                          <li
-                            key={index}
-                            className="hover:text-[#4234a2] transition-colors duration-200 ease-in-out"
-                          >
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-            )}
-        
+      {/* for interships */}
+      {showInternshipDropDown && (
+        <div
+          className="bg-white shadow-xl ml-[428px] flex top-[90px] absolute w-[485px] h-[431px] rounded-xl overflow-hidden transform transition-transform duration-300 ease-in-out hover:shadow-2xl"
+          onMouseEnter={() => {
+            setShowInternshipDropDown(true);
+            setOpportunities(true);
+          }}
+          onMouseLeave={() => {
+            setShowInternshipDropDown(false);
+            setOpportunities(false);
+          }}
+        >
+          <div className="py-5 w-[223px] text-[16px] font-medium pr-2">
+            <p
+              onClick={() => handleSelectInternshipOption("location")}
+              className={`${
+                selectInternshipOption === "location"
+                  ? "bg-[#4234a2] bg-opacity-20 rounded-tr-[39px] rounded-br-[39px] w-full flex items-center text-[#4234a2] font-semibold"
+                  : "hover:bg-gray-100 hover:rounded-tr-[39px] hover:rounded-br-[39px] text-gray-700"
+              } px-4 py-3 cursor-pointer transition-all duration-200 ease-in-out`}
+            >
+              Top Location
+            </p>
+            <p
+              onClick={() => handleSelectInternshipOption("profile")}
+              className={`${
+                selectInternshipOption === "profile"
+                  ? "bg-[#4234a2] bg-opacity-20 rounded-tr-[39px] rounded-br-[39px] w-full flex items-center text-[#4234a2] font-semibold"
+                  : "hover:bg-gray-100 hover:rounded-tr-[39px] hover:rounded-br-[39px] text-gray-700"
+              } px-4 py-3 cursor-pointer transition-all duration-200 ease-in-out`}
+            >
+              Profile
+            </p>
+            <p
+              onClick={() => handleSelectInternshipOption("categories")}
+              className={`${
+                selectInternshipOption === "categories"
+                  ? "bg-[#4234a2] bg-opacity-20 rounded-tr-[39px] rounded-br-[39px] w-full flex items-center text-[#4234a2] font-semibold"
+                  : "hover:bg-gray-100 hover:rounded-tr-[39px] hover:rounded-br-[39px] text-gray-700"
+              } px-4 py-3 cursor-pointer transition-all duration-200 ease-in-out`}
+            >
+              Top Categories
+            </p>
+            <p
+              onClick={() => handleSelectInternshipOption("moreInternship")}
+              className={`${
+                selectInternshipOption === "moreInternship"
+                  ? "bg-[#4234a2] bg-opacity-20 rounded-tr-[39px] rounded-br-[39px] w-full flex items-center text-[#4234a2] font-semibold"
+                  : "hover:bg-gray-100 hover:rounded-tr-[39px] hover:rounded-br-[39px] text-gray-700"
+              } px-4 py-3 cursor-pointer transition-all duration-200 ease-in-out`}
+            >
+              Explore More Internships
+            </p>
+          </div>
+          <div className="border-l border-gray-200 h-full"></div>
+          <div className="py-[36px] px-[18px] overflow-auto w-[262px] scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-gray-300">
+            <ul className="flex flex-col gap-4 text-[15px] cursor-pointer text-gray-600 font-medium">
+              {internshipListItem().map((item, index) => (
+                <li
+                  key={index}
+                  className="hover:text-[#4234a2] transition-colors duration-200 ease-in-out"
+                >
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
 
-
-          {/* //for switch mode
+      {/* //for switch mode
           {mode && (
             <div
               className=" flex flex-col items-center bg-gray-50 rounded-2xl -mt-5 ml-[30%]    max-w-xs mx-auto"
