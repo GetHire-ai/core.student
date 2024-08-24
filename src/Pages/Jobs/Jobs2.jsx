@@ -158,7 +158,8 @@ const Jobs2 = () => {
           <>
             <div className="w-full flex justify-start  items-center bg-[#f8f9fa] py-2">
               <p className="text-[16px] font-[400] text-[#000] text-opacity-[50%] px-[34px] cursor-pointer">
-                Home &gt; Jobs
+                Home &gt;{" "}
+                <span onClick={() => navigate("/blank/jobs")}>Jobs</span>
               </p>
             </div>
             <div className="flex flex-col justify-start items-start w-full md:flex-row gap-[34px] mt-[16px] px-[34px] bg-[#f8f9fa]">
@@ -286,7 +287,10 @@ const Jobs2 = () => {
                   })
                 ) : (
                   <div className="bg-white rounded-[16px] border-[1px] border-[#efecec] p-[27px]">
-                    No Jobs Found With title {query}
+                    No Jobs Found With title {query} go to{" "}
+                    <button onClick={() => navigate("/blank/jobs")}>
+                      All Jobs
+                    </button>
                   </div>
                 )}
               </div>

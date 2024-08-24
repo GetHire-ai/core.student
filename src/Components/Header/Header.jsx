@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FiAlignJustify } from "react-icons/fi";
 import InternshipModal from "../../Pages/Internship/InternshipModal";
 import Logo from "../../assets/Images/Gethire SVG.svg";
@@ -101,6 +101,7 @@ const workItems = [
 ];
 
 const Header = () => {
+  let path = useLocation();
   const navigate = useNavigate();
   const [aiModal, setAiModal] = useState(false);
   const [input, setInput] = useState("");
@@ -437,6 +438,15 @@ const Header = () => {
               onChange={(e) => setInput(e.target.value)}
               onKeyUp={(e) => {
                 if (e.key === "Enter") {
+                  const pathname = path.pathname;
+                  if (pathname.startsWith("/blank/jobs")) {
+                    const remainingPath = pathname.substring(
+                      "/blank/jobs".length
+                    );
+                    const lastPart = remainingPath.split("/").pop();
+                    alert(lastPart);
+                  }
+
                   if (input === "") return;
                   setInput("");
                   navigate(`/blank/jobs/${input}`);
