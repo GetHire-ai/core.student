@@ -702,7 +702,7 @@ const ChatComponent = () => {
 
 
 
-      {/* <Box className="w-3/4 flex flex-col relative max-h-[86vh] overflow-hidden">
+      <Box className="w-3/4 flex flex-col relative max-h-[86vh] overflow-hidden">
           {currentCompany && (
             <Box className="p-3 bg-blue-500 text-white text-lg font-semibold rounded-t-md">
               <Typography variant="h6">{currentCompany.Name}</Typography>
@@ -818,8 +818,8 @@ const ChatComponent = () => {
               <IoIosSend size={40} color="white" />
             </Button>
           </Box>
-        </Box> */}
-         <Box className="w-3/4 flex flex-col relative max-h-[86vh] overflow-hidden">
+        </Box>
+         {/* <Box className="w-3/4 flex flex-col relative max-h-[86vh] overflow-hidden">
             {currentCompany && (
               <Box className="p-3 bg-blue-500 text-white text-lg font-semibold rounded-t-md">
                 <Typography variant="h6">{currentCompany.Name}</Typography>
@@ -969,7 +969,7 @@ const ChatComponent = () => {
                 <IoIosSend size={40} color="white" />
               </Button>
             </Box>
-          </Box>
+          </Box> */}
 
 
       

@@ -235,8 +235,12 @@ const Invite = () => {
                       <p>{performer.applicants} + applicants</p>
                     </div>
                     <div className="flex mt-3 justify-between items-center ">
-                      <button className="border text-[12px] border-purple-500 text-purple-500 px-4 py-2 rounded-lg hover:bg-purple-500 hover:text-white transition">View details</button>
-                      <button className="bg-purple-600 text-[12px] text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition">Apply now</button>
+                      <button className="border text-[12px] border-red-500 text-red-500 px-4 py-2 rounded-lg hover:bg-red-600 hover:text-white transition"
+                       onClick={()=>alert("success fully rejected")}
+                       >Reject</button>
+                      <button className="bg-purple-600 text-[12px] text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition"
+                        onClick={()=>alert("View job")}
+                       >Apply now</button>
                     </div>
                   </div>
                 ))}

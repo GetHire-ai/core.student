@@ -11,32 +11,32 @@ const Home = ({ onSectionVisible, onSectionHidden }) => {
   const navigate = useNavigate();
   const path = useLocation();
 
-  const skillData = [
-    {
-      image: "/images/Ellipse 3290.svg",
-      name: "Kimaya",
-      skillName: "Ai Carrer Counsellor",
-      buttonData: "comming soon !",
-    },
-    {
-      image: "/images/Ellipse 3291.svg",
-      name: "Kimaya",
-      skillName: "Ai Carrer Counsellor",
-      buttonData: "comming soon !",
-    },
-    {
-      image: "/images/Ellipse 3292.svg",
-      name: "Kimaya",
-      skillName: "Skill Gap Analys",
-      buttonData: "comming soon !",
-    },
-    {
-      image: "/images/Ellipse 3293.svg",
-      name: "Kimaya",
-      skillName: "Mock interview",
-      buttonData: "comming soon !",
-    },
-  ];
+  // const skillData = [
+  //   {
+  //     image: "/images/Ellipse 3290.svg",
+  //     name: "Kimaya",
+  //     skillName: "Ai Carrer Counsellor",
+  //     buttonData: "comming soon !",
+  //   },
+  //   {
+  //     image: "/images/Ellipse 3291.svg",
+  //     name: "Kimaya",
+  //     skillName: "Ai Carrer Counsellor",
+  //     buttonData: "comming soon !",
+  //   },
+  //   {
+  //     image: "/images/Ellipse 3292.svg",
+  //     name: "Kimaya",
+  //     skillName: "Skill Gap Analys",
+  //     buttonData: "comming soon !",
+  //   },
+  //   {
+  //     image: "/images/Ellipse 3293.svg",
+  //     name: "Kimaya",
+  //     skillName: "Mock interview",
+  //     buttonData: "comming soon !",
+  //   },
+  // ];
   // dummy data for my interview
   const applicationData = [
     {
