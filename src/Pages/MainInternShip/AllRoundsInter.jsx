@@ -4,7 +4,6 @@ import { GetApi } from "../utilis/Api_Calling";
 import { Triangle } from "react-loader-spinner";
 import internshipCard from "../Jobs/JobCard";
 
-
 const AllInternship = () => {
   const navigate = useNavigate();
   const [value, setValue] = useState(50);
@@ -26,8 +25,13 @@ const AllInternship = () => {
 
   const GetAllinternships = async () => {
     try {
-      const Getinternshipdata = await GetApi(`api/AdminRoutes/GetAllinternships`);
-      setAllinternships(Getinternshipdata?.data?.data?.filter((internship) => internship?.type !== "internship"));
+      const res = await GetApi(`api/AdminRoutes/GetAlljobs`);
+      setAllinternships(
+        res?.data?.data?.filter(
+          (internship) => internship?.type === "internship"
+        )
+      );
+
       Settotalinternship(Allinternships.length);
       setLoading(false);
     } catch (error) {
@@ -85,19 +89,24 @@ const AllInternship = () => {
       // Apply individual filters
       const profileMatch =
         !profileFilter ||
-        internship.positionName.toLowerCase().includes(profileFilter.toLowerCase());
+        internship.positionName
+          .toLowerCase()
+          .includes(profileFilter.toLowerCase());
       const locationMatch =
         !locationFilter ||
-        internship.location.toLowerCase().includes(locationFilter.toLowerCase());
+        internship.location
+          .toLowerCase()
+          .includes(locationFilter.toLowerCase());
       const workFromHomeMatch =
         !workFromHomeFilter ||
         internship.contractDetails.toLowerCase() === "work from home";
       const partTimeMatch =
-        !partTimeFilter || internship.contractDetails.toLowerCase() === "part-time";
+        !partTimeFilter ||
+        internship.contractDetails.toLowerCase() === "part-time";
       const includeInternshipsMatch =
         !includeInternshipsFilter ||
         internship.internshipPipeline.toLowerCase() === "internship";
-      const salaryMatch = internship.maxSalary >= salaryFilter * 1000; // assuming salary is in thousands
+      const salaryMatch = internship.maxSalary >= salaryFilter * 1000;
       const experienceMatch =
         !experienceFilter || internship?.minExp === experienceFilter;
 
@@ -265,13 +274,15 @@ const AllInternship = () => {
                 </div>
                 {applyFilters(Allinternships)?.length > 0 ? (
                   applyFilters(Allinternships)?.map((internship, index) => {
-                    const isinternshipApplied = appiledinternships.includes(internship._id);
+                    const isinternshipApplied = appiledinternships.includes(
+                      internship._id
+                    );
                     return (
                       <internshipCard
                         key={index}
                         internship={internship}
                         isinternshipApplied={isinternshipApplied}
-                        internshipDetail={internshipDetail} // Pass the necessary props
+                        internshipDetail={internshipDetail}
                       />
                     );
                   })
