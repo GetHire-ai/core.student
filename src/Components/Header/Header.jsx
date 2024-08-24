@@ -437,19 +437,14 @@ const Header = () => {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyUp={(e) => {
+                if (input === "") return;
                 if (e.key === "Enter") {
                   const pathname = path.pathname;
-                  if (pathname.startsWith("/blank/jobs")) {
-                    const remainingPath = pathname.substring(
-                      "/blank/jobs".length
-                    );
-                    const lastPart = remainingPath.split("/").pop();
-                    alert(lastPart);
-                  }
-
-                  if (input === "") return;
-                  setInput("");
                   navigate(`/blank/jobs/${input}`);
+                  if (pathname.startsWith("/blank/jobs/")) {
+                    window.location.reload();
+                  }
+                  setInput("");
                 }
               }}
               placeholder="Search…"
@@ -461,7 +456,11 @@ const Header = () => {
                 color="#3B82F6"
                 onClick={() => {
                   if (input === "") return;
+                  const pathname = path.pathname;
                   navigate(`/blank/jobs/${input}`);
+                  if (pathname.startsWith("/blank/jobs/")) {
+                    window.location.reload();
+                  }
                   setInput("");
                 }}
               />
