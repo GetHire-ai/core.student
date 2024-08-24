@@ -106,9 +106,9 @@ const Portfolio = () => {
         <Sidebar />
       </div>
 
-      <div className="lg:w-3/4 w-full lg:ml-8">
+      <div className="lg:w-3/4 w-full lg:ml-8 mt-4">
         {/* Navigation Bar - Now Aligned to the Top Left */}
-        <nav className="flex flex-wrap space-x-6 p-4  pb-5 rounded justify-start gap-[3.5%] ">
+        <nav className="flex flex-wrap space-x-6 p-4  pb-5 rounded justify-start gap-[2.5%] ">
           {[
             "about",
             "skills",
@@ -120,7 +120,7 @@ const Portfolio = () => {
           ].map((tab) => (
             <button
               key={tab}
-              className={`relative group hover:text-blue-500 pb-2 ${activeTab === tab ? "text-blue-500" : "text-gray-600"}`}
+              className={`relative text-[18px] font-semibold group hover:text-blue-500 pb-2 ${activeTab === tab ? "text-blue-500" : "text-gray-600"}`}
               onClick={() => setActiveTab(tab)}
             >
               {tab.charAt(0).toUpperCase() + tab.slice(1).replace("&", " & ")}

@@ -561,14 +561,14 @@ const handleClick = (sectionId) => {
               Invites 
               <br />
                  <span className="font-semibold text-blue-600">
-                      <div className=" flex flex-row justify-center items-center gap-2"><p>0</p><IoIosArrowForward color="#1E88E5" onClick={()=> alert("clicked") } className=" hover:cursor-pointer" /></div> 
+                      <div className=" flex flex-row justify-center items-center gap-2"><p>0</p><IoIosArrowForward color="#1E88E5" onClick={()=> navigate('/blank/invite') } className=" hover:cursor-pointer" /></div> 
                   </span>
               </div>
               <div className="border-l border-light-blue-300 h-12 mx-4 max-xl:-ml-1 w-1 "></div>
               <div className="flex-1 text-sm text-gray-600 px-2 max-xl:-ml-3 max-xl:text-[12px] max-lg:text-xs max-lg:-ml-4">
               Applications <br /> 
                  <span className="font-semibold text-blue-600">
-                      <div className=" flex flex-row justify-center items-center gap-2"><p>0</p><IoIosArrowForward color="#1E88E5" onClick={()=> alert("clicked") } className=" hover:cursor-pointer" /></div> 
+                      <div className=" flex flex-row justify-center items-center gap-2"><p>0</p><IoIosArrowForward color="#1E88E5" onClick={()=> navigate('/blank/applicationManager') } className=" hover:cursor-pointer" /></div> 
                   </span>
               </div>
            </div>

@@ -10,6 +10,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { styled } from "@mui/material/styles";
+import Button from '@mui/material/Button';
 
 // const StyledDialog = styled(Dialog)(({ theme }) => ({
 //   "& .MuiDialog-paper": {
@@ -298,79 +299,244 @@ const JobApplyModelChat = ({
   const renderInput = () => {
     switch (step) {
       case 0:
+        // return (
+        //   <Autocomplete
+        //     options={["10th", "12th", "Graduate", "Post Graduate", "PhD"]}
+        //     value={qualification}
+        //     onChange={(event, newValue) => setQualification(newValue)}
+        //     renderInput={(params) => (
+        //       <TextField
+        //         {...params}
+        //         label="Highest Qualification"
+        //         disabled={isInputDisabled}
+        //         onKeyPress={(e) => {
+        //           if (e.key === "Enter" && qualification) {
+        //             handleNext();
+        //           }
+        //         }}
+        //       />
+        //     )}
+        //    className="sticky bottom-0 z-10 bg-white p-2 mt-44"
+        //   />
+        // );
         return (
-          <Autocomplete
-            options={["10th", "12th", "Graduate", "Post Graduate", "PhD"]}
-            value={qualification}
-            onChange={(event, newValue) => setQualification(newValue)}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Highest Qualification"
-                disabled={isInputDisabled}
-                onKeyPress={(e) => {
-                  if (e.key === "Enter" && qualification) {
-                    handleNext();
-                  }
-                }}
-              />
-            )}
-           className="sticky bottom-0 z-10 bg-white p-2 mt-44"
-          />
+          <div className="relative">
+            <Autocomplete
+              options={["10th", "12th", "Graduate", "Post Graduate", "PhD"]}
+              value={qualification}
+              onChange={(event, newValue) => setQualification(newValue)}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Highest Qualification"
+                  disabled={isInputDisabled}
+                  onKeyPress={(e) => {
+                    if (e.key === "Enter" && qualification) {
+                      handleNext();
+                    }
+                  }}
+                  InputProps={{
+                    ...params.InputProps,
+                    endAdornment: (
+                      <React.Fragment>
+                        {params.InputProps.endAdornment}
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={() => {
+                            if (qualification) {
+                              handleNext();
+                            }
+                          }}
+                          className="ml-2"
+                        >
+                          Send
+                        </Button>
+                      </React.Fragment>
+                    ),
+                  }}
+                />
+              )}
+              className="sticky bottom-0 z-10 bg-white p-2 mt-44"
+            />
+          </div>
         );
       case 1:
+        // return (
+        //   <Autocomplete
+        //     multiple
+        //     options={[
+        //       "JavaScript",
+        //       "Python",
+        //       "React",
+        //       "Node.js",
+        //       "Java",
+        //       "C++",
+        //     ]}
+        //     value={selectedSkills}
+        //     onChange={(event, newValue) => setSelectedSkills(newValue)}
+        //     renderInput={(params) => (
+        //       <TextField
+        //         {...params}
+        //         label="Skills"
+        //         disabled={isInputDisabled}
+        //         onKeyPress={(e) => {
+        //           if (e.key === "Enter" && selectedSkills.length > 0) {
+        //             handleNext();
+        //           }
+        //         }}
+        //       />
+        //     )}
+        //     className="sticky bottom-0 z-10 bg-white p-2 mt-44"
+        //   />
+        // );
         return (
-          <Autocomplete
-            multiple
-            options={[
-              "JavaScript",
-              "Python",
-              "React",
-              "Node.js",
-              "Java",
-              "C++",
-            ]}
-            value={selectedSkills}
-            onChange={(event, newValue) => setSelectedSkills(newValue)}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Skills"
-                disabled={isInputDisabled}
-                onKeyPress={(e) => {
-                  if (e.key === "Enter" && selectedSkills.length > 0) {
-                    handleNext();
-                  }
-                }}
-              />
-            )}
-            className="sticky bottom-0 z-10 bg-white p-2 mt-44"
-          />
+          <div className="relative">
+            <Autocomplete
+              multiple
+              options={[
+                "JavaScript",
+                "Python",
+                "React",
+                "Node.js",
+                "Java",
+                "C++",
+              ]}
+              value={selectedSkills}
+              onChange={(event, newValue) => setSelectedSkills(newValue)}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Skills"
+                  disabled={isInputDisabled}
+                  onKeyPress={(e) => {
+                    if (e.key === "Enter" && selectedSkills.length > 0) {
+                      handleNext();
+                    }
+                  }}
+                  InputProps={{
+                    ...params.InputProps,
+                    endAdornment: (
+                      <React.Fragment>
+                        {params.InputProps.endAdornment}
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={() => {
+                            if (selectedSkills.length > 0) {
+                              handleNext();
+                            }
+                          }}
+                          className="ml-2"
+                        >
+                          Send
+                        </Button>
+                      </React.Fragment>
+                    ),
+                  }}
+                />
+              )}
+              className="sticky bottom-0 z-10 bg-white p-2 mt-44"
+            />
+          </div>
         );
       case 2:
+        // return (
+        //   <Autocomplete
+        //     options={["Fresher", "Experienced"]}
+        //     value={experience}
+        //     onChange={(event, newValue) => setExperience(newValue)}
+        //     renderInput={(params) => (
+        //       <TextField
+        //         {...params}
+        //         label="Experience"
+        //         disabled={isInputDisabled}
+        //         onKeyPress={(e) => {
+        //           if (e.key === "Enter" && experience) {
+        //             handleNext();
+        //           }
+        //         }}
+        //       />
+        //     )}
+        //     className="sticky bottom-0 z-10 bg-white p-2 mt-44"
+        //   />
+        // );
         return (
-          <Autocomplete
-            options={["Fresher", "Experienced"]}
-            value={experience}
-            onChange={(event, newValue) => setExperience(newValue)}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Experience"
-                disabled={isInputDisabled}
-                onKeyPress={(e) => {
-                  if (e.key === "Enter" && experience) {
-                    handleNext();
-                  }
-                }}
-              />
-            )}
-            className="sticky bottom-0 z-10 bg-white p-2 mt-44"
-          />
+          <div className="relative">
+            <Autocomplete
+              options={["Fresher", "Experienced"]}
+              value={experience}
+              onChange={(event, newValue) => setExperience(newValue)}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Experience"
+                  disabled={isInputDisabled}
+                  onKeyPress={(e) => {
+                    if (e.key === "Enter" && experience) {
+                      handleNext();
+                    }
+                  }}
+                  InputProps={{
+                    ...params.InputProps,
+                    endAdornment: (
+                      <React.Fragment>
+                        {params.InputProps.endAdornment}
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={() => {
+                            if (experience) {
+                              handleNext();
+                            }
+                          }}
+                          className="ml-2"
+                        >
+                          Send
+                        </Button>
+                      </React.Fragment>
+                    ),
+                  }}
+                />
+              )}
+              className="sticky bottom-0 z-10 bg-white p-2 mt-44"
+            />
+          </div>
         );
       case 3:
+        // return (
+        //   <>
+        //     <TextField
+        //       label="Company Name"
+        //       value={company}
+        //       onChange={(e) => setCompany(e.target.value)}
+        //       fullWidth
+        //       disabled={isInputDisabled}
+        //       onKeyPress={(e) => {
+        //         if (e.key === "Enter" && company && yearsOfExperience) {
+        //           handleNext();
+        //         }
+        //       }}
+        //       className="sticky bottom-0 z-10 bg-white p-2 mt-44"
+        //     />
+        //     <TextField
+        //       label="Years of Experience"
+        //       value={yearsOfExperience}
+        //       onChange={(e) => setYearsOfExperience(e.target.value)}
+        //       type="number"
+        //       fullWidth
+        //       disabled={isInputDisabled}
+        //       onKeyPress={(e) => {
+        //         if (e.key === "Enter" && company && yearsOfExperience) {
+        //           handleNext();
+        //         }
+        //       }}
+        //     className="sticky bottom-0 z-10 bg-white p-2 mt-44"
+        //     />
+        //   </>
+        // );
         return (
-          <>
+          <div className="relative bg-white p-2 mt-44 sticky bottom-0 z-10">
             <TextField
               label="Company Name"
               value={company}
@@ -382,7 +548,7 @@ const JobApplyModelChat = ({
                   handleNext();
                 }
               }}
-              className="sticky bottom-0 z-10 bg-white p-2 mt-44"
+              className="mb-2"
             />
             <TextField
               label="Years of Experience"
@@ -396,9 +562,21 @@ const JobApplyModelChat = ({
                   handleNext();
                 }
               }}
-            className="sticky bottom-0 z-10 bg-white p-2 mt-44"
+              className="mb-2"
             />
-          </>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                if (company && yearsOfExperience) {
+                  handleNext();
+                }
+              }}
+              className="w-full"
+            >
+              Send
+            </Button>
+          </div>
         );
       default:
         return null;

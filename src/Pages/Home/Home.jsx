@@ -553,7 +553,30 @@ useEffect(() => {
 // for ai modal opener
 const [aiModal, setAiModal] = useState(false);
 
-// this below is for my interview section
+// this below is for search bar
+const [inputValue, setInputValue] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
+  const skills = ['JavaScript', 'React', 'Node.js', 'CSS', 'HTML', 'Python', 'Java', 'C++','Management','Verbal','SQL','Express','GraphQL','Tailwind'];
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setInputValue(value);
+
+    // Filter suggestions based on input value
+    if (value) {
+      const filteredSuggestions = skills.filter((skill) =>
+        skill.toLowerCase().includes(value.toLowerCase())
+      );
+      setSuggestions(filteredSuggestions);
+    } else {
+      setSuggestions([]);
+    }
+  };
+
+  const handleSuggestionClick = (suggestion) => {
+    setInputValue(suggestion);
+    setSuggestions([]);
+  };
 
 
   return (
@@ -936,12 +959,36 @@ const [aiModal, setAiModal] = useState(false);
                 className="w-[17px] h-[17px]"
                 alt=""
               />
-              <input
+              {/* <input
                 type="text"
                 className="w-[60%] bg-[#d9d9d9] bg-opacity-[1%] outline-none"
                 placeholder="Search Skills"
-              />
-              <p className="text-[16px] max-lg:text-[13px] font-[500] hover:cursor-pointer text-[#4234a2]">View all</p>
+              /> */}
+               <div className="relative w-[60%] ">
+                  <input
+                    type="text"
+                    className="w-full h-4 bg-[#d9d9d9] bg-opacity-[1%] outline-none p-2"
+                    placeholder="Search Skills"
+                    value={inputValue}
+                    onChange={handleInputChange}
+                  />
+                  {suggestions.length > 0 && (
+                    <ul className="absolute z-10 w-full bg-white border border-gray-200 shadow-lg mt-1 max-h-40 overflow-y-auto">
+                      {suggestions.map((suggestion, index) => (
+                        <li
+                          key={index}
+                          onClick={() => handleSuggestionClick(suggestion)}
+                          className="p-2 hover:bg-blue-100 cursor-pointer"
+                        >
+                          {suggestion}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              <p className="text-[16px] max-lg:text-[13px] font-[500] hover:cursor-pointer text-[#4234a2]"
+                onClick={()=>navigate('/blank/jobs')}
+               >View all</p>
             </div>
             <div className="grid md:grid-cols-2 w-full  mt-[46px] gap-[40px] ">
               {/* <div
