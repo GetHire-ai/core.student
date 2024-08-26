@@ -1,7 +1,7 @@
 import axios from "axios";
 // const Api_Url = 'https://gethire-backend.onrender.com/'
-const Api_Url = "http://localhost:5000/";
-// const Api_Url = "https://gethire-backend.onrender.com/";
+// const Api_Url = "http://localhost:5000/";
+const Api_Url = "https://gethire-backend.onrender.com/";
 
 const GetApi = async (apiEndpoint) => {
   try {
