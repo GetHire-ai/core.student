@@ -168,7 +168,7 @@ const Notification = () => {
     //   )}
     // </div>
     
-    <div className="px-8 py-12 bg-gradient-to-b from-blue-50 to-indigo-50 rounded-lg shadow-xl">
+    <div className="px-8 py-12 min-h-screen bg-gradient-to-b from-blue-50 to-indigo-50 rounded-lg shadow-xl">
       <p className="font-[Outfit] text-3xl font-semibold text-gray-800 mb-6">
         Notification
       </p>
@@ -271,8 +271,6 @@ const Notification = () => {
         </div>
       )}
     </div>
-
-  
   );
 };
 

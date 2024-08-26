@@ -818,7 +818,7 @@ const ChatComponent = () => {
               <IoIosSend size={40} color="white" />
             </Button>
           </Box>
-        </Box>
+      </Box>
          {/* <Box className="w-3/4 flex flex-col relative max-h-[86vh] overflow-hidden">
             {currentCompany && (
               <Box className="p-3 bg-blue-500 text-white text-lg font-semibold rounded-t-md">

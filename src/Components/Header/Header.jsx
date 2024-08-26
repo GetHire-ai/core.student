@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+// ---------------------
+// ----------------
+import Typography from '@mui/material/Typography';
+import Dialog from '@mui/material/Dialog';
+// import * as React from 'react';
+// import Box from '@mui/material/Box';
+// import Button from '@mui/material/Button';
+// import Modal from '@mui/material/Modal';
+// -------------------
 import { FiAlignJustify } from "react-icons/fi";
 import InternshipModal from "../../Pages/Internship/InternshipModal";
 import Logo from "../../assets/Images/Gethire SVG.svg";
@@ -7,7 +16,7 @@ import { Menu, MenuItem, IconButton } from "@mui/material";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import Popover from "@mui/material/Popover";
-import Typography from "@mui/material/Typography";
+// import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { styled, alpha } from "@mui/material/styles";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
@@ -20,6 +29,23 @@ import { MdOutlineSort } from "react-icons/md";
 import { MdOutlineNotifications } from "react-icons/md";
 import { FaRegStar } from "react-icons/fa";
 import AIToolsModal from "../../Pages/AI Tools/AIToolsModal";
+import { FaLocationArrow } from "react-icons/fa";
+
+import { GetApi } from "../../Pages/utilis/Api_Calling";
+
+// -----------------------
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+// ---------------------
 
 const DropdownLink = styled(Link)(({ theme }) => ({
   display: "flex",
@@ -99,6 +125,26 @@ const workItems = [
     link: "/blank/clubs", // Example route
   },
 ];
+
+
+// ------------------
+  // ----------------------------
+  // import * as React from 'react';
+// import Button from '@mui/material/Button';
+// import { styled } from '@mui/material/styles';
+// import Typography from '@mui/material/Typography';
+
+
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+  '& .MuiDialogContent-root': {
+    padding: theme.spacing(2),
+  },
+  '& .MuiDialogActions-root': {
+    padding: theme.spacing(1),
+  },
+}));
+
+
 
 const Header = () => {
   let path = useLocation();
@@ -285,6 +331,32 @@ const Header = () => {
   const id = open ? "simple-menu" : undefined;
   // const open2 = Boolean(anchorEl2);
   // const id2 = open ? "simple-menu" : undefined;
+
+  // for notifications
+  const [noti , SetNoti] = useState(false);
+  const [notifications, setNotifications] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      setLoading(true);
+      try {
+        const res = await GetApi(`api/notificationroutes/`);
+        console.log('API Response of notification :', res); 
+        setNotifications(res?.data?.data);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        console.log(error);
+      }
+    };
+
+    fetchNotifications();
+  }, []);
+
+
+
+
 
   return (
     <>
@@ -500,11 +572,16 @@ const Header = () => {
                         /> */}
             </Link>
             {/* <MdOutlineNotifications size={25} color="#6082B6" onClick={()=>{navigate('/Notification')}} />  */}
-            <Link to={"/blank/notification"}>
+            {/* <Link to={"/blank/notification"}> */}
+            <Link>
               {/* <i className="fa-regular fa-bell cursor-pointer"></i> */}
-              <MdOutlineNotifications size={25} color="#6082B6" />
+              <MdOutlineNotifications size={25} color="#6082B6"
+                onMouseEnter={()=> SetNoti(true)}
+                onMouseLeave={()=> SetNoti(false)}
+                />
             </Link>
           </div>
+
           {/* </Link> */}
           {/* <Link to={"/notification"}> */}
           {/* <i className="fa-regular fa-bell cursor-pointer"></i> */}
@@ -809,6 +886,75 @@ const Header = () => {
           </div>
         </div>
       </div>
+       
+      {/* for notifications */}
+      {/* {noti && (
+        <div className="fixed top-[50px] right-[5%] z-20 w-[300px] bg-white shadow-md rounded-lg overflow-hidden">
+          <div className="bg-blue-700 text-white p-4 font-bold">
+            Updated Messages
+          </div>
+          <div className="max-h-[320px] overflow-y-auto">
+            {loading ? (
+              <p className="p-4">Loading...</p>
+            ) : notifications.length > 0 ? (
+              notifications.map((notification, index) => (
+                <div key={index} className="p-4 border-b border-gray-200">
+                  {notification?.text || 'No message available'}
+                </div>
+              ))
+            ) : (
+              <p className="p-4">No notifications available.</p>
+            )}
+          </div>
+        </div>
+      )} */}
+        {noti && (
+          <>
+            <div
+              className="fixed -top-[25px] left-[59%] z-20 w-[300px] bg-white shadow-md rounded-lg overflow-hidden relative cursor-pointer"
+              onMouseEnter={() => SetNoti(true)}
+              onMouseLeave={() => SetNoti(false)}
+              onClick={() => navigate('/blank/notification')}
+            >
+              <div className="bg-blue-700 flex flex-row justify-around text-white p-4 font-bold">
+                Updated Messages
+              </div>
+              <div className="max-h-[320px] overflow-y-auto">
+                {loading ? (
+                  <p className="p-4">Loading...</p>
+                ) : notifications.length > 0 ? (
+                  notifications.map((notification, index) => {
+                    const words = notification?.text.split(' ');
+                    const truncatedText =
+                      words.length > 5
+                        ? words.slice(0, 9).join(' ') + '...'
+                        : notification?.text;
+          
+                    return (
+                      <div key={index} className="p-4 border-b text-sm font-semibold border-gray-200">
+                        {truncatedText || 'No message available'}
+                      </div>
+                    );
+                  })
+                ) : (
+                  <p className="p-4">No notifications available.</p>
+                )}
+              </div>
+            </div>
+        </>
+        
+        )}
+   
+
+
+
+
+
+
+
+
+
+
 
       {/* for opportunities section */}
       {/* {opportunities && (
@@ -1339,6 +1485,28 @@ const Header = () => {
           ))}
         </div>
       )}
+
+      {/* for notifications */}
+      {/* {noti && (
+         <div className="w-64 z-20 bg-white ml-[60%] shadow-lg rounded-lg overflow-hidden">
+         <div className="p-4 bg-blue-700 text-white font-bold">
+           Updated Messages
+         </div>
+         <div className="h-80 overflow-y-auto">
+           {loading ? (
+             <p className="p-4">Loading...</p>
+           ) : notifications.length > 0 ? (
+             notifications.map((notification, index) => (
+               <div key={index} className="p-4 border-b border-gray-200">
+                 {notification?.text || 'No message available'}
+               </div>
+             ))
+           ) : (
+             <p className="p-4">No notifications available.</p>
+           )}
+         </div>
+       </div>
+      )} */}
 
       {internshipModal && (
         <InternshipModal
