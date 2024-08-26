@@ -575,7 +575,7 @@ const [inputValue, setInputValue] = useState('');
                         <div>
                           <button
                             className="bg-blue-600 p-3 text-[11px] h-9 flex items-center max-2xl:text-[10px] max-2xl:p-1 max-2xl:rounded-lg max-2xl:h-7 rounded-md shadow-lg text-white max-lg:p-2 hover:bg-blue-900 hover:shadow-2xl"
-                            onClick={() => alert("View job button is clicked")}
+                            onClick={() => navigate(`/blank/JobViewDetails/${selectedJob?.JobId._id}`)}
                           >
                             View Jobs
                           </button>
