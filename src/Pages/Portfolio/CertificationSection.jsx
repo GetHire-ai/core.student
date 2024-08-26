@@ -118,8 +118,9 @@ function CertificationSection() {
   };
 
   return (
-    <div className="space-y-6 ml-3">
-      <h2 className="text-xl font-semibold mt-10 mb-4">Certifications</h2>
+    <div className=" flex flex-col gap-7">
+    <div className='p-6 rounded-lg bg-gray-50 shadow-md'>
+      <h2 className="text-2xl font-bold mb-4 text-blue-600">Certifications</h2>
       <div className="mb-6">
         <button
           onClick={() => {
@@ -217,7 +218,7 @@ function CertificationSection() {
       {certifications.map((cert, index) => (
         <div
           key={index}
-          className="bg-gray-100 p-4 rounded-lg shadow-md flex hover:shadow-xl gap-4"
+          className="bg-white p-4 rounded-lg shadow-md flex  gap-4"
         >
           <div className="w-1/4">
             {cert.image && (
@@ -269,7 +270,9 @@ function CertificationSection() {
         </div>
       )}
 
-      <h2 className="text-xl font-semibold mt-10 mb-4">Awards</h2>
+    </div>
+     <div className='bg-gray-50 shadow-md p-6 rounded-lg'>
+      <h2 className="text-2xl mt-5 font-bold mb-4 text-blue-600">Awards</h2>
       <div className="mb-6">
         <button
           onClick={() => setIsAwardFormOpen(true)}
@@ -364,7 +367,7 @@ function CertificationSection() {
       {awards.map((award, index) => (
         <div
           key={index}
-          className="bg-gray-100 p-4 rounded-lg shadow-md flex hover:shadow-xl gap-4"
+          className="bg-white p-4 rounded-lg shadow-md flex gap-4"
         >
           <div className="flex-1">
             <div className="text-lg font-semibold">{award.title}</div>
@@ -387,6 +390,8 @@ function CertificationSection() {
           </div>
         </div>
       ))}
+    </div>
+
     </div>
   );
 }

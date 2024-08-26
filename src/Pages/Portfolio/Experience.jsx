@@ -95,8 +95,8 @@ function Experience({ updateProfile }) {
   };
 
   return (
-    <div className="container mx-auto p-4 shadow-md h-screen">
-      <h2 className="text-xl font-semibold mb-4">Experience</h2>
+    <div className="bg-gray-50 p-6 rounded-lg shadow-md">
+      <h2 className="text-2xl font-bold mb-4 text-blue-600">Experience</h2>
 
       <button
         className="px-4 py-2 text-sm text-blue-500 hover:text-blue-700 rounded-md mb-4"
@@ -292,7 +292,7 @@ function Experience({ updateProfile }) {
       )}
 
       {experiences && experiences.length > 0 && (
-        <ul className="space-y-4">
+        <ul className="space-y-4 ">
           {experiences.map((experience, index) => (
             <li
               key={index}
@@ -307,17 +307,17 @@ function Experience({ updateProfile }) {
                       className="mr-4 w-12 h-12 object-cover rounded-full"
                     />
                     <div>
-                      <h4 className="text-lg font-semibold">
+                      <h4 className="text-[18px] text-[#333333] font-serif">
                         {experience.Profile}
                       </h4>
-                      <p className=" font-normal text-black">
+                      <p className=" font-serif text-[#555555] text-[15px] ">
                         {experience.Organization} · {experience.Type}
                       </p>
-                      <p className=" font-light text-gray-500">
+                      <p className=" font-light text-[13px] text-[#555555]">
                         {experience.Start_date} to {experience.End_date} ·{" "}
                         {experience.Status}
                       </p>
-                      <p className="text-gray-500 font-light ">
+                      <p className="text-[#666666] font-serif text-[15px]">
                         {experience.Location} · {experience.workType}
                       </p>
                     </div>

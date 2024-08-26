@@ -878,7 +878,7 @@ const [inputValue, setInputValue] = useState('');
         >
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-lg font-semibold text-gray-900">
-              Top companies
+            Trending Jobs
             </h2>
             <a href="#" className="text-blue-600 hover:underline">
               View all

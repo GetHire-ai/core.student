@@ -704,7 +704,7 @@ const ChatComponent = () => {
 
       <Box className="w-3/4 flex flex-col relative max-h-[86vh] overflow-hidden">
           {currentCompany && (
-            <Box className="p-3 bg-blue-500 text-white text-lg font-semibold rounded-t-md">
+            <Box className="p-3 bg-blue-500 fixed w-full text-white text-lg font-semibold rounded-t-md">
               <Typography variant="h6">{currentCompany.Name}</Typography>
               <Typography variant="body2" className="text-blue-200">
                 {currentCompany.Email}

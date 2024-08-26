@@ -179,7 +179,7 @@ const ApplicationManager = () => {
             </div>
             <hr className="border-t-2 border-gray-300 my-2 -mt-3" />
             <p className="text-[16px]">Application Status</p>
-            <div className="ml-4 mt-4">
+            <div className="ml-4 mt-2">
               {["pending", "shortlisted", "selected", "rejected"].map((status, index, statuses) => {
                 const currentIndex = statuses.findIndex(s => s.toLowerCase() === selectedJob?.status?.toLowerCase());
                 const isActive = index === currentIndex;
@@ -205,6 +205,7 @@ const ApplicationManager = () => {
                   </div>
                 );
               })}
+              <p className=" text-blue-600 -mt-2 ml-2 text-[12px] underline cursor-pointer " onClick={()=>(alert("Moving to feed back I dont know"))}>view feedback</p>
             </div>
           </div>
         )}

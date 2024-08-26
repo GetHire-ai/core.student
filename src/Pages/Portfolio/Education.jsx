@@ -406,8 +406,8 @@ function EducationForm({ updateProfile }) {
   };
 
   return (
-    <div className="p-4 mx-auto">
-      <h2 className="text-xl font-semibold mb-4">Education</h2>
+    <div className="bg-gray-50 p-6 rounded-lg shadow-md">
+      <h2 className="text-2xl font-bold mb-4 text-blue-600">Education</h2>
       <div className="mb-6">
         <button
           onClick={() => setIsModalOpen(true)}

@@ -48,8 +48,8 @@ function ProjectForm() {
   };
 
   return (
-    <div className="p-4 mx-auto">
-      <h2 className="text-xl font-semibold mb-4">Projects</h2>
+    <div className="bg-gray-50 p-6 rounded-lg shadow-md">
+      <h2 className="text-2xl font-bold mb-4 text-blue-600">Projects</h2>
       <div className="mb-6">
         <button
           onClick={() => {
@@ -164,21 +164,21 @@ function ProjectForm() {
         {projectList.map((project, index) => (
           <div
             key={index}
-            className="bg-gray-100 p-4 rounded-lg flex justify-between items-center shadow-sm"
+            className="bg-white p-4 rounded-lg flex justify-between items-center shadow-sm"
           >
             <div>
-              <div className="text-lg font-semibold">{project.title}</div>
+              <div className="text-lg text-gray-600 font-semibold">{project.title}</div>
               {project.link && (
                 <a href={project.link} target="_blank" rel="noopener noreferrer" className="text-xs underline text-blue-600">
                   {project.link}
                 </a>
               )}
               <div className="text-sm text-gray-600 mt-2">{project.description}</div>
-              <div className="text-sm text-gray-600 mt-2">
-                <span className="font-semibold">Start Date:</span> {project.startDate} &nbsp;
+              <div className="text-sm text-gray-600 mt-2 ">
+                <span className="font-serif text-[13px]">Start Date:</span> {project.startDate} &nbsp;
                 {project.endDate && (
                   <>
-                    <span className="font-semibold">End Date:</span> {project.endDate}
+                    <span className="font-serif text-[13px]">End Date:</span> {project.endDate}
                   </>
                 )}
               </div>
