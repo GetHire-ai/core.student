@@ -1,9 +1,10 @@
+import React, { useEffect, useState } from "react";
+import { GetApi, PutApi } from "../Pages/utilis/Api_Calling";
 import Sidebar from "../Components/Sidebar/Sidebar";
 import Sidebar2 from "../Components/Sidebar/Sidebar2";
 import Header from "../Components/Header/Header";
 import { Outlet } from "react-router-dom/dist";
 import Home from "../Pages/Home/Home";
-import { useState, useCallback, useMemo } from "react";
 
 const Layout = () => {
   const [activeSection, setActiveSection] = useState(null);
