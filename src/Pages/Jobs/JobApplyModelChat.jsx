@@ -10,35 +10,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { styled } from "@mui/material/styles";
-import Button from '@mui/material/Button';
-
-// const StyledDialog = styled(Dialog)(({ theme }) => ({
-//   "& .MuiDialog-paper": {
-//     padding: theme.spacing(2),
-//     borderRadius: 20,
-//     boxShadow: theme.shadows[5],
-//     minWidth: "30rem",
-//     maxWidth: "90vw",
-//     minHeight: "80vh",
-//     position: "fixed",
-//     right: 20,
-//     bottom: 20,
-//     display: "flex",
-//     flexDirection: "column",
-//   },
-// }));
-
-
-// const StyledDialogTitle = styled(DialogTitle)(({ theme }) => ({
-//   display: "flex",
-//   justifyContent: "space-between",
-//   alignItems: "center",
-//   padding: theme.spacing(1),
-//   borderBottom: `1px solid ${theme.palette.divider}`,
-//   fontSize: "1rem",
-//   backgroundColor: theme.palette.background.paper,
-// }));
-
+import Button from "@mui/material/Button";
 
 const StyledDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialog-paper": {
@@ -98,9 +70,6 @@ const StyledDialogTitle = styled(DialogTitle)(({ theme }) => ({
   },
 }));
 
-
-
-
 // const StyledDialogContent = styled(DialogContent)(({ theme }) => ({
 //   padding: theme.spacing(2),
 //   flexGrow: 1,
@@ -127,58 +96,31 @@ const StyledDialogContent = styled(DialogContent)(({ theme }) => ({
   },
 
   [theme.breakpoints.down("sm")]: {
-    padding: theme.spacing(2), // Adjust padding for smaller screens
-    borderRadius: "8px", // Slightly reduce border radius on smaller screens
+    padding: theme.spacing(2),
+    borderRadius: "8px",
   },
 }));
 
-
-
-// const ChatContainer = styled(List)(({ theme }) => ({
-//   padding: theme.spacing(1),
-//   display: "flex",
-//   flexDirection: "column",
-// }));
 const ChatContainer = styled(List)(({ theme }) => ({
-  padding: theme.spacing(2), // Comfortable padding
+  padding: theme.spacing(2),
   display: "flex",
   flexDirection: "column",
-  backgroundColor: theme.palette.background.paper, // Matches theme background
-  boxShadow: theme.shadows[1], // Subtle shadow for a clean lifted effect
-  borderRadius: "12px", // Rounded corners for a modern touch
-  overflowY: "auto", // Handles overflow if content exceeds
-  maxHeight: "80vh", // Limits height to prevent overflow
-
-  // Spacing between chat items
+  backgroundColor: theme.palette.background.paper,
+  boxShadow: theme.shadows[1],
+  borderRadius: "12px",
+  overflowY: "auto",
+  maxHeight: "80vh",
   "& > * + *": {
     margin: theme.spacing(1),
   },
 
   [theme.breakpoints.down("sm")]: {
-    padding: theme.spacing(1), // Adjust padding for smaller screens
-    borderRadius: "8px", // Slightly reduced border radius on smaller screens
-    maxHeight: "70vh", // Adjust max height for smaller screens
+    padding: theme.spacing(1),
+    borderRadius: "8px",
+    maxHeight: "70vh",
   },
 }));
 
-
-
-
-// const MessageItem = styled(ListItem)(({ theme, type }) => ({
-//   backgroundColor:
-//     type === "user" ? theme.palette.primary.main : theme.palette.grey[300],
-//   color:
-//     type === "user"
-//       ? theme.palette.primary.contrastText
-//       : theme.palette.text.primary,
-//   borderRadius: 20,
-//   marginBottom: theme.spacing(1),
-//   maxWidth: "70%",
-//   alignSelf: type === "user" ? "flex-end" : "flex-start",
-//   padding: "8px 12px",
-//   wordBreak: "break-word",
-//   position: "relative",
-// }));
 const MessageItem = styled(ListItem)(({ theme, type }) => ({
   backgroundColor:
     type === "user" ? theme.palette.primary.main : theme.palette.grey[200],
@@ -213,9 +155,6 @@ const MessageItem = styled(ListItem)(({ theme, type }) => ({
     padding: theme.spacing(1), // Adjust padding for smaller screens
   },
 }));
-
-
-
 
 const JobApplyModelChat = ({
   onOpen,
