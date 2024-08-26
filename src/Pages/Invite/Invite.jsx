@@ -189,10 +189,10 @@ const Invite = () => {
                     <p className=' text-2xl font-semibold'>Talent Booking</p>
                     <p>Find comedians by availability, ratings, and past performance success .</p>
                 </div>
-                <div className='flex gap-4 mr-4 items-center'>
-                    <button className=' p-2 h-10 items-center border-[1.5px] border-black rounded-md'>Contact</button>
+                {/* <div className='flex gap-4 mr-4 items-center'> */}
+                    {/* <button className=' p-2 h-10 items-center border-[1.5px] border-black rounded-md'>Contact</button> */}
                     {/* <button className=' p-2 h-10 items-center border-[1.5px] border-black'>Book</button> */}
-                </div>
+                {/* </div> */}
             </div>
             <div className="flex flex-wrap justify-center items-start gap-7  p-4">
                 {performers.map((performer) => (
