@@ -27,7 +27,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="border-2 sticky z-10 top-24 border-gray-300 rounded-2xl p-6 mt-3 max-2xl:h-[25%] min-h-[23%] max-h-[23%] bg-white w-[80%] shadow-lg hover:shadow-xl transition-shadow duration-300">
+    <div className="border-2 sticky z-0 top-24 border-gray-300 rounded-2xl p-6 mt-3 max-2xl:h-[25%] min-h-[23%] max-h-[23%] bg-white w-[80%] shadow-lg hover:shadow-xl transition-shadow duration-300">
       <div className="profile w-full flex flex-col justify-start items-start">
         <h2 className="text-[14px] font-medium text-gray-900 mb-1">
           Where are you in your job search journey?
