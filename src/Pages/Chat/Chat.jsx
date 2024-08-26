@@ -10,10 +10,6 @@ import {
   InputBase,
   List,
   ListItem,
-  ListItemText,
-  Menu,
-  MenuItem,
-  Paper,
   Typography,
   CircularProgress,
 } from "@mui/material";
@@ -33,16 +29,6 @@ const SearchInput = styled(InputBase)(({ theme }) => ({
 }));
 
 const ChatComponent = () => {
-  // Refs for input elements
-  const imageInputRef = useRef(null);
-  const fileInputRef = useRef(null);
-  const gifInputRef = useRef(null);
-
-  //  Handlers for opening file pickers
-  const handleImageClick = () => {
-    imageInputRef.current.click();
-  };
-
   const handleFileClick = () => {
     fileInputRef.current.click();
   };
@@ -51,6 +37,9 @@ const ChatComponent = () => {
     gifInputRef.current.click();
   };
 
+  const handleImageClick = () => {
+    // Logic to open emoji picker
+  };
   const handleEmojiClick = () => {
     // Logic to open emoji picker
   };
@@ -59,9 +48,10 @@ const ChatComponent = () => {
     const file = e.target.files[0];
     // Logic to send file
   };
-
-  console.log("chat component clicked");
-  const studentId = localStorage.getItem("Studentid");
+  // Refs for input elements
+  const imageInputRef = useRef(null);
+  const fileInputRef = useRef(null);
+  const gifInputRef = useRef(null);
   const messagesEndRef = useRef(null);
 
   const [message, setMessage] = useState("");
@@ -75,11 +65,23 @@ const ChatComponent = () => {
   const [showOldMessages, setShowOldMessages] = useState(false);
   const [onlineUsers, setOnlineUsers] = useState({});
 
+  // Initialize the user ID
+  const studentId = localStorage.getItem("Studentid");
+
   // Fetch companies
   const getCompanies = async () => {
     try {
       const response = await GetApi("api/adminroutes/GetAllCompany");
-      setCompanies(response?.data?.data);
+      const companiesData = response?.data?.data;
+
+      // Sort companies by last message date
+      companiesData.sort((a, b) => {
+        const aDate = new Date(a.lastActiveDate || 0).getTime();
+        const bDate = new Date(b.lastActiveDate || 0).getTime();
+        return bDate - aDate;
+      });
+
+      setCompanies(companiesData);
     } catch (error) {
       console.error("Error fetching companies:", error);
     } finally {
@@ -103,6 +105,7 @@ const ChatComponent = () => {
     }
   };
 
+  // UseEffect hooks
   useEffect(() => {
     getCompanies();
     socket.emit("userConnected", studentId);
@@ -127,7 +130,18 @@ const ChatComponent = () => {
       getMessages(currentConversationId);
 
       socket.on("receiveMessage", (newMessage) => {
-        setMessages((prevMessages) => [...prevMessages, newMessage]);
+        setMessages((prevMessages) => {
+          const updatedMessages = [...prevMessages, newMessage];
+          // Update the last message date for the company
+          setCompanies((prevCompanies) =>
+            prevCompanies.map((company) =>
+              company._id === newMessage.companyId
+                ? { ...company, lastActiveDate: new Date().toISOString() }
+                : company
+            )
+          );
+          return updatedMessages;
+        });
       });
 
       return () => {
@@ -144,7 +158,6 @@ const ChatComponent = () => {
         senderType: "Student",
         message,
       };
-      console.log(data);
       socket.emit("sendMessage", data);
       setMessage("");
     }
@@ -369,7 +382,7 @@ const ChatComponent = () => {
                         alt={msg.senderName}
                         className="w-10 h-10 rounded-full"
                       />
-                      <Box className="flex flex-col">
+                      <Box className="flex flex-col mb-2">
                         <Box className="flex items-center space-x-2">
                           <Typography variant="body2" className="font-semibold">
                             {msg.senderName}
