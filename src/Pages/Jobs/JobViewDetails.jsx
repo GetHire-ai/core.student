@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { GetApi, PostApi } from "../utilis/Api_Calling";
-import { ThreeDots } from 'react-loader-spinner'
+import { ThreeDots } from "react-loader-spinner";
 import {
   Button,
   Box,
@@ -15,7 +15,6 @@ import JobApplyModelResumeCheck from "./JobApplyModelResumeCheck";
 import { toast } from "react-toastify";
 import JobApplyModelChat from "./JobApplyModelChat";
 const stepsHead = ["View Job", "Job Apply", "Shortlisted"];
-
 
 const JobViewDetails = () => {
   const { id } = useParams();
@@ -161,15 +160,15 @@ const JobViewDetails = () => {
         <div className="bg-white flex justify-center pt-20 min-w-[100vw] min-h-[100vh] text-2xl">
           {/* Loading... */}
           <ThreeDots
-              visible={true}
-              height="80"
-              width="80"
-              color="blue"
-              radius="9"
-              ariaLabel="three-dots-loading"
-              wrapperStyle={{}}
-              wrapperClass=""
-              />
+            visible={true}
+            height="80"
+            width="80"
+            color="blue"
+            radius="9"
+            ariaLabel="three-dots-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+          />
         </div>
       ) : (
         <div className="w-full flex justify-center items-start gap-10 font-[poppins] bg-[#f8f9fa]">
@@ -195,7 +194,12 @@ const JobViewDetails = () => {
                       {Jobdetail?.positionName}
                     </p>
                   </div>
-                  <p className="text-gray-600  text-md font-normal hover:text-blue-600 cursor-pointer" onClick={()=>{alert("redirecting to company page")}}>
+                  <p
+                    className="text-gray-600  text-md font-normal hover:text-blue-600 cursor-pointer"
+                    onClick={() => {
+                      alert("redirecting to company page");
+                    }}
+                  >
                     {Jobdetail?.Company?.Name}
                   </p>
                   <div className="flex flex-col text-[14px] font-[400] text-black text-opacity-[50%] mt-[5px] gap-2">
@@ -207,8 +211,7 @@ const JobViewDetails = () => {
                       <span>
                         {/* <i className="fa-solid fa-dollar-sign mr-2"></i>{" "} */}
                         {/* {Jobdetail?.minSalary}-{Jobdetail?.maxSalary} salary */}
-                        10-12 LPA CTC
-                        &nbsp;&nbsp;
+                        10-12 LPA CTC &nbsp;&nbsp;
                       </span>
                     </div>
                     <div className="flex justify-start items-center flex-wrap gap-3 border-b-[1px] pb-3">
@@ -493,6 +496,7 @@ const JobViewDetails = () => {
       )}
       {chatModal && (
         <JobApplyModelChat
+          job={Jobdetail}
           onOpen={chatModal}
           onClose={() => setChatModal(false)}
           onSubmit={() => {
