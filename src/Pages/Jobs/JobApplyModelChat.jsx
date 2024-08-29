@@ -10,6 +10,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import Chip from "@mui/material/Chip";
+import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
 import Button from "@mui/material/Button";
@@ -37,9 +38,9 @@ const JobApplyModelChat = ({ onOpen, onClose, onSubmit, job }) => {
       if (step < 2) {
         setStep(step + 1);
       } else {
-        setStep(step + 1); 
+        setStep(step + 1);
       }
-    }, 300); 
+    }, 300);
   };
 
   const getQuestionText = () => {
@@ -63,7 +64,7 @@ const JobApplyModelChat = ({ onOpen, onClose, onSubmit, job }) => {
         if (prevProgress === 100) {
           return 0;
         }
-        return Math.min(prevProgress + 10, 100); 
+        return Math.min(prevProgress + 10, 100);
       });
     }, 1000);
 
@@ -126,11 +127,7 @@ const JobApplyModelChat = ({ onOpen, onClose, onSubmit, job }) => {
           {isTyping && (
             <Box display="flex" justifyContent="flex-end" mt={1}>
               <Box sx={{ width: "100%" }}>
-                <LinearProgress
-                  variant="determinate"
-                  value={progress}
-                  sx={{ mb: 2 }}
-                />
+                <LinearProgress value={progress} />
               </Box>
             </Box>
           )}
@@ -202,10 +199,10 @@ const JobApplyModelChat = ({ onOpen, onClose, onSubmit, job }) => {
               {!checkRequirements().educationMet ||
               !checkRequirements().experienceMet ? (
                 <Box mt={2} sx={{ color: "red" }}>
-                  <p>
+                  <Alert severity="warning" color="error" borderRadius="10">
                     You have indicated that you do not meet some of the job
                     requirements. Do you still want to apply?
-                  </p>
+                  </Alert>
                 </Box>
               ) : null}
 
