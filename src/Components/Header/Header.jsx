@@ -342,7 +342,6 @@ const Header = () => {
       setLoading(true);
       try {
         const res = await GetApi(`api/notificationroutes/`);
-        console.log('API Response of notification :', res); 
         setNotifications(res?.data?.data);
         setLoading(false);
       } catch (error) {
