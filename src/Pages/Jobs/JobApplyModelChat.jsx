@@ -25,8 +25,8 @@ const JobApplyModelChat = ({ onOpen, onClose, onSubmit, job }) => {
   const progressRef = useRef(0);
   const [Loading, setLoading] = useState(true);
   const [studentprofile, setstudentprofile] = useState({});
-
   const [selectedValue, setSelectedValue] = useState("");
+
 
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
@@ -269,7 +269,7 @@ const JobApplyModelChat = ({ onOpen, onClose, onSubmit, job }) => {
                       minEducation: responses[0].answer === "Yes",
                       expRequired: responses[1].answer === "Yes",
                       noticePeriod: responses[2].answer === job?.noticePeriod,
-                      resume: selectedValue,
+                      Resume: selectedValue,
                     };
                     onSubmit(data);
                   }}

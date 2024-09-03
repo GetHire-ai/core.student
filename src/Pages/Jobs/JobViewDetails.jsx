@@ -33,9 +33,9 @@ const JobViewDetails = () => {
   const [Applymodel, setApplymodel] = useState(false);
   const [ApplymodelResumeCheck, setApplymodelResumeCheck] = useState(false);
 
-  const ApplyforJob = async () => {
+  const ApplyforJob = async (data) => {
     try {
-      const response = await PostApi("api/StudentRoutes/ApplyForJob", id);
+      const response = await PostApi("api/StudentRoutes/ApplyForJob", data);
       toast.success("Job Details updated successfully.", { autoClose: 1000 });
       navigate(`/blank/start/${id}`);
     } catch (error) {
@@ -512,7 +512,6 @@ const JobViewDetails = () => {
           onOpen={chatModal}
           onClose={() => setChatModal(false)}
           onSubmit={(data) => {
-            console.log(data);
             setChatModal(false);
             setApplymodelResumeCheck(true);
           }}
