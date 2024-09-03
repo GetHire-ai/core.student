@@ -33,7 +33,7 @@ const Jobs = () => {
       setLoading(false);
     } catch (error) {
       setLoading(false);
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -44,7 +44,7 @@ const Jobs = () => {
       );
       setappiledjobs(Getbookmark?.data?.data?.appliedJobIds);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 

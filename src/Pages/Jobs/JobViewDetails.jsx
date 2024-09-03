@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { GetApi, PostApi } from "../utilis/Api_Calling";
 import { ThreeDots } from "react-loader-spinner";
 import {
@@ -18,6 +18,7 @@ const stepsHead = ["View Job", "Job Apply", "Shortlisted"];
 
 const JobViewDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
   const [educationDetails, setEducationDetails] = useState({});
   const [Jobdetail, setJobdetail] = useState({});
@@ -32,6 +33,17 @@ const JobViewDetails = () => {
   const [Applymodel, setApplymodel] = useState(false);
   const [ApplymodelResumeCheck, setApplymodelResumeCheck] = useState(false);
 
+  const ApplyforJob = async () => {
+    try {
+      const response = await PostApi("api/StudentRoutes/ApplyForJob", id);
+      toast.success("Job Details updated successfully.", { autoClose: 1000 });
+      navigate(`/blank/start/${id}`);
+    } catch (error) {
+      console.log(error.response);
+      toast.error(error?.response?.data?.message, { autoClose: 1000 });
+    }
+  };
+
   const GetAllJobs = async () => {
     try {
       const Getjobdata = await GetApi(`api/AdminRoutes/GetAllJobs`);
@@ -40,7 +52,7 @@ const JobViewDetails = () => {
       setLoading(false);
     } catch (error) {
       setLoading(false);
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -49,7 +61,7 @@ const JobViewDetails = () => {
       const Getbookmark = await GetApi(`api/StudentRoutes/getallbookmark`);
       setBookmarkedJobs(Getbookmark?.data?.data?.bookmarkedJobs);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
   const Getallappiledjob = async () => {
@@ -59,7 +71,7 @@ const JobViewDetails = () => {
       );
       setappiledjobs(res?.data?.data?.appliedJobIds);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -75,7 +87,7 @@ const JobViewDetails = () => {
       setLoading(false);
     } catch (error) {
       setLoading(false);
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -108,7 +120,7 @@ const JobViewDetails = () => {
       Getallbookmark();
       toast.success(responce?.data?.message, { autoClose: 1000 });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -134,7 +146,7 @@ const JobViewDetails = () => {
       Getallbookmark();
       toast.success(responce?.data?.message, { autoClose: 1000 });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -500,7 +512,7 @@ const JobViewDetails = () => {
           onOpen={chatModal}
           onClose={() => setChatModal(false)}
           onSubmit={(data) => {
-            console.log(data)
+            console.log(data);
             setChatModal(false);
             setApplymodelResumeCheck(true);
           }}

@@ -30,7 +30,7 @@ const JobApplyModelChat = ({ onOpen, onClose, onSubmit, job }) => {
 
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
-    handleNextStep()
+    handleNextStep();
   };
 
   const Getstudentprofile = async () => {
@@ -38,7 +38,7 @@ const JobApplyModelChat = ({ onOpen, onClose, onSubmit, job }) => {
     try {
       const Getjobdata = await GetApi(`api/StudentRoutes/GetStudentProfile`);
       setstudentprofile(Getjobdata?.data?.data);
-      console.log(Getjobdata.data.data.aiResumes);
+      // console.log(Getjobdata.data.data.aiResumes);
     } catch (error) {
       console.log(error);
     } finally {
@@ -59,7 +59,6 @@ const JobApplyModelChat = ({ onOpen, onClose, onSubmit, job }) => {
         { question: getQuestionText(), answer: response },
       ];
       setResponses(newResponses);
-      console.log(newResponses)
       setIsTyping(false);
 
       if (step < 4) {
@@ -81,9 +80,9 @@ const JobApplyModelChat = ({ onOpen, onClose, onSubmit, job }) => {
   const checkRequirements = () => {
     const educationMet = responses[0]?.answer === "Yes";
     const experienceMet = responses[1]?.answer === "Yes";
-    // console.log(responses[2].answer)
-    console.log(job)
-    return { educationMet, experienceMet };
+    const noticePeriodMet = responses[2]?.answer === job?.noticePeriod;
+
+    return { educationMet, experienceMet, noticePeriodMet };
   };
 
   useEffect(() => {
@@ -218,6 +217,7 @@ const JobApplyModelChat = ({ onOpen, onClose, onSubmit, job }) => {
               </div>
             </Box>
           )}
+
           {!isTyping && step === 3 && (
             <Box>
               <FormLabel component="legend" sx={{ textAlign: "start" }}>
@@ -234,7 +234,9 @@ const JobApplyModelChat = ({ onOpen, onClose, onSubmit, job }) => {
                     label="Select Item"
                   >
                     {studentprofile?.aiResumes?.map((resume) => (
-                      <MenuItem key={resume?._id} value={resume?._id}>{resume?.jobTitle}</MenuItem>
+                      <MenuItem key={resume?._id} value={resume?._id}>
+                        {resume?.jobTitle}
+                      </MenuItem>
                     ))}
                   </Select>
                 </FormControl>
@@ -248,7 +250,8 @@ const JobApplyModelChat = ({ onOpen, onClose, onSubmit, job }) => {
                 Review your responses:
               </FormLabel>
               {!checkRequirements().educationMet ||
-              !checkRequirements().experienceMet ? (
+              !checkRequirements().educationMet ||
+              !checkRequirements().noticePeriodMet ? (
                 <Box mt={2} sx={{ color: "red" }}>
                   <Alert severity="warning" color="error" borderRadius="10">
                     You have indicated that you do not meet some of the job
@@ -261,7 +264,15 @@ const JobApplyModelChat = ({ onOpen, onClose, onSubmit, job }) => {
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={() => onSubmit(responses)}
+                  onClick={() => {
+                    let data = {
+                      minEducation: responses[0].answer === "Yes",
+                      expRequired: responses[1].answer === "Yes",
+                      noticePeriod: responses[2].answer === job?.noticePeriod,
+                      resume: selectedValue,
+                    };
+                    onSubmit(data);
+                  }}
                 >
                   Apply
                 </Button>
