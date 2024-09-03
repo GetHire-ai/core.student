@@ -499,7 +499,8 @@ const JobViewDetails = () => {
           job={Jobdetail}
           onOpen={chatModal}
           onClose={() => setChatModal(false)}
-          onSubmit={() => {
+          onSubmit={(data) => {
+            console.log(data)
             setChatModal(false);
             setApplymodelResumeCheck(true);
           }}

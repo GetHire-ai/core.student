@@ -6,15 +6,15 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
+import { Select, MenuItem, InputLabel, FormControl } from "@mui/material";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import Chip from "@mui/material/Chip";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
 import Button from "@mui/material/Button";
-
+import { GetApi } from "../utilis/Api_Calling";
 const noticePeriodOptions = ["15 Days", "30 Days", "2 Months", "3 Months"];
 
 const JobApplyModelChat = ({ onOpen, onClose, onSubmit, job }) => {
@@ -23,6 +23,32 @@ const JobApplyModelChat = ({ onOpen, onClose, onSubmit, job }) => {
   const [isTyping, setIsTyping] = useState(false);
   const [progress, setProgress] = useState(10);
   const progressRef = useRef(0);
+  const [Loading, setLoading] = useState(true);
+  const [studentprofile, setstudentprofile] = useState({});
+
+  const [selectedValue, setSelectedValue] = useState("");
+
+  const handleChange = (event) => {
+    setSelectedValue(event.target.value);
+    handleNextStep()
+  };
+
+  const Getstudentprofile = async () => {
+    setLoading(true);
+    try {
+      const Getjobdata = await GetApi(`api/StudentRoutes/GetStudentProfile`);
+      setstudentprofile(Getjobdata?.data?.data);
+      console.log(Getjobdata.data.data.aiResumes);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    Getstudentprofile();
+  }, []);
 
   const handleNextStep = (response) => {
     setIsTyping(true);
@@ -33,9 +59,10 @@ const JobApplyModelChat = ({ onOpen, onClose, onSubmit, job }) => {
         { question: getQuestionText(), answer: response },
       ];
       setResponses(newResponses);
+      console.log(newResponses)
       setIsTyping(false);
 
-      if (step < 2) {
+      if (step < 4) {
         setStep(step + 1);
       } else {
         setStep(step + 1);
@@ -54,7 +81,8 @@ const JobApplyModelChat = ({ onOpen, onClose, onSubmit, job }) => {
   const checkRequirements = () => {
     const educationMet = responses[0]?.answer === "Yes";
     const experienceMet = responses[1]?.answer === "Yes";
-
+    // console.log(responses[2].answer)
+    console.log(job)
     return { educationMet, experienceMet };
   };
 
@@ -190,8 +218,31 @@ const JobApplyModelChat = ({ onOpen, onClose, onSubmit, job }) => {
               </div>
             </Box>
           )}
-
           {!isTyping && step === 3 && (
+            <Box>
+              <FormLabel component="legend" sx={{ textAlign: "start" }}>
+                Kindly Select Resume?
+              </FormLabel>
+              <div className="flex flex-wrap w-full">
+                <FormControl fullWidth>
+                  <InputLabel id="select-label">Select Item</InputLabel>
+                  <Select
+                    labelId="select-label"
+                    id="select"
+                    value={selectedValue}
+                    onChange={handleChange}
+                    label="Select Item"
+                  >
+                    {studentprofile?.aiResumes?.map((resume) => (
+                      <MenuItem key={resume?._id} value={resume?._id}>{resume?.jobTitle}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </div>
+            </Box>
+          )}
+
+          {!isTyping && step === 4 && (
             <Box>
               <FormLabel component="legend" sx={{ textAlign: "start" }}>
                 Review your responses:
