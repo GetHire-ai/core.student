@@ -104,7 +104,7 @@ const StartInterview = () => {
         const points = await getResult(aitext);
         if (!points) throw new Error("Failed to evaluate transcription.");
 
-        const evaluateText = await getTexResult(aitext);
+        // const evaluateText = await getTexResult(aitext);
         // Submit the result
         await submitResult(points, aitext);
         setModalContent(
@@ -160,25 +160,25 @@ const StartInterview = () => {
     return jsonData?.points;
   };
 
-  const getTexResult = async (aitext) => {
-    const data = {
-      interviewQuestions: aitext,
-      criteria: criteria,
-    };
-    const response = await fetch(
-      "https://shining-needed-bug.ngrok-free.app/evaluate-interview",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    );
-    const jsonData = await response.json();
-    console.log(jsonData);
-    return jsonData?.points;
-  };
+  // const getTexResult = async (aitext) => {
+  //   const data = {
+  //     interviewQuestions: aitext,
+  //     criteria: criteria,
+  //   };
+  //   const response = await fetch(
+  //     "https://shining-needed-bug.ngrok-free.app/evaluate-interview",
+  //     {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(data),
+  //     }
+  //   );
+  //   const jsonData = await response.json();
+  //   console.log(jsonData);
+  //   return jsonData?.points;
+  // };
 
   const submitResult = async (points, aitext) => {
     try {
