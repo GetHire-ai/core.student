@@ -3,6 +3,7 @@ import useScreenAudioRecorder from "../utilis/useScreenAudioRecorder";
 import { Box, Typography, Container, CircularProgress } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { GetApi, PostApi, Api_Url } from "../utilis/Api_Calling";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   Dialog,
@@ -25,7 +26,7 @@ const StartInterview = () => {
     downloadVideo,
     downloadAudio,
   } = useScreenAudioRecorder();
-
+  const navigate = useNavigate();
   const { jobId } = useParams();
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState("");
@@ -104,7 +105,7 @@ const StartInterview = () => {
         const points = await getResult(aitext);
         if (!points) throw new Error("Failed to evaluate transcription.");
 
-        // const evaluateText = await getTexResult(aitext);
+        const evaluateText = await getTexResult(aitext);
         // Submit the result
         await submitResult(points, aitext);
         setModalContent(
@@ -125,6 +126,7 @@ const StartInterview = () => {
   const getTextFromAudio = async (formData) => {
     try {
       console.log("audio sent");
+      console.log(formData)
       const response = await fetch(
         "https://shining-needed-bug.ngrok-free.app/transcribe",
         {
@@ -132,11 +134,12 @@ const StartInterview = () => {
           body: formData,
         }
       );
-      const jsonData = await response.json();
+      console.log(response)
+      const jsonData = await response.text();
       console.log(jsonData);
       return jsonData;
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     }
   };
 
@@ -160,38 +163,62 @@ const StartInterview = () => {
     return jsonData?.points;
   };
 
-  // const getTexResult = async (aitext) => {
-  //   const data = {
-  //     interviewQuestions: aitext,
-  //     criteria: criteria,
-  //   };
-  //   const response = await fetch(
-  //     "https://shining-needed-bug.ngrok-free.app/evaluate-interview",
-  //     {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(data),
-  //     }
-  //   );
-  //   const jsonData = await response.json();
-  //   console.log(jsonData);
-  //   return jsonData?.points;
-  // };
+  const getTexResult = async (aitext) => {
+    const data = {
+      interviewQuestions: aitext,
+      criterias: criteria,
+    };
+    const response = await fetch(
+      "https://shining-needed-bug.ngrok-free.app/evaluate-interview",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    const jsonData = await response.json();
+    console.log(jsonData);
+    return jsonData?.points;
+  };
 
   const submitResult = async (points, aitext) => {
     try {
-      const data = {
-        jobId,
-        score: points,
-        aitext: aitext,
+      const authToken = localStorage.getItem("StudentToken");
+      let headersList = {
+        "Authorization": `Bearer ${authToken}`,
+        "Content-Type": "application/json",
       };
-      await PostApi("api/testRoutes/result/aitestresult", data);
+  
+      let bodyContent = JSON.stringify({
+        "jobId": jobId,
+        "score": points,
+        "aiText": aitext,
+      });
+  
+      let reqOptions = {
+        url: "http://localhost:5000/api/testRoutes/result/aitestresult",
+        method: "POST",
+        headers: headersList,
+        data: bodyContent,
+      };
+  
+      let response = await axios.request(reqOptions);
+      console.log(response.data);
     } catch (error) {
-      console.error("Error submitting result:", error);
+      // Check if the error response exists and if the status code is 403
+      if (error.response && error.response.status === 403) {
+        alert("You have already given your test.");
+      } else {
+        console.error("Error submitting result:", error);
+      }
+  
+      // Navigate regardless of the error type
+      navigate("/blank/applicationManager");
     }
   };
+  
 
   if (loading) {
     return (
