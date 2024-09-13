@@ -5,6 +5,11 @@ const Start = () => {
   const { jobId } = useParams();
   const navigate = useNavigate();
   const [Loading, setLoading] = useState(false);
+  const [checkBox, setCheckBox] = useState(false);
+
+  function handleChange(e){
+    setCheckBox(!checkBox)
+  }
 
   return (
     <>
@@ -25,7 +30,7 @@ const Start = () => {
               </p>
             </div>
             <div className="grid sm:grid-cols-4 grid-cols-1 mt-[58px] mb-[45px] sm:px-[114px] px-[0px] gap-[33px]">
-              <div className="bg-[#FFBB2E0D] flex flex-col justify-start pt-[50px] pb-[38px] items-center rounded-[16px]">
+              <div className="bg-[#FFBB2E0D] flex flex-col justify-start pthandleChange-[50px] pb-[38px] items-center rounded-[16px]">
                 <div className="h-[38px] bg-[#FFBB2E] rounded-full w-[38px]"></div>
                 <p className="font-[Outfit] font-[500] text-[16px] leading-[20.16px] text-center text-[#000000] pt-[23px] pb-[17px]">
                   60 minutes long
@@ -64,21 +69,23 @@ const Start = () => {
               </div>
             </div>
             <div className="flex justify-center gap-[16px] items-start">
-              <input type="checkbox" className="mt-[4px]" name="" id="" />
+              <input type="checkbox" className="mt-[4px]" name="" id="" onChange={handleChange} />
               <p className="max-w-[160px] font-[Outfit] font-[400] text-[12px] text-[#545454] leading-[15.12px]">
                 I have read all the instructions and am ready to begin my
                 assessment
               </p>
             </div>
+            { checkBox &&
             <div className="flex justify-center mt-[41px] mb-[70px]">
               <button
                 className="w-[412px] h-[55px] text-white bg-gradient-to-tl from-[#0f87b3] to-[#462da1] rounded-[5px] flex justify-center items-center"
                 // onClick={() => navigate(`/blank/continue/${jobId}`)}
                 onClick={() => navigate(`/blank/question/${jobId}`)}
-              >
+                >
                 Start Assessment
               </button>
             </div>
+            }
           </div>
         </div>
       )}

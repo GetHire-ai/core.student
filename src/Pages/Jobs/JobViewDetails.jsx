@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { GetApi, PostApi } from "../utilis/Api_Calling";
+import { postformdataApi } from "../utilis/Api_Calling";
 import { ThreeDots } from "react-loader-spinner";
 import {
   Button,
@@ -53,6 +54,31 @@ const JobViewDetails = () => {
     } catch (error) {
       setLoading(false);
       console.error(error);
+    }
+  };
+
+  const submitJobApplication = async (Jobd) => {
+    // if (JobApply?.Coverletter === "" || JobApply?.Your_availability === "") {
+    //   toast.error("Please fill all details", { autoClose: 1000 });
+    //   return;
+    // }
+    try {
+      const response = await postformdataApi(
+        "api/StudentRoutes/ApplyForJob",
+        {
+          JobId: Jobd?._id,
+          CompanyId: Jobd?.Company?._id,
+          Coverletter: "",
+          Your_availability: "",
+          relocate: "",
+          image1: null,
+        }
+      );
+      toast.success("Job Details updated successfully.", { autoClose: 1000 });
+      navigate(`/blank/start/${Jobd?._id}`);
+    } catch (error) {
+      console.log(error.response);
+      toast.error(error?.response?.data?.message, { autoClose: 1000 });
     }
   };
 
@@ -488,6 +514,7 @@ const JobViewDetails = () => {
         </div>
       )}
 
+      {/*
       {Applymodel && (
         <JobApplyModel
           onOpen={jobapplymodelopen}
@@ -506,6 +533,7 @@ const JobViewDetails = () => {
           educationDetails={educationDetails}
         />
       )}
+      */}
       {chatModal && (
         <JobApplyModelChat
           job={Jobdetail}
@@ -513,7 +541,9 @@ const JobViewDetails = () => {
           onClose={() => setChatModal(false)}
           onSubmit={(data) => {
             setChatModal(false);
-            setApplymodelResumeCheck(true);
+            // setApplymodelResumeCheck(true);
+            // setApplymodel(true)
+            submitJobApplication(Jobdetail)
           }}
           openModal={() => setApplymodel(true)}
           setEducationDetails={setEducationDetails}
