@@ -51,12 +51,26 @@ const useScreenAudioRecorder = () => {
       throw new Error("Webcam permission denied.");
     }
   };
+  const playVideo = async () => {
+    try{
+
+      const webcamStream = await getWebcamStream();
+      webcamVideoRef.current.srcObject = webcamStream;
+      webcamVideoRef.current.play();
+      setStatus("idle");
+    }
+    catch (err){
+
+    }
+  }
   const startRecording = async () => {
     setStatus("requesting_permissions");
     try {
-      const displayStream = await getDisplayStream();
-      const audioStream = await getAudioStream();
       const webcamStream = await getWebcamStream();
+      webcamVideoRef.current.srcObject = webcamStream;
+      webcamVideoRef.current.play();
+      const audioStream = await getAudioStream();
+      const displayStream = await getDisplayStream();
       streamsRef.current = { displayStream, audioStream, webcamStream };
       const combinedStream = new MediaStream([
         ...displayStream.getVideoTracks(),
@@ -92,8 +106,6 @@ const useScreenAudioRecorder = () => {
 
       screenVideoRef.current.srcObject = combinedStream;
       screenVideoRef.current.play();
-      webcamVideoRef.current.srcObject = webcamStream;
-      webcamVideoRef.current.play();
     } catch (error) {
       console.error("Error starting recording: ", error.message);
       setStatus("idle");
@@ -165,6 +177,7 @@ const useScreenAudioRecorder = () => {
     webcamVideoRef,
     downloadVideo,
     downloadAudio,
+    playVideo,
   };
 };
 export default useScreenAudioRecorder;

@@ -15,6 +15,7 @@ import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
 import Button from "@mui/material/Button";
 import { GetApi } from "../utilis/Api_Calling";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 const noticePeriodOptions = ["15 Days", "30 Days", "2 Months", "3 Months"];
 
 const JobApplyModelChat = ({ onOpen, onClose, onSubmit, job }) => {
@@ -27,10 +28,19 @@ const JobApplyModelChat = ({ onOpen, onClose, onSubmit, job }) => {
   const [studentprofile, setstudentprofile] = useState({});
   const [selectedValue, setSelectedValue] = useState("");
 
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
-    setSelectedValue(event.target.value);
-    handleNextStep();
+    const selectedValue = event.target.value;
+  
+    if (selectedValue === 'add_resume') {
+      // Redirect to Add Resume screen
+      navigate('/blank/ai-tools/resume-builder'); // Replace '/add-resume' with the actual route
+    } else {
+      // Handle regular resume selection
+      setSelectedValue(event.target.value);
+      handleNextStep();
+    }
   };
 
   const Getstudentprofile = async () => {
@@ -218,31 +228,33 @@ const JobApplyModelChat = ({ onOpen, onClose, onSubmit, job }) => {
             </Box>
           )}
 
-          {!isTyping && step === 3 && (
-            <Box>
-              <FormLabel component="legend" sx={{ textAlign: "start" }}>
-                Kindly Select Resume?
-              </FormLabel>
-              <div className="flex flex-wrap w-full">
-                <FormControl fullWidth>
-                  <InputLabel id="select-label">Select Item</InputLabel>
-                  <Select
-                    labelId="select-label"
-                    id="select"
-                    value={selectedValue}
-                    onChange={handleChange}
-                    label="Select Item"
-                  >
-                    {studentprofile?.aiResumes?.map((resume) => (
-                      <MenuItem key={resume?._id} value={resume?._id}>
-                        {resume?.jobTitle}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </div>
-            </Box>
-          )}
+{!isTyping && step === 3 && (
+  <Box>
+    <FormLabel component="legend" sx={{ textAlign: "start" }}>
+      Kindly Select Resume?
+    </FormLabel>
+    <div className="flex flex-wrap w-full">
+      <FormControl fullWidth>
+        <InputLabel id="select-label">Select Item</InputLabel>
+        <Select
+          labelId="select-label"
+          id="select"
+          value={selectedValue}
+          onChange={handleChange}
+          label="Select Item"
+        >
+          {studentprofile?.aiResumes?.map((resume) => (
+            <MenuItem key={resume?._id} value={resume?._id}>
+              {resume?.jobTitle}
+            </MenuItem>
+          ))}
+          {/* Add an option to redirect to "Add Resume" */}
+          <MenuItem value="add_resume">Add Resume</MenuItem>
+        </Select>
+      </FormControl>
+    </div>
+  </Box>
+)}
 
           {!isTyping && step === 4 && (
             <Box>
