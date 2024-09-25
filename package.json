@@ -53,6 +53,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -74,5 +75,7 @@
   "devDependencies": {
     "@storybook/react-vite": "^8.2.9",
     "tailwindcss": "^3.4.3"
-  }
+  },
+  "proxy": "http://localhost:3000"
+
 }

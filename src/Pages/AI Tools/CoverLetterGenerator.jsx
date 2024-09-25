@@ -82,6 +82,26 @@ function CoverLetterGenerator() {
               onChange={handleInputChange}
             />
           </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-medium mb-2">Aspect of the Company or Role that Excites You:</label>
+            <textarea
+              name="aspectOfCompany"
+              className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-blue-500"
+              placeholder="Enter Company or Role that Excites You"
+              rows="4"
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-medium mb-2">Specific Goals or Projects You Want to Contribute to:</label>
+            <textarea
+              name="specificGoals"
+              className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-blue-500"
+              placeholder="Enter Specific Goals or Projects"
+              rows="4"
+              onChange={handleInputChange}
+            />
+          </div>
           
           <div className="mb-6">
               <div className="border-4 border-dashed border-blue-300 p-8 rounded-xl shadow-md flex flex-col items-center justify-center">
