@@ -1,3 +1,5 @@
+ 
+
 import React from "react";
 
 const MockInterview = () => {
@@ -141,9 +143,7 @@ const MockInterview = () => {
           </div>
         </div>
         <div className="w-1/2 mx-auto flex justify-center my-20">
-          {/* <button className="text-white rounded bg-blue-600 font-semibold px-5 py-2 mt-5">
-            Start Your Mock Interview
-          </button> */}
+          
         </div>
       </div>
     </div>
