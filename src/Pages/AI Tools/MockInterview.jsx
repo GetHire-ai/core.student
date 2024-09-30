@@ -1,6 +1,14 @@
+ 
+
 import React from "react";
 
 const MockInterview = () => {
+
+  const handleStartClick = () =>{
+    window.location.href="http://localhost:3001/dashboard"
+  }
+
+
   return (
     // <div className="flex flex-col justify-start items-center pt-36 bg-gradient-to-l from-[#4086f0] to-[#15bb98] min-h-screen">
     //   <span className="text-xl font-bold text-gray-800">
@@ -34,7 +42,9 @@ const MockInterview = () => {
             Coach
           </span>
           <div className="w-1/2 ">
-            <button className="text-white rounded bg-blue-600 font-semibold px-5 py-2 mt-5">
+            <button 
+            onClick={handleStartClick}
+             className="text-white rounded bg-blue-600 font-semibold px-5 py-2 mt-5">
               Start Your Mock Interview
             </button>
             <div className="text-lg mt-5  text-gray-600">Powered By :
@@ -133,9 +143,7 @@ const MockInterview = () => {
           </div>
         </div>
         <div className="w-1/2 mx-auto flex justify-center my-20">
-          <button className="text-white rounded bg-blue-600 font-semibold px-5 py-2 mt-5">
-            Start Your Mock Interview
-          </button>
+          
         </div>
       </div>
     </div>
