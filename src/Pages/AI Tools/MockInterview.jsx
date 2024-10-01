@@ -130,6 +130,7 @@ const MockInterview = () => {
               src="https://app.careerflow.ai/static/media/mock_interview_analytics.708c9b1390682bef0815.png"
               alt=""
             />
+            
           </div>
           <div className="w-1/2 min-h-[50vh] flex flex-col justify-center items-center gap-3 pt-36 ml-[-7rem]">
             <span className="text-gray-900 text-3xl font-semibold w-1/2">
