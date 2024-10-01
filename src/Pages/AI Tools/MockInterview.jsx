@@ -143,7 +143,7 @@ const MockInterview = () => {
           </div>
         </div>
         <div className="w-1/2 mx-auto flex justify-center my-20">
-        
+
           
         </div>
       </div>
