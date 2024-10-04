@@ -1,32 +1,13 @@
- 
-
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const MockInterview = () => {
-
-  const handleStartClick = () =>{
-    window.location.href="http://localhost:3001/dashboard"
-  }
-
+  const navigate = useNavigate();
+  const handleStartClick = () => {
+    navigate("/blank/ai-tools/mockinterview/dashboard");
+  };
 
   return (
-    // <div className="flex flex-col justify-start items-center pt-36 bg-gradient-to-l from-[#4086f0] to-[#15bb98] min-h-screen">
-    //   <span className="text-xl font-bold text-gray-800">
-    //     included with Premium Membership
-    //   </span>
-    //   <span className="text-6xl font-bold text-gray-800 mb-5">
-    //     Ace Your upcoming job interviews !
-    //   </span>
-    //   <span className="text-xl font-semibold text-gray-600 mb-5">
-    //     practice role and company specific interview questions and get real time
-    //     feedback
-    //     <br /> from your private and judgment free AI interview Coach .S tart
-    //     your mock interview
-    //   </span>
-    //   <button className="bg-white text-blue-600 font-semibold px-5 py-2 mt-5">
-    //     Start Your Mock interview
-    //   </button>
-    // </div>
     <div className="w-full">
       <div className="w-full flex justify-around items-center bg-white overflow-hidden pb-20">
         <div className="w-1/2 min-h-[50vh] flex flex-col justify-center items-center gap-3 pt-36">
@@ -42,13 +23,13 @@ const MockInterview = () => {
             Coach
           </span>
           <div className="w-1/2 ">
-            <button 
-            onClick={handleStartClick}
-             className="text-white rounded bg-blue-600 font-semibold px-5 py-2 mt-5">
+            <button
+              onClick={handleStartClick}
+              className="text-white rounded bg-blue-600 font-semibold px-5 py-2 mt-5"
+            >
               Start Your Mock Interview
             </button>
-            <div className="text-lg mt-5  text-gray-600">Powered By :
-            </div>
+            <div className="text-lg mt-5  text-gray-600">Powered By :</div>
           </div>
         </div>
         <div className="w-1/2 h-[40vh] flex justify-center items-center">
@@ -130,7 +111,6 @@ const MockInterview = () => {
               src="https://app.careerflow.ai/static/media/mock_interview_analytics.708c9b1390682bef0815.png"
               alt=""
             />
-            
           </div>
           <div className="w-1/2 min-h-[50vh] flex flex-col justify-center items-center gap-3 pt-36 ml-[-7rem]">
             <span className="text-gray-900 text-3xl font-semibold w-1/2">
@@ -143,10 +123,7 @@ const MockInterview = () => {
             </span>
           </div>
         </div>
-        <div className="w-1/2 mx-auto flex justify-center my-20">
-
-          
-        </div>
+        <div className="w-1/2 mx-auto flex justify-center my-20"></div>
       </div>
     </div>
   );

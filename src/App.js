@@ -9,6 +9,7 @@ import Layout from "./Layouts/Layout";
 import Home from "./Pages/Home/Home";
 // import Notification from "./Pages/Notification/Notification";
 // import ApplicationManager from "./Pages/ApplicationManager/ApplicationManager";
+import IDashboard from './Pages/AI MockInterview/Dashboard.jsx'
 import Training from "./Pages/Training/Training";
 import MyBoard from "./Pages/MyBoard/MyBoard";
 import CollegeBoard from "./Pages/MyBoard/CollegeBoard";
@@ -156,6 +157,10 @@ const ProjectRoutes = () => {
             path="/blank/ai-tools/mockinterview"
             element={<MockInterview />}
           />
+          <Route
+            path="/blank/ai-tools/mockinterview/dashboard"
+            element={<IDashboard />}
+          />
           <Route path="/blank/allrounds/:id" element={<AllRounds />} />
           <Route path="/blank/start/:jobId" element={<Start />} />
           <Route path="/blank/continue/:jobId" element={<Continue />} />
@@ -183,7 +188,7 @@ const ProjectRoutes = () => {
           <Route path="/blank/chats" element={<Chat />} />
           <Route path="/blank/notification" element={<Notification />} />
           <Route path="/blank/applicationManager" element={<ApplicationManager />} />
-          
+
 
 
           <Route
