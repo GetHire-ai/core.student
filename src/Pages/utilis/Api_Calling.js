@@ -13,7 +13,7 @@ const GetApi = async (apiEndpoint) => {
     });
     return response;
   } catch (error) {
-    console.error("Error fetching data:", error);
+    // console.error("Error fetching data:", error);
     throw error;
   }
 };
@@ -31,7 +31,7 @@ const PutApi = async (apiEndpoint, data) => {
     });
     return response;
   } catch (error) {
-    console.error("Error fetching data:", error);
+    // console.error("Error fetching data:", error);
     throw error;
   }
 };
@@ -46,7 +46,7 @@ const GetApiwithouttoken = async (apiEndpoint) => {
     });
     return response;
   } catch (error) {
-    console.error("Error fetching data:", error);
+    // console.error("Error fetching data:", error);
     throw error;
   }
 };

@@ -15,12 +15,10 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-// Socket connection
-const socket = io("https://gethire-backend.onrender.com", {
+const socket = io(process.env.REACT_APP_BACKEND_URL, {
   withCredentials: true,
 });
 
-// Styled components
 const SearchInput = styled(InputBase)(({ theme }) => ({
   width: "100%",
   padding: theme.spacing(1),

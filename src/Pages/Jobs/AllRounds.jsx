@@ -17,7 +17,7 @@ const AllRounds = () => {
       setLoading(false);
     } catch (error) {
       setLoading(false);
-      console.log(error);
+      console.log(error.response);
     }
   };
 
@@ -27,7 +27,7 @@ const AllRounds = () => {
       const res = await GetApi(`api/testRoutes/result/multiid/${studentId}`);
       setAllTestResults(res.data.data);
     } catch (error) {
-      console.log(error);
+      console.log(error.response);
     }
   };
 
@@ -39,7 +39,7 @@ const AllRounds = () => {
       );
       setAllAiTest(res.data.data);
     } catch (error) {
-      console.log(error);
+      console.log(error.response);
     }
   };
 
@@ -142,7 +142,7 @@ const AllRounds = () => {
                         <button
                           onClick={() => {
                             if (!takenTest) {
-                              navigate(`/blank/start/${job._id}`);
+                              navigate(`/blank/question/${job._id}`);
                             }
                           }}
                           disabled={takenTest}
@@ -159,7 +159,7 @@ const AllRounds = () => {
                         <button
                           disabled={allAiTest !== null}
                           onClick={() => {
-                            navigate(`/blank/successful/${job._id}`);
+                            navigate(`/blank/start-interview/${job._id}`);
                           }}
                           className={`px-4 py-2 text-white rounded-md ${
                             allAiTest !== null

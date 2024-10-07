@@ -7,8 +7,8 @@ const Start = () => {
   const [Loading, setLoading] = useState(false);
   const [checkBox, setCheckBox] = useState(false);
 
-  function handleChange(e){
-    setCheckBox(!checkBox)
+  function handleChange(e) {
+    setCheckBox(!checkBox);
   }
 
   return (
@@ -69,23 +69,29 @@ const Start = () => {
               </div>
             </div>
             <div className="flex justify-center gap-[16px] items-start">
-              <input type="checkbox" className="mt-[4px]" name="" id="" onChange={handleChange} />
+              <input
+                type="checkbox"
+                className="mt-[4px]"
+                name=""
+                id=""
+                onChange={handleChange}
+              />
               <p className="max-w-[160px] font-[Outfit] font-[400] text-[12px] text-[#545454] leading-[15.12px]">
                 I have read all the instructions and am ready to begin my
                 assessment
               </p>
             </div>
-            { checkBox &&
-            <div className="flex justify-center mt-[41px] mb-[70px]">
-              <button
-                className="w-[412px] h-[55px] text-white bg-gradient-to-tl from-[#0f87b3] to-[#462da1] rounded-[5px] flex justify-center items-center"
-                // onClick={() => navigate(`/blank/continue/${jobId}`)}
-                onClick={() => navigate(`/blank/question/${jobId}`)}
+            {checkBox && (
+              <div className="flex justify-center mt-[41px] mb-[70px]">
+                <button
+                  className="w-[412px] h-[55px] text-white bg-gradient-to-tl from-[#0f87b3] to-[#462da1] rounded-[5px] flex justify-center items-center"
+                  // onClick={() => navigate(`/blank/continue/${jobId}`)}
+                  onClick={() => navigate(`/blank/question/${jobId}`)}
                 >
-                Start Assessment
-              </button>
-            </div>
-            }
+                  Start Assessment
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}

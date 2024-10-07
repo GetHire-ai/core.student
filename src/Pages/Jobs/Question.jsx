@@ -8,8 +8,8 @@ import axios from "axios";
 
 const MyModal = ({ open, handleClose, handleNavigate, jobId }) => {
   const navigate = useNavigate();
-  function scheduleLater(){
-    navigate(`/blank/allrounds/${jobId}`)
+  function scheduleLater() {
+    navigate(`/blank/allrounds/${jobId}`);
   }
   return (
     <Modal
@@ -94,7 +94,7 @@ const Question = () => {
   const [Loading, setLoading] = useState(false);
   const [job, setJob] = useState("");
   const [skills, setSkills] = useState([]);
-  const [modal, setModal] = useState(true);
+  const [modal, setModal] = useState(false);
   const [testId, setTestId] = useState("");
   const [result, setResult] = useState(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -192,7 +192,7 @@ const Question = () => {
       getTest(skills);
     }
   }, [job]);
-  
+
   useEffect(() => {
     // If timeLeft is zero, stop the timer
     if (timeLeft === 0) {
@@ -209,11 +209,10 @@ const Question = () => {
     return () => clearInterval(timerId);
   }, [timeLeft]);
 
-  
   useEffect(() => {
     // Automatically submit form when time is up
     if (isTimeUp) {
-      handleFinishTest()
+      handleFinishTest();
     }
   }, [isTimeUp]);
 
@@ -223,7 +222,7 @@ const Question = () => {
       setElapsedTime(Math.floor((new Date() - startTime) / 1000));
     }, 1000);
     setTimerInterval(interval);
-    
+
     return () => clearInterval(interval);
   }, []);
 
@@ -245,7 +244,7 @@ const Question = () => {
       setLoading(false);
     }
   };
-  
+
   // Format time to MM:SS format
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
@@ -254,7 +253,7 @@ const Question = () => {
   };
 
   const { minutes, secs } = formatTime(timeLeft);
-  
+
   const handleNextQuestion = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
@@ -283,12 +282,12 @@ const Question = () => {
     };
     try {
       const res = await PostApi("api/testRoutes/result", data);
-      console.log(res)
+      console.log(res);
       if (res.status === 200) {
         // navigate(`/blank/report/${res.data.data._id}`);
-        console.log(data)
+        console.log(data);
         getResult(res.data.data._id);
-        setModal(true)
+        setModal(true);
       }
     } catch (error) {
       console.log(error.response);
@@ -302,7 +301,6 @@ const Question = () => {
       </div>
     );
   }
-
 
   // const formatTimeElapsed = (totalSeconds) => {
   //   const hours = Math.floor(totalSeconds / 3600);
@@ -336,7 +334,8 @@ const Question = () => {
             className="w-6 h-6"
           />
           <p className="font-semibold text-sm leading-6 text-gray-600">
-            Time Left: {minutes} min {secs < 10 ? '0' : ''}{secs} sec
+            Time Left: {minutes} min {secs < 10 ? "0" : ""}
+            {secs} sec
           </p>
         </div>
 
