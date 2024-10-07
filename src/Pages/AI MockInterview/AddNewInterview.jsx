@@ -8,7 +8,7 @@ import {
   Button,
   CircularProgress,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom"; // React Router
+import { useNavigate } from "react-router-dom";
 
 function AddNewInterview() {
   const [openDialog, setOpenDialog] = useState(false);
@@ -16,7 +16,7 @@ function AddNewInterview() {
   const [jobDesc, setJobDesc] = useState("");
   const [jobExperience, setJobExperience] = useState("");
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate(); // React Router's navigate
+  const navigate = useNavigate();
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -26,13 +26,12 @@ function AddNewInterview() {
     setTimeout(() => {
       setLoading(false);
       setOpenDialog(false);
-      navigate("/dashboard/interview/dummyMockId"); // Navigate using react-router
+      navigate("/dashboard/interview/dummyMockId");
     }, 2000);
   };
 
   return (
     <div>
-      {/* Button to open dialog */}
       <div
         className="p-10 border rounded-lg bg-secondary hover:scale-105 hover:shadow-md cursor-pointer"
         onClick={() => setOpenDialog(true)}
