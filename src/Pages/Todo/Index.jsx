@@ -1,24 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { GetApi } from "../utilis/Api_Calling";
 
 const Index = () => {
-  const navigate = useNavigate();
-  const [allInterviews, setAllInterviews] = useState([]);
+  // const [allInterviews, setAllInterviews] = useState([]);
   const [allAppliedJobs, setAllAppliedJobs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [allTestResults, setAllTestResults] = useState([]);
+  // const [allTestResults, setAllTestResults] = useState([]);
 
-  const getAllInterviews = async () => {
-    try {
-      const data = await GetApi(
-        `api/StudentRoutes/GetAllJobinterviewofaStudent`
-      );
-      setAllInterviews(data?.data?.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const getAllInterviews = async () => {
+  //   try {
+  //     const data = await GetApi(
+  //       `api/StudentRoutes/GetAllJobinterviewofaStudent`
+  //     );
+  //     setAllInterviews(data?.data?.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const getAllAppliedJobs = async () => {
     try {
@@ -34,25 +32,25 @@ const Index = () => {
     }
   };
 
-  const getAllTestResults = async () => {
-    let id = localStorage.getItem("Studentid");
-    try {
-      const res = await GetApi(`api/testRoutes/result/multiid/${id}`);
-      setAllTestResults(res.data.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const getAllTestResults = async () => {
+  //   let id = localStorage.getItem("Studentid");
+  //   try {
+  //     const res = await GetApi(`api/testRoutes/result/multiid/${id}`);
+  //     setAllTestResults(res.data.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   useEffect(() => {
-    getAllInterviews();
+    // getAllInterviews();
     getAllAppliedJobs();
-    getAllTestResults();
+    // getAllTestResults();
   }, []);
 
-  const hasTakenTest = (jobId) => {
-    return allTestResults.some((test) => test.job === jobId);
-  };
+  // const hasTakenTest = (jobId) => {
+  //   return allTestResults.some((test) => test.job === jobId);
+  // };
 
   if (loading) {
     return (
