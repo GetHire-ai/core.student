@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { PostApi } from "../utilis/Api_Calling";
 import {
   Dialog,
   DialogTitle,
@@ -7,27 +8,43 @@ import {
   TextField,
   Button,
   CircularProgress,
+  Autocomplete,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 function AddNewInterview() {
   const [openDialog, setOpenDialog] = useState(false);
-  const [jobPosition, setJobPosition] = useState("");
-  const [jobDesc, setJobDesc] = useState("");
-  const [jobExperience, setJobExperience] = useState("");
+  const [jobTitle, setJobTitle] = useState("");
+  const [desc, setDesc] = useState("");
+  const [experience, setExperience] = useState("");
+  const [skills, setSkills] = useState([]); // New state for skills
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const onSubmit = (e) => {
+  const allSkills = [
+    "JavaScript",
+    "React",
+    "Node.js",
+    "Python",
+    "Java",
+    "C++",
+    "Ruby",
+    // Add more skills as needed
+  ];
+
+  const onSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    console.log(jobPosition, jobDesc, jobExperience);
-
-    setTimeout(() => {
+    try {
+      let data = { jobTitle, desc, experience, skills }; // Include skills in the data
+      let res = await PostApi(`api/studentroutes/ai-interview`, data);
+      console.log(res);
+      setOpenDialog(false); // Close dialog after submission
+    } catch (error) {
+      console.error(error.response);
+    } finally {
       setLoading(false);
-      setOpenDialog(false);
-      navigate("/dashboard/interview/dummyMockId");
-    }, 2000);
+    }
   };
 
   return (
@@ -40,7 +57,12 @@ function AddNewInterview() {
       </div>
 
       {/* Material UI Dialog */}
-      <Dialog open={openDialog} onClose={() => setOpenDialog(false)} fullWidth maxWidth="md">
+      <Dialog
+        open={openDialog}
+        onClose={() => setOpenDialog(false)}
+        fullWidth
+        maxWidth="md"
+      >
         <DialogTitle>Tell us more about your job interview</DialogTitle>
         <DialogContent>
           <form onSubmit={onSubmit}>
@@ -52,8 +74,8 @@ function AddNewInterview() {
                   variant="outlined"
                   fullWidth
                   required
-                  value={jobPosition}
-                  onChange={(e) => setJobPosition(e.target.value)}
+                  value={jobTitle}
+                  onChange={(e) => setJobTitle(e.target.value)}
                   placeholder="Ex. Full Stack Developer"
                 />
               </div>
@@ -67,8 +89,8 @@ function AddNewInterview() {
                   required
                   multiline
                   minRows={3}
-                  value={jobDesc}
-                  onChange={(e) => setJobDesc(e.target.value)}
+                  value={desc}
+                  onChange={(e) => setDesc(e.target.value)}
                   placeholder="Ex. React, Node.js"
                 />
               </div>
@@ -81,10 +103,30 @@ function AddNewInterview() {
                   variant="outlined"
                   fullWidth
                   required
-                  value={jobExperience}
-                  onChange={(e) => setJobExperience(e.target.value)}
+                  value={experience}
+                  onChange={(e) => setExperience(e.target.value)}
                   placeholder="Ex. 5"
                   inputProps={{ min: 0, max: 20 }}
+                />
+              </div>
+
+              {/* Skills Input */}
+              <div className="my-3">
+                <Autocomplete
+                  multiple
+                  options={allSkills}
+                  getOptionLabel={(option) => option}
+                  value={skills}
+                  onChange={(event, newValue) => setSkills(newValue)}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Skills"
+                      placeholder="Select or add skills"
+                      variant="outlined"
+                    />
+                  )}
+                  freeSolo
                 />
               </div>
             </div>
@@ -97,7 +139,10 @@ function AddNewInterview() {
               <Button type="submit" color="primary" disabled={loading}>
                 {loading ? (
                   <>
-                    <CircularProgress size={20} style={{ marginRight: "8px" }} />
+                    <CircularProgress
+                      size={20}
+                      style={{ marginRight: "8px" }}
+                    />
                     Generating From AI
                   </>
                 ) : (

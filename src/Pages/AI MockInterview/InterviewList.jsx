@@ -9,6 +9,7 @@ function InterviewList() {
     try {
       let res = await GetApi(`api/studentroutes/ai-interview`);
       setInterviewList(res?.data?.data);
+      console.log(res?.data?.data);
     } catch (error) {
       console.error(error);
     }

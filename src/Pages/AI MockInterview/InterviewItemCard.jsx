@@ -6,18 +6,18 @@ function InterviewItemCard({ interview }) {
   const navigate = useNavigate(); // React Router's navigate
 
   const onStart = () => {
-    navigate("/dashboard/interview/" + interview.mockId); // React Router navigation
+    navigate("/dashboard/interview/" + interview._id);
   };
 
   const onFeedbackPress = () => {
-    navigate("/dashboard/interview/" + interview.mockId + "/feedback"); // React Router navigation
+    navigate("/dashboard/interview/" + interview._id + "/feedback"); 
   };
 
   return (
     <div className="border shadow-sm rounded-lg p-3 my-4">
-      <h2 className="font-bold text-blue-600">{interview.jobPosition}</h2>
+      <h2 className="font-bold text-blue-600">{interview?.jobTitle}</h2>
       <h2 className="text-sm text-grey-600">
-        {interview.jobExperience} Years of Experience
+        {interview.experience} Years of Experience
       </h2>
       <h2 className="text-xs text-grey-600">
         Created At : {interview.createdAt}
