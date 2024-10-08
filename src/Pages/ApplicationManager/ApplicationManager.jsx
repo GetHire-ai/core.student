@@ -10,8 +10,8 @@ import {
   DialogContent,
   DialogTitle,
   CircularProgress,
+  TextField,
 } from "@mui/material";
-import "react-circular-progressbar/dist/styles.css";
 import { GetApi } from "../utilis/Api_Calling";
 import { useNavigate } from "react-router-dom";
 
@@ -22,14 +22,17 @@ const ApplicationManager = () => {
   const [Loading, setLoading] = useState(true);
   const [allappiledjobs, setAllAppliedJobs] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);
-  const [allinterview, setallinterview] = useState([]);
   const [studentprofile, setstudentprofile] = useState({});
+  const [selectedInterview, setSelectedInterview] = useState(null);
   const [selectedJob, setSelectedJob] = useState(null);
   const [hoveredCardIndex, setHoveredCardIndex] = useState(null);
   const [hoveredModalIndex, setHoveredModalIndex] = useState(null);
   const [value, setValue] = useState(0);
   const [interviewModal, setInterviewModal] = useState(false);
   const [onboardingModal, setOnboardingModal] = useState(false);
+  const [newDate, setNewDate] = useState("");
+  const [newTime, setNewTime] = useState("");
+  const [editing, setEditing] = useState(false); // To toggle edit mode
   const cardRefs = useRef([]);
   const timeoutRef = useRef(null);
 
@@ -59,6 +62,7 @@ const ApplicationManager = () => {
     Getstudentprofile();
     Getallappiledjob();
   }, []);
+
   const handleMouseEnter = (index) => {
     clearTimeout(timeoutRef.current);
     setHoveredCardIndex(index);
@@ -84,76 +88,51 @@ const ApplicationManager = () => {
     }, 300);
   };
 
-  const getContainerStyle = (index) => {
-    const card = cardRefs.current[index];
-    if (!card) return {};
-
-    const { offsetTop, offsetLeft, offsetWidth, offsetHeight } = card;
-    const containerWidth = 350;
-    const containerHeight = 400; // Increase height to fit content
-
-    let top = offsetTop + offsetHeight + 20; // Increased gap
-    let left = offsetLeft + offsetWidth + 20; // Increased gap
-
-    // Adjust left position if necessary
-    const viewportWidth = window.innerWidth;
-    const adjustedLeft =
-      left + containerWidth > viewportWidth
-        ? Math.max(left - containerWidth - 20, 0)
-        : left;
-
-    // Adjust top position if necessary
-    const viewportHeight = window.innerHeight;
-    const adjustedTop =
-      top + containerHeight > viewportHeight
-        ? Math.max(top - containerHeight - 20, 0)
-        : top;
-
-    return {
-      top: adjustedTop,
-      left: adjustedLeft,
-      width: containerWidth,
-      height: containerHeight,
-      zIndex: 9999,
-      position: "fixed",
-      // overflow: 'auto',
-      padding: "24px",
-    };
-  };
-
   useEffect(() => {
     setSelectedJob(null);
-    if (allappiledjobs) {
-      if (tabOptions[value] === "Applied Jobs") setFilteredJobs(allappiledjobs);
-      if (tabOptions[value] === "Interview") {
-        console.log(allappiledjobs?.filter((job) => job));
+    if (allappiledjobs.length > 0) {
+      if (tabOptions[value] === "Applied Jobs") {
+        setFilteredJobs(allappiledjobs);
+      } else if (tabOptions[value] === "Interview") {
         setFilteredJobs(
-          allappiledjobs?.filter(
+          allappiledjobs.filter(
             (job) =>
-              job?.isInterviewScheduled === true &&
-              job?.job?.isInterviewCompleted === false &&
-              job?.IsSelectedforjob === false
+              job?.isinterviewScheduled &&
+              !job?.isInterviewcompleted &&
+              !job?.IsSelectedforjob
           )
         );
-      }
-
-      if (tabOptions[value] === "Onboarding")
-        setFilteredJobs(
-          allappiledjobs?.filter((job) => job?.status === "selected")
+      } else if (tabOptions[value] === "Onboarding") {
+        const filteredOnboardingJobs = allappiledjobs.filter(
+          (job) => job?.status === "selected"
         );
+        setFilteredJobs(filteredOnboardingJobs);
+      }
     }
-  }, [value, allappiledjobs]);
+  }, [value]);
 
   const handleClick = (job, index) => {
     setSelectedJob(job);
     if (tabOptions[value] === "Interview") {
       setInterviewModal(true);
+      setSelectedInterview(job);
     } else if (tabOptions[value] === "Onboarding") {
       setOnboardingModal(true);
     } else {
       navigate(`/blank/allrounds/${job?.JobId?._id}`);
-      console.log(job);
     }
+  };
+
+  const handleReschedule = async () => {
+    const updatedSchedule = {
+      date: newDate,
+      time: newTime,
+    };
+    console.log("New Schedule: ", updatedSchedule);
+    // Call your API to update the interview schedule
+    // await PostApi('api/update-schedule', updatedSchedule);
+    setEditing(false);
+    setInterviewModal(false);
   };
 
   return (
@@ -269,48 +248,64 @@ const ApplicationManager = () => {
         maxWidth="sm"
         fullWidth
       >
-        <DialogTitle id="interview-dialog-title">Interview Details</DialogTitle>
-        <DialogContent>
-          {/* Place the Interview details here */}
-          <Typography variant="body1">
-            Interview Date: {selectedJob?.job?.interviewDate}
-          </Typography>
-          <Typography variant="body1">
-            Interview Time: {selectedJob?.job?.interviewTime}
-          </Typography>
-          {/* Add more details as needed */}
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setInterviewModal(false)} color="primary">
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
-
-      <Dialog
-        open={onboardingModal}
-        onClose={() => setOnboardingModal(false)}
-        aria-labelledby="onboarding-dialog-title"
-        maxWidth="sm"
-        fullWidth
-      >
-        <DialogTitle id="onboarding-dialog-title">
-          Onboarding Details
+        <DialogTitle id="interview-dialog-title" textAlign={"center"}>
+          Reschedule Interview
         </DialogTitle>
         <DialogContent>
-          {/* Place the Onboarding details here */}
-          <Typography variant="body1">
-            Onboarding Date: {selectedJob?.job?.onboardingDate}
+          <Typography textAlign={"center"} gutterBottom>
+            Current Interview Date: {selectedInterview?.interviewSchedule?.date}
+            &nbsp;&nbsp;&nbsp; Current Time:{" "}
+            {selectedInterview?.interviewSchedule?.time}
           </Typography>
-          <Typography variant="body1">
-            Onboarding Location: {selectedJob?.job?.onboardingLocation}
-          </Typography>
-          {/* Add more details as needed */}
+
+          {!editing ? (
+            <Button onClick={() => setEditing(true)}>Edit Schedule</Button>
+          ) : (
+            <>
+              <TextField
+                label="New Date"
+                type="date"
+                value={newDate}
+                onChange={(e) => setNewDate(e.target.value)}
+                fullWidth
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                margin="normal"
+              />
+
+              <TextField
+                label="New Time"
+                type="time"
+                value={newTime}
+                onChange={(e) => setNewTime(e.target.value)}
+                fullWidth
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                margin="normal"
+              />
+            </>
+          )}
         </DialogContent>
+
         <DialogActions>
-          <Button onClick={() => setOnboardingModal(false)} color="primary">
-            Close
+          <Button
+            onClick={() => setInterviewModal(false)}
+            color="secondary"
+            variant="outlined"
+          >
+            Cancel
           </Button>
+          {editing && (
+            <Button
+              onClick={handleReschedule}
+              color="primary"
+              variant="contained"
+            >
+              Save
+            </Button>
+          )}
         </DialogActions>
       </Dialog>
     </>
