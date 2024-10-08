@@ -124,6 +124,7 @@ const ApplicationManager = () => {
     }
   };
 
+  
   const handleReschedule = async (id) => {
     try {
       const data = {
