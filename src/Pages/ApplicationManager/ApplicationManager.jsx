@@ -19,13 +19,10 @@ const tabOptions = ["Applied Jobs", "Interview", "Onboarding"];
 
 const ApplicationManager = () => {
   const navigate = useNavigate();
-  const [AllJobs, setAllJobs] = useState([]);
   const [Loading, setLoading] = useState(true);
-  const [appiledjobs, setappiledjobs] = useState([]);
-  const [allappiledjobs, setallappiledjobs] = useState([]);
+  const [allappiledjobs, setAllAppliedJobs] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);
   const [allinterview, setallinterview] = useState([]);
-  const [allTestResults, setAllTestResults] = useState([]);
   const [studentprofile, setstudentprofile] = useState({});
   const [selectedJob, setSelectedJob] = useState(null);
   const [hoveredCardIndex, setHoveredCardIndex] = useState(null);
@@ -33,7 +30,6 @@ const ApplicationManager = () => {
   const [value, setValue] = useState(0);
   const [interviewModal, setInterviewModal] = useState(false);
   const [onboardingModal, setOnboardingModal] = useState(false);
-
   const cardRefs = useRef([]);
   const timeoutRef = useRef(null);
 
@@ -48,25 +44,10 @@ const ApplicationManager = () => {
     }
   };
 
-  useEffect(() => {
-    Getstudentprofile();
-  }, []);
-
-  const GetAllJobs = async () => {
-    try {
-      const Getjobdata = await GetApi(`api/AdminRoutes/GetAllJobs`);
-      setAllJobs(Getjobdata?.data?.data);
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
-    }
-  };
-
   const Getallappiledjob = async () => {
     try {
       const res = await GetApi(`api/StudentRoutes/GetAllAppiledJobsofaStudent`);
-      setallappiledjobs(res?.data?.data);
+      setAllAppliedJobs(res?.data?.data);
       setFilteredJobs(res?.data?.data);
       setSelectedJob(res?.data?.data[0]);
     } catch (error) {
@@ -75,10 +56,9 @@ const ApplicationManager = () => {
   };
 
   useEffect(() => {
-    GetAllJobs();
+    Getstudentprofile();
     Getallappiledjob();
   }, []);
-
   const handleMouseEnter = (index) => {
     clearTimeout(timeoutRef.current);
     setHoveredCardIndex(index);
@@ -145,7 +125,8 @@ const ApplicationManager = () => {
     setSelectedJob(null);
     if (allappiledjobs) {
       if (tabOptions[value] === "Applied Jobs") setFilteredJobs(allappiledjobs);
-      if (tabOptions[value] === "Interview")
+      if (tabOptions[value] === "Interview") {
+        console.log(allappiledjobs?.filter((job) => job));
         setFilteredJobs(
           allappiledjobs?.filter(
             (job) =>
@@ -154,6 +135,7 @@ const ApplicationManager = () => {
               job?.IsSelectedforjob === false
           )
         );
+      }
 
       if (tabOptions[value] === "Onboarding")
         setFilteredJobs(
@@ -170,7 +152,7 @@ const ApplicationManager = () => {
       setOnboardingModal(true);
     } else {
       navigate(`/blank/allrounds/${job?.JobId?._id}`);
-      console.log(job)
+      console.log(job);
     }
   };
 
