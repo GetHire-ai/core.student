@@ -12,8 +12,9 @@ import {
   CircularProgress,
   TextField,
 } from "@mui/material";
-import { GetApi } from "../utilis/Api_Calling";
+import { GetApi, PostApi } from "../utilis/Api_Calling";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const tabOptions = ["Applied Jobs", "Interview", "Onboarding"];
 
@@ -123,16 +124,24 @@ const ApplicationManager = () => {
     }
   };
 
-  const handleReschedule = async () => {
-    const updatedSchedule = {
-      date: newDate,
-      time: newTime,
-    };
-    console.log("New Schedule: ", updatedSchedule);
-    // Call your API to update the interview schedule
-    // await PostApi('api/update-schedule', updatedSchedule);
-    setEditing(false);
-    setInterviewModal(false);
+  const handleReschedule = async (id) => {
+    try {
+      const data = {
+        date: newDate,
+        Time: newTime,
+      };
+      let res = await PostApi(
+        `api/studentroutes/interview/reschedule/${id}`,
+        data
+      );
+      toast.success("Interview Rescheduled", { autoClose: 1000 });
+      setEditing(false);
+    } catch (error) {
+      toast.error("Interview Rescheduled failed", { autoClose: 1000 });
+      console.error(error.response);
+    } finally {
+      setInterviewModal(false);
+    }
   };
 
   return (
@@ -299,7 +308,7 @@ const ApplicationManager = () => {
           </Button>
           {editing && (
             <Button
-              onClick={handleReschedule}
+              onClick={() => handleReschedule(selectedInterview._id)}
               color="primary"
               variant="contained"
             >
