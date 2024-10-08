@@ -307,7 +307,7 @@ const ChatComponent = () => {
                       </div>
                       <Typography variant="body2" className="text-gray-600">
                         {onlineUsers[company._id] ? (
-                          <span className="ml-2 text-green-500">●</span>
+                          <span className="ml-2 text-green-500"> f●</span>
                         ) : (
                           company.statusMessage || ""
                         )}
