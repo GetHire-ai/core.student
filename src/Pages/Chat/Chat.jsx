@@ -164,17 +164,18 @@ const ChatComponent = () => {
 
   const handleCompanyClick = async (companyId, company) => {
     try {
-      if (companyId !== currentCompany._id) {
-        setSearchQuery("");
-        const response = await GetApi(
-          `api/chatroutes/conversation/${studentId}/${companyId}`
-        );
-        const conversationId = response?.data?.data?._id;
-        setCurrentConversationId(conversationId);
-        setCurrentCompany(company);
-        setMessages([]);
-        setShowOldMessages(false);
+      if (companyId == currentCompany?._id) {
+        return;
       }
+      setSearchQuery("");
+      const response = await GetApi(
+        `api/chatroutes/conversation/${studentId}/${companyId}`
+      );
+      const conversationId = response?.data?.data?._id;
+      setCurrentConversationId(conversationId);
+      setCurrentCompany(company);
+      setMessages([]);
+      setShowOldMessages(false);
     } catch (error) {
       console.error("Error fetching or creating conversation:", error);
     }
