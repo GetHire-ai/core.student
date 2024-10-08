@@ -124,7 +124,6 @@ const ApplicationManager = () => {
     }
   };
 
-  
   const handleReschedule = async (id) => {
     try {
       const data = {
@@ -143,6 +142,23 @@ const ApplicationManager = () => {
     } finally {
       setInterviewModal(false);
     }
+  };
+
+  // Get today's date in YYYY-MM-DD format
+  const getTodayDate = () => {
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, "0");
+    const mm = String(today.getMonth() + 1).padStart(2, "0");
+    const yyyy = today.getFullYear();
+    return `${yyyy}-${mm}-${dd}`;
+  };
+
+  // Get the current time in HH:MM format
+  const getCurrentTime = () => {
+    const now = new Date();
+    const hh = String(now.getHours()).padStart(2, "0");
+    const mm = String(now.getMinutes()).padStart(2, "0");
+    return `${hh}:${mm}`;
   };
 
   return (
@@ -265,37 +281,43 @@ const ApplicationManager = () => {
           <Typography textAlign={"center"} gutterBottom>
             Current Interview Date: {selectedInterview?.interviewSchedule?.date}
             &nbsp;&nbsp;&nbsp; Current Time:{" "}
-            {selectedInterview?.interviewSchedule?.time}
+            {selectedInterview?.interviewSchedule?.Time}
           </Typography>
 
           {!editing ? (
             <Button onClick={() => setEditing(true)}>Edit Schedule</Button>
           ) : (
-            <>
-              <TextField
-                label="New Date"
-                type="date"
-                value={newDate}
-                onChange={(e) => setNewDate(e.target.value)}
-                fullWidth
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                margin="normal"
-              />
+            <div className="w-full flex gap-1">
+              <div className="w-1/2">
+                <TextField
+                  label="New Date"
+                  type="date"
+                  value={newDate}
+                  onChange={(e) => setNewDate(e.target.value)}
+                  fullWidth
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  margin="normal"
+                  inputProps={{ min: getTodayDate() }} // Disable past dates
+                />
+              </div>
 
-              <TextField
-                label="New Time"
-                type="time"
-                value={newTime}
-                onChange={(e) => setNewTime(e.target.value)}
-                fullWidth
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                margin="normal"
-              />
-            </>
+              <div className="w-1/2">
+                <TextField
+                  label="New Time"
+                  type="time"
+                  value={newTime}
+                  onChange={(e) => setNewTime(e.target.value)}
+                  fullWidth
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  margin="normal"
+                  inputProps={{ min: getCurrentTime() }} // Disable past times
+                />
+              </div>
+            </div>
           )}
         </DialogContent>
 

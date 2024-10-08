@@ -156,6 +156,7 @@ const ChatComponent = () => {
         senderType: "Student",
         message,
       };
+      console.log(data);
       socket.emit("sendMessage", data);
       setMessage("");
     }
@@ -163,15 +164,17 @@ const ChatComponent = () => {
 
   const handleCompanyClick = async (companyId, company) => {
     try {
-      setSearchQuery("");
-      const response = await GetApi(
-        `api/chatroutes/conversation/${studentId}/${companyId}`
-      );
-      const conversationId = response?.data?.data?._id;
-      setCurrentConversationId(conversationId);
-      setCurrentCompany(company);
-      setMessages([]);
-      setShowOldMessages(false);
+      if (companyId !== currentCompany._id) {
+        setSearchQuery("");
+        const response = await GetApi(
+          `api/chatroutes/conversation/${studentId}/${companyId}`
+        );
+        const conversationId = response?.data?.data?._id;
+        setCurrentConversationId(conversationId);
+        setCurrentCompany(company);
+        setMessages([]);
+        setShowOldMessages(false);
+      }
     } catch (error) {
       console.error("Error fetching or creating conversation:", error);
     }
@@ -204,7 +207,7 @@ const ChatComponent = () => {
     <Box className="flex overflow-hidden overflow-y-hidden min-h-full max-h-full bg-white shadow-lg rounded-lg">
       <Box
         component="aside"
-        className="w-[35%] bg-white border-r max-h-[600px] border-gray-300 p-4 overflow-y-scroll"
+        className="w-[35%] bg-white border-r min-h-[90vh] max-h-[90vh] border-gray-300 p-4 overflow-y-scroll"
       >
         <Typography variant="h6" className="text-gray-800 font-semibold mb-4">
           <div className="w-full border-b border-gray-300 mb-4 relative">
@@ -251,7 +254,7 @@ const ChatComponent = () => {
         {loadingCompanies ? (
           <CircularProgress className="text-blue-900" />
         ) : (
-          <List className="space-y-2">
+          <List className="space-y-2 ">
             <ListItem className="pb-4">
               <SearchInput
                 placeholder="Search by name or email"
@@ -323,7 +326,7 @@ const ChatComponent = () => {
         )}
       </Box>
 
-      <Box className="w-3/4 flex flex-col relative max-h-[86vh] overflow-hidden">
+      <Box className="w-3/4 flex flex-col relative min-h-[90vh] max-h-[90vh] overflow-hidden">
         {currentCompany && (
           <Box className="p-3 bg-blue-500 text-white text-lg font-semibold rounded-t-md">
             <Typography variant="h6">{currentCompany.Name}</Typography>
@@ -373,7 +376,9 @@ const ChatComponent = () => {
                   {msgs.map((msg, index) => (
                     <Box
                       key={msg._id || index}
-                      className={`flex items-start space-x-3 mb-2 ${msg.senderType === "Student" ? "justify-end" : ""}`}
+                      className={`flex items-start space-x-3 mb-2 ${
+                        msg.senderType === "Student" ? "justify-end" : ""
+                      }`}
                     >
                       <img
                         src="https://static.vecteezy.com/system/resources/previews/009/383/461/non_2x/man-face-clipart-design-illustration-free-png.png"
