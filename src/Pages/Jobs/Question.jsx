@@ -4,6 +4,7 @@ import { GetApi, PostApi } from "../utilis/Api_Calling";
 import { Modal, Box, Button, Typography, Alert } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import TipsAndUpdatesIcon from "@mui/icons-material/TipsAndUpdates";
+import SkillsCheckModal from "./SkillsCheckModal";
 import axios from "axios";
 
 const MyModal = ({ open, handleClose, handleNavigate, jobId }) => {
@@ -92,6 +93,7 @@ const Question = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [Loading, setLoading] = useState(false);
+  const [skillTestModal, setSkillTestModal] = useState(true);
   const [job, setJob] = useState("");
   const [skills, setSkills] = useState([]);
   const [modal, setModal] = useState(false);
@@ -506,6 +508,12 @@ const Question = () => {
           </div>
         </div>
       )}
+      <SkillsCheckModal
+        isOpen={skillTestModal}
+        onRequestClose={() => setSkillTestModal(false)}
+        skill={skills}
+        job={job}
+      />
       <MyModal
         open={modal}
         handleNavigate={() => navigate(`/blank/interview-setting/${id}`)}
