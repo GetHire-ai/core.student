@@ -231,6 +231,7 @@ function Skills({ updateProfile }) {
 
   const handleTest = (skill) => {
     setSelectedSkill(skill)
+    console.log(skill )
     setSkillTest(true)
   }
 
@@ -268,7 +269,7 @@ function Skills({ updateProfile }) {
               key={index}
               className="bg-blue-100 text-blue-800 p-3 rounded-full flex items-center space-x-2 cursor-pointer"
             >
-              <span>{skill.Skill}</span>
+              <span>{skill?.score}%  {skill?.Skill}</span>
               {editingTechnicalSkills && (
                 <button
                   className="text-red-500 hover:text-red-700"
