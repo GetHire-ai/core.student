@@ -132,7 +132,7 @@ const ProjectRoutes = () => {
           <Route path="/CollegeBoard" element={<CollegeBoard />} />
           {/* <Route path="/chat" element={<Chat />} /> */}
           <Route path="/AICounsellor" element={<AICounsellor />} />
-          <Route path="/SkillManager" element={<SkillsManager />} />
+          <Route path="/blank/SkillManager" element={<SkillsManager />} />
           <Route path="/Suggestion" element={<Suggestion />} />
           <Route path="/Certification" element={<Certifiaction />} />
           <Route path="/blank/bookmarked" element={<Bookmarks />} />

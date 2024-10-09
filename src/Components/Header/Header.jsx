@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 // ---------------------
 // ----------------
-import Typography from '@mui/material/Typography';
-import Dialog from '@mui/material/Dialog';
+import Typography from "@mui/material/Typography";
+import Dialog from "@mui/material/Dialog";
 // import * as React from 'react';
 // import Box from '@mui/material/Box';
 // import Button from '@mui/material/Button';
@@ -35,13 +35,13 @@ import { GetApi } from "../../Pages/utilis/Api_Calling";
 
 // -----------------------
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
+  bgcolor: "background.paper",
+  border: "2px solid #000",
   boxShadow: 24,
   p: 4,
 };
@@ -126,25 +126,21 @@ const workItems = [
   },
 ];
 
-
 // ------------------
-  // ----------------------------
-  // import * as React from 'react';
+// ----------------------------
+// import * as React from 'react';
 // import Button from '@mui/material/Button';
 // import { styled } from '@mui/material/styles';
 // import Typography from '@mui/material/Typography';
 
-
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-  '& .MuiDialogContent-root': {
+  "& .MuiDialogContent-root": {
     padding: theme.spacing(2),
   },
-  '& .MuiDialogActions-root': {
+  "& .MuiDialogActions-root": {
     padding: theme.spacing(1),
   },
 }));
-
-
 
 const Header = () => {
   let path = useLocation();
@@ -333,7 +329,7 @@ const Header = () => {
   // const id2 = open ? "simple-menu" : undefined;
 
   // for notifications
-  const [noti , SetNoti] = useState(false);
+  const [noti, SetNoti] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -352,10 +348,6 @@ const Header = () => {
 
     fetchNotifications();
   }, []);
-
-
-
-
 
   return (
     <>
@@ -574,10 +566,12 @@ const Header = () => {
             {/* <Link to={"/blank/notification"}> */}
             <Link>
               {/* <i className="fa-regular fa-bell cursor-pointer"></i> */}
-              <MdOutlineNotifications size={25} color="#6082B6"
-                onMouseEnter={()=> SetNoti(true)}
-                onMouseLeave={()=> SetNoti(false)}
-                />
+              <MdOutlineNotifications
+                size={25}
+                color="#6082B6"
+                onMouseEnter={() => SetNoti(true)}
+                onMouseLeave={() => SetNoti(false)}
+              />
             </Link>
           </div>
 
@@ -628,7 +622,7 @@ const Header = () => {
                 Portfolio
               </MenuItem>
               <MenuItem
-                onClick={() => navigate("/SkillManager")}
+                onClick={() => navigate("/blank/SkillManager")}
                 className="hover:bg-blue-100 hover:text-blue-700 transition-colors duration-200 px-4 py-2 rounded-lg"
               >
                 My Skills
@@ -641,42 +635,6 @@ const Header = () => {
               </MenuItem>
             </Menu>
           </div>
-
-          {/* <div className="md:hidden">
-            <div
-              className={` ${
-                !showFullNavbar ? "flex " : "hidden"
-              } z-10 bg-white overflow-x-auto h-screen  right-0 w-[300px] pb-[120px] px-[53px] text-[18px] absolute flex-col font-[400] gap-[43px]  font-[Outfit]`}></div>
-            <Menu
-              id={id}
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-              MenuListProps={{
-                "aria-labelledby": id,
-              }}
-              className=" right-0"
-            >
-              <MenuItem
-                onClick={() => navigate("/blank/Portfolio")}
-                className="hover:bg-blue-100 hover:text-blue-700 transition-colors duration-200 px-4 py-2 rounded-lg"
-              >
-                Portfolio
-              </MenuItem>
-              <MenuItem
-                onClick={() => navigate("/SkillManager")}
-                className="hover:bg-blue-100 hover:text-blue-700 transition-colors duration-200 px-4 py-2 rounded-lg"
-              >
-                My Skills
-              </MenuItem>
-              <MenuItem
-                onClick={handleLogout}
-                className="hover:bg-red-100 hover:text-red-700 transition-colors duration-200 px-4 py-2 rounded-lg"
-              >
-                Logout
-              </MenuItem>
-            </Menu>
-          </div> */}
         </div>
 
         <div className="md:hidden">
@@ -699,68 +657,6 @@ const Header = () => {
               </p>
             </div>
             <Link>Home</Link>
-            {/* <div
-                onClick={toggleInternshipDropDown}
-                className="relative cursor-pointer"
-              >
-                Internship
-              </div> */}
-
-            {/* {showInternshipDropDown && (
-                <div className="bg-white shadow-lg flex flex-col top-[240px]  h-full">
-                  <div className="py-[22px] w-[223px] text-[16px] font-[400] pr-[10px]">
-                    <p
-                      onClick={() => handleSelectInternshipOption("location")}
-                      className={` ${
-                        selectInternshipOption === "location"
-                          ? "bg-[#4234a2] bg-opacity-[10%] rounded-tr-[39px] rounded-br-[39px] w-full  flex items-center "
-                          : ""
-                      } px-[17px] py-[8px]`}
-                    >
-                      Top Location
-                    </p>
-                    <p
-                      onClick={() => handleSelectInternshipOption("profile")}
-                      className={` ${
-                        selectInternshipOption === "profile"
-                          ? "bg-[#4234a2] bg-opacity-[10%] rounded-tr-[39px] rounded-br-[39px] w-full  flex items-center "
-                          : ""
-                      } px-[17px] py-[8px]`}
-                    >
-                      Profile
-                    </p>
-                    <p
-                      onClick={() => handleSelectInternshipOption("categories")}
-                      className={` ${
-                        selectInternshipOption === "categories"
-                          ? "bg-[#4234a2] bg-opacity-[10%] rounded-tr-[39px] rounded-br-[39px] w-full  flex items-center "
-                          : ""
-                      } px-[17px] py-[8px]`}
-                    >
-                      Top Categories
-                    </p>
-                    <p
-                      onClick={() => handleSelectInternshipOption("moreInternship")}
-                      className={` ${
-                        selectInternshipOption === "moreInternship"
-                          ? "bg-[#4234a2] bg-opacity-[10%] rounded-tr-[39px] rounded-br-[39px] w-full  flex items-center "
-                          : ""
-                      } px-[17px] py-[8px]`}
-                    >
-                      Explore More Internships
-                    </p>
-                  </div>
-
-                  <div className="py-[36px] px-[18px] overflow-auto w-full">
-                    <ul className="flex flex-col gap-[17px] text-[15px] text-black text-opacity-[50%] font-[400]">
-                      {internshipListItem().map((item, index) => {
-                        return <li key={index}>{item}</li>;
-                      })}
-                    </ul>
-                  </div>
-                </div>
-              )} */}
-
             <Link to="/Jobs">Jobs</Link>
             <Link to="/blank/clubs">Clubs</Link>
             <div className="flex gap-[8px] bg-[#e7f6ff] rounded-[8px] px-[14px] py-[12px]">
@@ -885,7 +781,7 @@ const Header = () => {
           </div>
         </div>
       </div>
-       
+
       {/* for notifications */}
       {/* {noti && (
         <div className="fixed top-[50px] right-[5%] z-20 w-[300px] bg-white shadow-md rounded-lg overflow-hidden">
@@ -907,53 +803,44 @@ const Header = () => {
           </div>
         </div>
       )} */}
-        {noti && (
-          <>
-            <div
-              className="fixed -top-[25px] left-[59%] z-20 w-[300px] bg-white shadow-md rounded-lg overflow-hidden relative cursor-pointer"
-              onMouseEnter={() => SetNoti(true)}
-              onMouseLeave={() => SetNoti(false)}
-              onClick={() => navigate('/blank/notification')}
-            >
-              <div className="bg-blue-700 flex flex-row justify-around text-white p-4 font-bold">
-                Updated Messages
-              </div>
-              <div className="max-h-[320px] overflow-y-auto">
-                {loading ? (
-                  <p className="p-4">Loading...</p>
-                ) : notifications.length > 0 ? (
-                  notifications.map((notification, index) => {
-                    const words = notification?.text.split(' ');
-                    const truncatedText =
-                      words.length > 5
-                        ? words.slice(0, 9).join(' ') + '...'
-                        : notification?.text;
-          
-                    return (
-                      <div key={index} className="p-4 border-b text-sm font-semibold border-gray-200">
-                        {truncatedText || 'No message available'}
-                      </div>
-                    );
-                  })
-                ) : (
-                  <p className="p-4">No notifications available.</p>
-                )}
-              </div>
+      {noti && (
+        <>
+          <div
+            className="fixed -top-[25px] left-[59%] z-20 w-[300px] bg-white shadow-md rounded-lg overflow-hidden relative cursor-pointer"
+            onMouseEnter={() => SetNoti(true)}
+            onMouseLeave={() => SetNoti(false)}
+            onClick={() => navigate("/blank/notification")}
+          >
+            <div className="bg-blue-700 flex flex-row justify-around text-white p-4 font-bold">
+              Updated Messages
             </div>
+            <div className="max-h-[320px] overflow-y-auto">
+              {loading ? (
+                <p className="p-4">Loading...</p>
+              ) : notifications.length > 0 ? (
+                notifications.map((notification, index) => {
+                  const words = notification?.text.split(" ");
+                  const truncatedText =
+                    words.length > 5
+                      ? words.slice(0, 9).join(" ") + "..."
+                      : notification?.text;
+
+                  return (
+                    <div
+                      key={index}
+                      className="p-4 border-b text-sm font-semibold border-gray-200"
+                    >
+                      {truncatedText || "No message available"}
+                    </div>
+                  );
+                })
+              ) : (
+                <p className="p-4">No notifications available.</p>
+              )}
+            </div>
+          </div>
         </>
-        
-        )}
-   
-
-
-
-
-
-
-
-
-
-
+      )}
 
       {/* for opportunities section */}
       {/* {opportunities && (

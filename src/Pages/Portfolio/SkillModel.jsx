@@ -6,9 +6,6 @@ import {
   Grid,
   TextField,
   Typography,
-  FormControlLabel,
-  Checkbox,
-  TextareaAutosize,
   Select,
   MenuItem,
 } from "@mui/material";

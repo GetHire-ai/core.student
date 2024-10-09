@@ -8,6 +8,7 @@ import EducationForm from "./Education";
 import ProjectDetails from "./ProjectDetails";
 import SocialMediaForm from "./SocialLink";
 import CertificationForm from "./CertificationSection";
+import { toast } from "react-toastify";
 
 const Portfolio = () => {
   const [activeTab, setActiveTab] = useState("about");
@@ -31,10 +32,12 @@ const Portfolio = () => {
         "api/StudentRoutes/UpdateStudentProfile",
         data
       );
-      alert("Profile updated successfully.");
+      console.log(response?.data);
+      toast.success("Profile updated successfully.", { autoClose: 1000 });
+      Getstudentprofile();
     } catch (error) {
       console.log(error.response);
-      alert("Error updating ");
+      toast.error("Error updating ", { autoClose: 1000 });
     }
   };
 
@@ -118,12 +121,16 @@ const Portfolio = () => {
           ].map((tab) => (
             <button
               key={tab}
-              className={`relative text-[18px] font-semibold group hover:text-blue-500 pb-2 ${activeTab === tab ? "text-blue-500" : "text-gray-600"}`}
+              className={`relative text-[18px] font-semibold group hover:text-blue-500 pb-2 ${
+                activeTab === tab ? "text-blue-500" : "text-gray-600"
+              }`}
               onClick={() => setActiveTab(tab)}
             >
               {tab.charAt(0).toUpperCase() + tab.slice(1).replace("&", " & ")}
               <span
-                className={`absolute bottom-0 left-0 right-0 h-1 bg-indigo-500 transition-all duration-300 ${activeTab === tab ? "w-full" : "w-0 group-hover:w-3/6"}`}
+                className={`absolute bottom-0 left-0 right-0 h-1 bg-indigo-500 transition-all duration-300 ${
+                  activeTab === tab ? "w-full" : "w-0 group-hover:w-3/6"
+                }`}
               ></span>
             </button>
           ))}
