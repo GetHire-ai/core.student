@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { PostApi } from "../utilis/Api_Calling";
+import { postformdataApi } from "../utilis/Api_Calling";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
@@ -101,7 +101,11 @@ const AddDetails = ({ Email, Number }) => {
 
     let data = jobData;
     try {
-      const responce = await PostApi("api/StudentRoutes/RegisterStudent", data);
+      console.log(data);
+      const responce = await postformdataApi(
+        "api/StudentRoutes/RegisterStudent",
+        data
+      );
       console.log(responce?.data);
       localStorage.setItem("StudentToken", responce?.data?.data?.token);
       localStorage.setItem("Studentid", responce?.data?.data?.Student?._id);

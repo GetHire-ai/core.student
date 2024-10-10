@@ -141,13 +141,27 @@ const postformdataApi = async (apiEndpoint, postData) => {
   }
 };
 
-export {
-  GetApi,
-  PutApi,
-  GetApiwithouttoken,
-  DeleteApi,
-  PostApi,
-  Api_Url,
-  updateApi,
-  postformdataApi,
+const putformdataApi = async (apiEndpoint, postData) => {
+  const authToken = localStorage.getItem("StudentToken");
+  try {
+    const formData = new FormData();
+
+    Object.entries(postData).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+
+    const response = await axios.put(`${Api_Url}${apiEndpoint}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Error creating:", error);
+    throw error;
+  }
 };
+
+export { GetApi, PutApi, GetApiwithouttoken, DeleteApi, PostApi, Api_Url, updateApi, postformdataApi, putformdataApi };
