@@ -2,14 +2,7 @@ import React, { useState } from "react";
 import { postformdataApi } from "../utilis/Api_Calling";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import {
-  Button,
-  Box,
-  Stepper,
-  Step,
-  StepLabel,
-  Typography,
-} from "@mui/material";
+import { Box, Stepper, Step, StepLabel } from "@mui/material";
 import {
   predefinedJobTitles,
   predefinedSkills,

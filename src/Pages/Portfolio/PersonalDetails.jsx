@@ -8,23 +8,17 @@ import {
   Autocomplete,
   TextField,
 } from "@mui/material";
-import { GetApi, PutApi, putformdataApi } from "../utilis/Api_Calling";
+import { GetApi, putformdataApi } from "../utilis/Api_Calling";
 import { toast } from "react-toastify";
 
 const PersonalDetails = ({ profile, updateProfile, loading }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [details, setDetails] = useState({});
-  const [isEditingPersonal, setIsEditingPersonal] = useState(false);
-  // const [isEditingPersonal, setIsEditingPersonal] = useState(false);
   const [isEditingField, setIsEditingField] = useState(null);
   const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
-  const [Loading, setLoading] = useState(false);
+  // const [Loading, setLoading] = useState(false);
   const handleResumeModalOpen = () => {
     setIsResumeModalOpen(true);
-  };
-
-  const handleResumeModalClose = () => {
-    setIsResumeModalOpen(false);
   };
 
   const jobTitles = [
@@ -40,20 +34,11 @@ const PersonalDetails = ({ profile, updateProfile, loading }) => {
     "Pune, Maharashtra, India",
   ];
 
-  const handleEditPersonalClick = () => {
-    setIsEditingPersonal(!isEditingPersonal);
-  };
-
   const handleChangePersonal = (e) => {
     setDetails({
       ...details,
       [e.target.name]: e.target.value,
     });
-  };
-
-  const handleSavePersonalClick = () => {
-    setIsEditingPersonal(false);
-    updateProfile(details);
   };
 
   const handleEditFieldClick = (field) => {
@@ -83,10 +68,7 @@ const PersonalDetails = ({ profile, updateProfile, loading }) => {
         Resume: file,
       };
       try {
-        let res = await putformdataApi(
-          `api/StudentRoutes/UpdateStudentProfile`,
-          data
-        );
+        await putformdataApi(`api/StudentRoutes/UpdateStudentProfile`, data);
         toast.success("Resume Update Successfully", {
           autoClose: 1000,
         });
@@ -118,7 +100,6 @@ const PersonalDetails = ({ profile, updateProfile, loading }) => {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    setIsEditingPersonal(false);
   };
 
   const handlejobTitlesChange = (event, newValue) => {
@@ -152,13 +133,12 @@ const PersonalDetails = ({ profile, updateProfile, loading }) => {
         </Box>
       </Modal>
       <div className="bg-white p-4 rounded-lg shadow-sm">
-        <a
-          href="#"
+        <span
           className="text-blue-500 hover:underline"
           onClick={handleResumeModalOpen}
         >
           Your Resume
-        </a>
+        </span>
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2">
             <p className="text-gray-700">.</p>
@@ -335,7 +315,6 @@ const PersonalDetails = ({ profile, updateProfile, loading }) => {
             className="mt-6"
             onClick={() => {
               setIsModalOpen(false);
-              setIsEditingPersonal(false);
               updateProfile(details);
             }}
           >
