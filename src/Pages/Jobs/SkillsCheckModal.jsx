@@ -13,7 +13,7 @@ import { PutApi } from "../utilis/Api_Calling";
 import { toast } from "react-toastify";
 
 const SkillsCheckModal = ({ isOpen, onRequestClose, skills, job }) => {
-  console.log(job);
+  console.log(skills);
   return (
     <Modal
       isOpen={isOpen}

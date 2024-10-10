@@ -105,7 +105,7 @@ const Question = () => {
   const [timerInterval, setTimerInterval] = useState(null);
   const [elapsedTime, setElapsedTime] = useState(0);
   const [questions, setQuestions] = useState([]);
-  const [timeLeft, setTimeLeft] = useState(300); // 300 seconds = 5 minutes
+  const [timeLeft, setTimeLeft] = useState(300);
   const [isTimeUp, setIsTimeUp] = useState(false);
 
   const getTest = async (skills) => {
@@ -195,38 +195,38 @@ const Question = () => {
     }
   }, [job]);
 
-  useEffect(() => {
-    // If timeLeft is zero, stop the timer
-    if (timeLeft === 0) {
-      setIsTimeUp(true);
-      return;
-    }
+  // useEffect(() => {
+  //   // If timeLeft is zero, stop the timer
+  //   if (timeLeft === 0) {
+  //     setIsTimeUp(true);
+  //     return;
+  //   }
 
-    // Timer to decrease timeLeft every second
-    const timerId = setInterval(() => {
-      setTimeLeft((prevTimeLeft) => prevTimeLeft - 1);
-    }, 1000);
+  //   // Timer to decrease timeLeft every second
+  //   const timerId = setInterval(() => {
+  //     setTimeLeft((prevTimeLeft) => prevTimeLeft - 1);
+  //   }, 1000);
 
-    // Cleanup the timer when component unmounts
-    return () => clearInterval(timerId);
-  }, [timeLeft]);
+  //   // Cleanup the timer when component unmounts
+  //   return () => clearInterval(timerId);
+  // }, [timeLeft]);
 
-  useEffect(() => {
-    // Automatically submit form when time is up
-    if (isTimeUp) {
-      handleFinishTest();
-    }
-  }, [isTimeUp]);
+  // useEffect(() => {
+  //   // Automatically submit form when time is up
+  //   if (isTimeUp) {
+  //     handleFinishTest();
+  //   }
+  // }, [isTimeUp]);
 
-  useEffect(() => {
-    setStartTime(new Date());
-    const interval = setInterval(() => {
-      setElapsedTime(Math.floor((new Date() - startTime) / 1000));
-    }, 1000);
-    setTimerInterval(interval);
+  // useEffect(() => {
+  //   setStartTime(new Date());
+  //   const interval = setInterval(() => {
+  //     setElapsedTime(Math.floor((new Date() - startTime) / 1000));
+  //   }, 1000);
+  //   setTimerInterval(interval);
 
-    return () => clearInterval(interval);
-  }, []);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   const handleAnswerChange = (questionId, optionText) => {
     setSelectedAnswers((prev) => ({

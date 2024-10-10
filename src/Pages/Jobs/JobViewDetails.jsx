@@ -57,23 +57,19 @@ const JobViewDetails = () => {
     }
   };
 
-  const submitJobApplication = async (Jobd) => {
+  const submitJobApplication = async (Jobd, data) => {
     // if (JobApply?.Coverletter === "" || JobApply?.Your_availability === "") {
     //   toast.error("Please fill all details", { autoClose: 1000 });
     //   return;
     // }
+    let newData = {
+      ...data,
+      JobId: Jobd?._id,
+      CompanyId: Jobd?.Company?._id,
+    };
+
     try {
-      const response = await postformdataApi(
-        "api/StudentRoutes/ApplyForJob",
-        {
-          JobId: Jobd?._id,
-          CompanyId: Jobd?.Company?._id,
-          Coverletter: "",
-          Your_availability: "",
-          relocate: "",
-          image1: null,
-        }
-      );
+      await postformdataApi("api/StudentRoutes/ApplyForJob", newData);
       toast.success("Job Details updated successfully.", { autoClose: 1000 });
       navigate(`/blank/start/${Jobd?._id}`);
     } catch (error) {
@@ -543,7 +539,7 @@ const JobViewDetails = () => {
             setChatModal(false);
             // setApplymodelResumeCheck(true);
             // setApplymodel(true)
-            submitJobApplication(Jobdetail)
+            submitJobApplication(Jobdetail, data);
           }}
           openModal={() => setApplymodel(true)}
           setEducationDetails={setEducationDetails}

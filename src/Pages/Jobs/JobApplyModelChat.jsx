@@ -16,30 +16,51 @@ import LinearProgress from "@mui/material/LinearProgress";
 import Button from "@mui/material/Button";
 import { GetApi } from "../utilis/Api_Calling";
 import { Link, Navigate, useNavigate } from "react-router-dom";
+
 const noticePeriodOptions = ["15 Days", "30 Days", "2 Months", "3 Months"];
 
 const JobApplyModelChat = ({ onOpen, onClose, onSubmit, job }) => {
   const [step, setStep] = useState(0);
   const [responses, setResponses] = useState([]);
+  const [resumePreview, setResumePreview] = useState(""); // New state for resume preview
   const [isTyping, setIsTyping] = useState(false);
   const [progress, setProgress] = useState(10);
   const progressRef = useRef(0);
   const [Loading, setLoading] = useState(true);
   const [studentprofile, setstudentprofile] = useState({});
   const [selectedValue, setSelectedValue] = useState("");
+  const [resumeFile, setResumeFile] = useState(null); // New state for resume file
 
   const navigate = useNavigate();
 
   const handleChange = (event) => {
     const selectedValue = event.target.value;
-  
-    if (selectedValue === 'add_resume') {
-      // Redirect to Add Resume screen
-      navigate('/blank/ai-tools/resume-builder'); // Replace '/add-resume' with the actual route
+    const selectedResume = studentprofile?.aiResumes?.find(
+      (resume) => resume?._id === selectedValue
+    );
+
+    if (selectedValue === "add_resume") {
+      navigate("/blank/ai-tools/resume-builder");
     } else {
-      // Handle regular resume selection
       setSelectedValue(event.target.value);
+      setResumePreview(selectedResume?.jobTitle || ""); // Set job title as preview
       handleNextStep();
+    }
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    // Check file size (max 3MB) and type (only PDF)
+    if (
+      file &&
+      file.size <= 3 * 1024 * 1024 &&
+      file.type === "application/pdf"
+    ) {
+      setResumeFile(file);
+      setResumePreview(URL.createObjectURL(file)); // Use URL.createObjectURL to display the PDF
+      handleNextStep();
+    } else {
+      alert("Please upload a valid PDF file of size less than 3MB."); // Alert for invalid file
     }
   };
 
@@ -48,7 +69,6 @@ const JobApplyModelChat = ({ onOpen, onClose, onSubmit, job }) => {
     try {
       const Getjobdata = await GetApi(`api/StudentRoutes/GetStudentProfile`);
       setstudentprofile(Getjobdata?.data?.data);
-      // console.log(Getjobdata.data.data.aiResumes);
     } catch (error) {
       console.log(error);
     } finally {
@@ -228,33 +248,57 @@ const JobApplyModelChat = ({ onOpen, onClose, onSubmit, job }) => {
             </Box>
           )}
 
-{!isTyping && step === 3 && (
-  <Box>
-    <FormLabel component="legend" sx={{ textAlign: "start" }}>
-      Kindly Select Resume?
-    </FormLabel>
-    <div className="flex flex-wrap w-full">
-      <FormControl fullWidth>
-        <InputLabel id="select-label">Select Item</InputLabel>
-        <Select
-          labelId="select-label"
-          id="select"
-          value={selectedValue}
-          onChange={handleChange}
-          label="Select Item"
-        >
-          {studentprofile?.aiResumes?.map((resume) => (
-            <MenuItem key={resume?._id} value={resume?._id}>
-              {resume?.jobTitle}
-            </MenuItem>
-          ))}
-          {/* Add an option to redirect to "Add Resume" */}
-          <MenuItem value="add_resume">Add Resume</MenuItem>
-        </Select>
-      </FormControl>
-    </div>
-  </Box>
-)}
+          {!isTyping && step === 3 && (
+            <Box>
+              <FormLabel component="legend" sx={{ textAlign: "start" }}>
+                Kindly Select Resume or Upload a New One
+              </FormLabel>
+              <div className="flex flex-wrap w-full">
+                <FormControl fullWidth>
+                  <InputLabel id="select-label">Select Item</InputLabel>
+                  <Select
+                    labelId="select-label"
+                    id="select"
+                    value={selectedValue}
+                    onChange={handleChange}
+                    label="Select Item"
+                  >
+                    {studentprofile?.aiResumes?.map((resume) => (
+                      <MenuItem key={resume?._id} value={resume?._id}>
+                        {resume?.jobTitle}
+                      </MenuItem>
+                    ))}
+                    <MenuItem value="add_resume">Add Resume</MenuItem>
+                  </Select>
+                </FormControl>
+
+                {/* Upload resume option */}
+                <Box mt={2}>
+                  <input
+                    type="file"
+                    accept=".pdf"
+                    onChange={handleFileChange}
+                  />
+                </Box>
+
+                {/* Display resume preview */}
+                <Box mt={2}>
+                  {resumePreview ? (
+                    <iframe
+                      src={resumePreview}
+                      width="100%"
+                      height="400px"
+                      title="Resume Preview"
+                    />
+                  ) : (
+                    <p>
+                      <strong>Selected Resume:</strong> No resume selected
+                    </p>
+                  )}
+                </Box>
+              </div>
+            </Box>
+          )}
 
           {!isTyping && step === 4 && (
             <Box>
@@ -262,7 +306,7 @@ const JobApplyModelChat = ({ onOpen, onClose, onSubmit, job }) => {
                 Review your responses:
               </FormLabel>
               {!checkRequirements().educationMet ||
-              !checkRequirements().educationMet ||
+              !checkRequirements().experienceMet ||
               !checkRequirements().noticePeriodMet ? (
                 <Box mt={2} sx={{ color: "red" }}>
                   <Alert severity="warning" color="error" borderRadius="10">
@@ -282,6 +326,7 @@ const JobApplyModelChat = ({ onOpen, onClose, onSubmit, job }) => {
                       expRequired: responses[1].answer === "Yes",
                       noticePeriod: responses[2].answer === job?.noticePeriod,
                       Resume: selectedValue,
+                      resumeFile: resumeFile,
                     };
                     onSubmit(data);
                   }}
