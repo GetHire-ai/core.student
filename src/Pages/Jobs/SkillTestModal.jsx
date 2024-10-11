@@ -103,7 +103,7 @@ const SkillTestModal = ({ isOpen, onRequestClose, skill, job }) => {
 
     try {
       let url = "api/StudentRoutes/UpdateStudentProfile/updateskillscore";
-      await PutApi(url, { ...skill, score: Number(88) });
+      await PutApi(url, { ...skill, score: Number(roundedScore) });
       toast.success("Test Completed Successfully", { autoClose: 1000 });
       onRequestClose();
       setAnswers({});
@@ -111,7 +111,7 @@ const SkillTestModal = ({ isOpen, onRequestClose, skill, job }) => {
       setCurrentQuestionIndex(0);
     } catch (error) {
       toast.error("Error in add result", { autoClose: 1000 });
-      console.log(error.response);
+      console.error(error.response);
     }
   };
 
