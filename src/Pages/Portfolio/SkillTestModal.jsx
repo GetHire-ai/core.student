@@ -109,7 +109,7 @@ const SkillTestModal = ({ isOpen, onRequestClose, skill }) => {
     try {
       let data = {
         ...skill,
-        score: roundedScore,
+        score: Number(roundedScore),
       };
       // Uncomment the lines below when you are ready to submit the score
       let res = await PutApi(

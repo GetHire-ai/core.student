@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { FaSave, FaTimes, FaPlus } from "react-icons/fa";
 import { RiEditLine } from "react-icons/ri";
 import { GetApi } from "../utilis/Api_Calling";
-import SkillTestModal from './SkillTestModal'
+import SkillTestModal from "./SkillTestModal";
 
 const allLanguages = [
   "English",
@@ -47,8 +47,8 @@ function Skills({ updateProfile }) {
   const [newLanguage, setNewLanguage] = useState("");
   const [newLevel, setnewLevel] = useState("Beginner");
   const [languageDropdownOpen, setLanguageDropdownOpen] = useState(false);
-  const [skillTest, setSkillTest] = useState(false)
-  const [selectedSkill, setSelectedSkill] = useState(null)
+  const [skillTest, setSkillTest] = useState(false);
+  const [selectedSkill, setSelectedSkill] = useState(null);
   const [loading, setLoading] = useState(false);
   const [details, setDetails] = useState({ Skill_Set: [] });
   const [newSkill, setNewSkill] = useState(""); // State for the new skill
@@ -157,7 +157,7 @@ function Skills({ updateProfile }) {
 
       // Update the languages state
       setLanguages(updatedLanguages);
-      console.log(updatedLanguages)
+      console.log(updatedLanguages);
       // Update the details state with the new languages array
       setDetails((prev) => ({
         ...prev,
@@ -230,11 +230,9 @@ function Skills({ updateProfile }) {
   };
 
   const handleTest = (skill) => {
-    setSelectedSkill(skill)
-    console.log(skill )
-    setSkillTest(true)
-  }
-
+    setSelectedSkill(skill);
+    setSkillTest(true);
+  };
 
   // Function to remove a technical skill
   // const handleRemoveTechnicalSkill = (skillToRemove) => {
@@ -269,7 +267,9 @@ function Skills({ updateProfile }) {
               key={index}
               className="bg-blue-100 text-blue-800 p-3 rounded-full flex items-center space-x-2 cursor-pointer"
             >
-              <span>{skill?.score}%  {skill?.Skill}</span>
+              <span>
+                {skill?.score}% {skill?.Skill}
+              </span>
               {editingTechnicalSkills && (
                 <button
                   className="text-red-500 hover:text-red-700"
@@ -287,7 +287,9 @@ function Skills({ updateProfile }) {
       {isTechnicalSkillModalOpen && (
         <div className="fixed inset-0 mt-8 bg-gray-800 bg-opacity-50 flex justify-center items-center overflow-y-auto">
           <div className="bg-white p-6 rounded-lg shadow-lg w-1/3 max-h-[80vh] overflow-y-auto">
-            <h3 className="text-lg font-semibold mb-4">Edit Technical Skills</h3>
+            <h3 className="text-lg font-semibold mb-4">
+              Edit Technical Skills
+            </h3>
             <div className="flex items-center mb-4">
               <input
                 type="text"
@@ -307,10 +309,11 @@ function Skills({ updateProfile }) {
               {allTechnicalSkills.map((skill, index) => (
                 <button
                   key={index}
-                  className={`border px-4 py-2 rounded ${selectedTechnicalSkills.some((s) => s.Skill === skill)
-                    ? "bg-blue-500 text-white"
-                    : "bg-white text-gray-700"
-                    }`}
+                  className={`border px-4 py-2 rounded ${
+                    selectedTechnicalSkills.some((s) => s.Skill === skill)
+                      ? "bg-blue-500 text-white"
+                      : "bg-white text-gray-700"
+                  }`}
                   onClick={() => handleTechnicalSkillSelection(skill)}
                 >
                   {skill}
@@ -354,7 +357,6 @@ function Skills({ updateProfile }) {
           </div>
         </div>
       )}
-
 
       {/* Soft Skills Section */}
       <div className="mb-8 p-6 bg-white border border-gray-200 rounded-lg shadow-md">
@@ -412,10 +414,11 @@ function Skills({ updateProfile }) {
               {allSoftSkills.map((skill, index) => (
                 <button
                   key={index}
-                  className={`border px-4 py-2 rounded ${selectedSoftSkills.some((s) => s.Skill === skill)
-                    ? "bg-green-500 text-white"
-                    : "bg-white text-gray-700"
-                    }`}
+                  className={`border px-4 py-2 rounded ${
+                    selectedSoftSkills.some((s) => s.Skill === skill)
+                      ? "bg-green-500 text-white"
+                      : "bg-white text-gray-700"
+                  }`}
                   onClick={() => handleSoftSkillSelection(skill)}
                 >
                   {skill}
@@ -458,7 +461,6 @@ function Skills({ updateProfile }) {
         </div>
       )}
 
-
       {/* Language Proficiency Section */}
       <div className="mb-8 p-6 bg-white border border-gray-200 rounded-lg shadow-md">
         <div className="flex justify-between items-center mb-4">
@@ -469,7 +471,9 @@ function Skills({ updateProfile }) {
             className="text-blue-600 hover:text-blue-800 focus:outline-none"
             onClick={handleAddLanguage}
           >
-            <span className="text-base"><RiEditLine className="text-xl" /></span>
+            <span className="text-base">
+              <RiEditLine className="text-xl" />
+            </span>
           </button>
         </div>
 
@@ -564,19 +568,13 @@ function Skills({ updateProfile }) {
       <SkillTestModal
         skill={selectedSkill}
         isOpen={skillTest}
-        onRequestClose={() => { setSkillTest(false); setSelectedSkill(null) }}
+        onRequestClose={() => {
+          setSkillTest(false);
+          setSelectedSkill(null);
+        }}
       />
     </div>
   );
 }
 
 export default Skills;
-
-
-
-
-
-
-
-
-

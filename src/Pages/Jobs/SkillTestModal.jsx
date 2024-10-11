@@ -17,7 +17,6 @@ const SkillTestModal = ({ isOpen, onRequestClose, skill, job }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [loading, setLoading] = useState(false);
   const [mcqQuestions, setMcqQuestions] = useState([]);
-  console.log(skill);
   const getMCQ = async () => {
     setLoading(true);
     const data = {
@@ -104,7 +103,7 @@ const SkillTestModal = ({ isOpen, onRequestClose, skill, job }) => {
 
     try {
       let url = "api/StudentRoutes/UpdateStudentProfile/updateskillscore";
-      await PutApi(url, { ...skill, score: 87 });
+      await PutApi(url, { ...skill, score: Number(88) });
       toast.success("Test Completed Successfully", { autoClose: 1000 });
       onRequestClose();
       setAnswers({});
@@ -112,7 +111,7 @@ const SkillTestModal = ({ isOpen, onRequestClose, skill, job }) => {
       setCurrentQuestionIndex(0);
     } catch (error) {
       toast.error("Error in add result", { autoClose: 1000 });
-      // console.log(error.response);
+      console.log(error.response);
     }
   };
 

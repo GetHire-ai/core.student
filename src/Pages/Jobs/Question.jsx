@@ -59,7 +59,7 @@ const Question = () => {
   };
 
   const handleTest = (skill) => {
-    setSelectedSkill({ Skill: skill, score: 0 });
+    setSelectedSkill({ Skill: skill, score: 0, Rate: "Beginner" });
     setSkillTest(true);
   };
 
@@ -154,6 +154,7 @@ const Question = () => {
           isOpen={skillTest}
           onRequestClose={() => {
             setSkillTest(false);
+            getStudent();
             setSelectedSkill(null);
           }}
           skill={selectedSkill}
