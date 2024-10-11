@@ -135,15 +135,13 @@ function Login() {
         "api/StudentRoutes/CreateStudentOtp/SMS",
         data
       );
-      if (response?.data?.success) {
-        toast.success("Otp Send Successful", { autoClose: 1000 });
-        setShowNumber(false);
-        setShowNumberotp(true);
-      }
+      toast.success("Otp Send Successful", { autoClose: 1000 });
+      setShowNumber(false);
+      setShowNumberotp(true);
     } catch (error) {
-      console.log(error.response.data.message);
+      console.log(error?.response?.data?.message);
       if (
-        error.response.data.message ===
+        error?.response?.data?.message ===
         "No Account Exist with this Number Please Sign up First"
       ) {
         toast.error("No Account Exist with this Number Please Sign up First", {

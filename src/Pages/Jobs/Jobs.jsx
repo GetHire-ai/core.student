@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { GetApi } from "../utilis/Api_Calling";
-import {Triangle} from 'react-loader-spinner'
+import { Triangle } from "react-loader-spinner";
 
 import JobCard from "./JobCard";
 
@@ -18,7 +18,6 @@ const Jobs = () => {
   const handleToggle = () => {
     setShowAll(!showAll);
   };
-
 
   const [AllJobs, setAllJobs] = useState([]);
   const [Loading, setLoading] = useState(true);
@@ -124,8 +123,8 @@ const Jobs = () => {
     setExperienceFilter("");
   };
 
- const  WHATSAPP_GROUP_LINK  = 'https://whatsapp.com/channel/0029Va7Rxc32ER6hBAuIL222';
-
+  const WHATSAPP_GROUP_LINK =
+    "https://whatsapp.com/channel/0029Va7Rxc32ER6hBAuIL222";
 
   return (
     <>
@@ -133,14 +132,13 @@ const Jobs = () => {
         <div className="bg-white flex justify-center pt-20 min-w-[100vw] text-2xl">
           {/* Loading... */}
           <Triangle
-              visible={true}
-              height="90"
-              width="80"
-              color="blue"
-              ariaLabel="triangle-loading"
-              wrapperStyle={{}}
-              wrapperClass=""
-              />
+            visible={true}
+            height="90"
+            width="80"
+            color="blue"
+            ariaLabel="triangle-loading"
+            wrapperStyle={{}}
+          />
         </div>
       ) : (
         <div
@@ -265,46 +263,47 @@ const Jobs = () => {
                   </span>
                 </div>
                 {applyFilters(AllJobs)?.length > 0 ? (
-                    applyFilters(AllJobs)?.map((job, index) => {
-                      const isJobApplied = appiledjobs.includes(job._id);
-                      return (
-                        <JobCard
-                          key={index}
-                          job={job}
-                          isJobApplied={isJobApplied}
-                          jobDetail={jobDetail} // Pass the necessary props
-                        />
-                      );
-                    })
-                  ) : (
-                    <div className="bg-white rounded-[16px] border-[1px] border-[#efecec] p-[27px]">
-                      No Jobs Found With This Query
-                    </div>
-                  )}
+                  applyFilters(AllJobs)?.map((job, index) => {
+                    const isJobApplied = appiledjobs?.includes(job?._id);
+                    return (
+                      <JobCard
+                        key={index}
+                        job={job}
+                        isJobApplied={isJobApplied}
+                        jobDetail={jobDetail} // Pass the necessary props
+                      />
+                    );
+                  })
+                ) : (
+                  <div className="bg-white rounded-[16px] border-[1px] border-[#efecec] p-[27px]">
+                    No Jobs Found With This Query
+                  </div>
+                )}
               </div>
               <div className=" min-h-[100] w-1/5 rounded-[8px]  flex flex-col  items-start p-[26px]  ">
-                   <div className="flex flex-col items-center justify-center bg-gradient-to-r from-blue-300 to-blue-600 text-white p-6 rounded-lg shadow-lg max-w-md mx-auto">
-                      <div className="flex items-center">
-                        <img
-                          src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" // Link to a WhatsApp logo
-                          alt="WhatsApp Logo"
-                          className="w-10 h-10 mr-4"
-                        />
-                        <h3 className="text-xl font-bold">Join Our WhatsApp Community</h3>
-                      </div>
-                      <p className="mt-4 text-center text-sm">
-                        Get daily updates and stay connected with our community!
-                      </p>
-                      <a
-                        href={WHATSAPP_GROUP_LINK} // Replace with your WhatsApp group link
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mt-6 px-4 py-2 bg-white text-blue-600 font-semibold rounded-full shadow-lg hover:bg-gray-100 transition duration-200"
-                      >
-                        Join Now
-                      </a>
-                    </div>
-
+                <div className="flex flex-col items-center justify-center bg-gradient-to-r from-blue-300 to-blue-600 text-white p-6 rounded-lg shadow-lg max-w-md mx-auto">
+                  <div className="flex items-center">
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" // Link to a WhatsApp logo
+                      alt="WhatsApp Logo"
+                      className="w-10 h-10 mr-4"
+                    />
+                    <h3 className="text-xl font-bold">
+                      Join Our WhatsApp Community
+                    </h3>
+                  </div>
+                  <p className="mt-4 text-center text-sm">
+                    Get daily updates and stay connected with our community!
+                  </p>
+                  <a
+                    href={WHATSAPP_GROUP_LINK} // Replace with your WhatsApp group link
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-6 px-4 py-2 bg-white text-blue-600 font-semibold rounded-full shadow-lg hover:bg-gray-100 transition duration-200"
+                  >
+                    Join Now
+                  </a>
+                </div>
               </div>
             </div>
           </>
@@ -315,8 +314,6 @@ const Jobs = () => {
 };
 
 export default Jobs;
-
-
 
 /*
 

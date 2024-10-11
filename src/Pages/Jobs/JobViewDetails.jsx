@@ -152,7 +152,7 @@ const JobViewDetails = () => {
   }, [bookmarkedJobs, id]);
 
   useEffect(() => {
-    const isappiled = appiledjobs.includes(id);
+    const isappiled = appiledjobs?.includes(id);
     setisappiled(isappiled);
   }, [appiledjobs, id]);
 
@@ -434,7 +434,7 @@ const JobViewDetails = () => {
               </div>
               {AllJobs?.length > 0 ? (
                 AllJobs.map((job) => {
-                  const isJobApplied = appiledjobs.includes(job._id);
+                  const isJobApplied = appiledjobs?.includes(job._id);
                   return (
                     <div
                       // onClick={() => jobDetail(job._id)}
