@@ -64,12 +64,6 @@ const Question = () => {
   };
 
   useEffect(() => {
-    if (student && skills.length > 0) {
-      console.log(student?.Skill_Set, skills);
-    }
-  }, [student, skills]);
-
-  useEffect(() => {
     getJob();
   }, []);
 
@@ -83,8 +77,11 @@ const Question = () => {
 
   return (
     <>
-      <Typography variant="h4" sx={{ mb: 4, textAlign: "center" }}>
+      <Typography variant="h5" sx={{ mb: 2, textAlign: "center" }}>
         Skill Assessment
+      </Typography>
+      <Typography variant="p" sx={{ mb: 4, textAlign: "center" }}>
+        These Skills are required by recruiter 
       </Typography>
       <Box
         sx={{
