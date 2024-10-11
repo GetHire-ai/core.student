@@ -14,11 +14,10 @@ import { toast } from "react-toastify";
 
 const SkillTestModal = ({ isOpen, onRequestClose, skill, job }) => {
   const [answers, setAnswers] = useState({});
-  const [result, setResult] = useState(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [loading, setLoading] = useState(false);
   const [mcqQuestions, setMcqQuestions] = useState([]);
-
+  console.log(skill);
   const getMCQ = async () => {
     setLoading(true);
     const data = {
@@ -101,31 +100,19 @@ const SkillTestModal = ({ isOpen, onRequestClose, skill, job }) => {
     });
     const pointsPerQues = 100 / mcqQuestions.length;
     score = pointsPerQues * correctCount;
-
     const roundedScore = score.toFixed(2);
-    setResult(roundedScore);
 
     try {
-      let data = {
-        ...skill,
-        score: roundedScore,
-      };
-      let res = await PutApi(
-        "api/StudentRoutes/UpdateStudentProfile/updateskillscore",
-        data
-      );
-      if (res.status === 200) {
-        toast.success("Test Completed Successfully", { autoClose: 1000 });
-        onRequestClose();
-        onRequestClose();
-        setAnswers({});
-        setMcqQuestions([]);
-        setResult(null);
-        setCurrentQuestionIndex(0);
-      }
+      let url = "api/StudentRoutes/UpdateStudentProfile/updateskillscore";
+      await PutApi(url, { ...skill, score: 87 });
+      toast.success("Test Completed Successfully", { autoClose: 1000 });
+      onRequestClose();
+      setAnswers({});
+      setMcqQuestions([]);
+      setCurrentQuestionIndex(0);
     } catch (error) {
       toast.error("Error in add result", { autoClose: 1000 });
-      console.log(error);
+      // console.log(error.response);
     }
   };
 
@@ -136,7 +123,6 @@ const SkillTestModal = ({ isOpen, onRequestClose, skill, job }) => {
         onRequestClose();
         setAnswers({});
         setMcqQuestions([]);
-        setResult(null);
         setCurrentQuestionIndex(0);
       }}
       ariaHideApp={false}
@@ -161,7 +147,7 @@ const SkillTestModal = ({ isOpen, onRequestClose, skill, job }) => {
           gutterBottom
           textAlign={"center"}
         >
-          Skill Test for {skill}
+          Skill Test for {skill?.Skill}
         </Typography>
         {mcqQuestions.length === 0 && !loading && (
           <div className="w-full text-center">

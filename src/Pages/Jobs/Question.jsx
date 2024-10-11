@@ -59,7 +59,7 @@ const Question = () => {
   };
 
   const handleTest = (skill) => {
-    setSelectedSkill(skill);
+    setSelectedSkill({ Skill: skill, score: 0 });
     setSkillTest(true);
   };
 
@@ -81,7 +81,7 @@ const Question = () => {
         Skill Assessment
       </Typography>
       <Typography variant="p" sx={{ mb: 4, textAlign: "center" }}>
-        These Skills are required by recruiter 
+        These Skills are required by recruiter
       </Typography>
       <Box
         sx={{
@@ -126,7 +126,7 @@ const Question = () => {
                       <Button
                         variant="contained"
                         color="primary"
-                        onClick={() => handleRetest(skill)}
+                        onClick={() => handleRetest(matchedSkill)}
                       >
                         Retest
                       </Button>

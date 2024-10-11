@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Modal from "react-modal";
 import {
   Radio,
@@ -12,21 +12,24 @@ import {
 import { PutApi } from "../utilis/Api_Calling";
 import { toast } from "react-toastify";
 
-const SkillTestModal = ({ isOpen, onRequestClose, skill }) => {
+const SkillTestModal = ({ isOpen, onRequestClose, skill, job }) => {
   const [answers, setAnswers] = useState({});
-  const [result, setResult] = useState(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [skillObj, setSkillObj] = useState({
+    skill,
+    score: 0,
+    Rate: "Beginner",
+  });
   const [mcqQuestions, setMcqQuestions] = useState([]);
 
   const getMCQ = async () => {
     setLoading(true);
     const data = {
       categories: `give only on ${skill} basis`,
-      experience: "junior",
-      count: "5",
+      experience: `${job?.minExp}-Years`,
+      count: "10",
     };
-
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -71,7 +74,6 @@ const SkillTestModal = ({ isOpen, onRequestClose, skill }) => {
       setLoading(false);
     }
   };
-
   const currentQuestion = mcqQuestions[currentQuestionIndex];
 
   const handleAnswerChange = (question, answer) => {
@@ -102,32 +104,20 @@ const SkillTestModal = ({ isOpen, onRequestClose, skill }) => {
     });
     const pointsPerQues = 100 / mcqQuestions.length;
     score = pointsPerQues * correctCount;
-
     const roundedScore = score.toFixed(2);
-    setResult(roundedScore);
 
     try {
-      let data = {
-        ...skill,
-        score: roundedScore,
-      };
-      // Uncomment the lines below when you are ready to submit the score
-      let res = await PutApi(
-        "api/StudentRoutes/UpdateStudentProfile/updateskillscore",
-        data
-      );
-      if (res.status == 200) {
-        toast.success("Test Completed Successfully", { autoClose: 1000 });
-        onRequestClose();
-        onRequestClose();
-        setAnswers({});
-        setMcqQuestions([]);
-        setResult(null);
-        setCurrentQuestionIndex(0);
-      }
+      setSkillObj((prev) => ({ ...prev, score: Number(roundedScore) }));
+      let url = "api/StudentRoutes/UpdateStudentProfile/updateskillscore";
+      await PutApi(url, skillObj);
+      toast.success("Test Completed Successfully", { autoClose: 1000 });
+      onRequestClose();
+      setAnswers({});
+      setMcqQuestions([]);
+      setCurrentQuestionIndex(0);
     } catch (error) {
       toast.error("Error in add result", { autoClose: 1000 });
-      console.log(error);
+      // console.log(error.response);
     }
   };
 
@@ -138,7 +128,6 @@ const SkillTestModal = ({ isOpen, onRequestClose, skill }) => {
         onRequestClose();
         setAnswers({});
         setMcqQuestions([]);
-        setResult(null);
         setCurrentQuestionIndex(0);
       }}
       ariaHideApp={false}
@@ -163,7 +152,7 @@ const SkillTestModal = ({ isOpen, onRequestClose, skill }) => {
           gutterBottom
           textAlign={"center"}
         >
-          Skill Test for {skill?.Skill}
+          Skill Test for {skill}
         </Typography>
         {mcqQuestions.length === 0 && !loading && (
           <div className="w-full text-center">
