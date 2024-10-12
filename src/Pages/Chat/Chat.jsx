@@ -66,7 +66,7 @@ const ChatComponent = () => {
         ...prevUsers,
         [userId]: online,
       }));
-      console.log("onlineusers", userId);
+      // console.log("onlineusers", userId);
     });
 
     return () => {
@@ -101,6 +101,7 @@ const ChatComponent = () => {
     }
   }, [currentConversationId]);
 
+  
   const sendMessage = () => {
     if (message.trim() && currentConversationId) {
       const data = {
@@ -109,12 +110,11 @@ const ChatComponent = () => {
         senderType: "Student",
         message,
       };
-      console.log(data);
+      // console.log(data);
       socket.emit("sendMessage", data);
       setMessage("");
     }
   };
-
   const handleCompanyClick = async (companyId, company) => {
     try {
       if (companyId == currentCompany?._id) {
