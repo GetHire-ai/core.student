@@ -45,7 +45,7 @@
     "recorder-js": "^1.0.7",
     "recordrtc": "^5.6.2",
     "slick-carousel": "^1.8.1",
-    "socket.io-client": "^4.7.5",
+    "socket.io-client": "^4.8.0",
     "tailwind-merge": "^2.5.3",
     "tailwindcss-animate": "^1.0.7",
     "wav-blob-util": "^1.0.20",
