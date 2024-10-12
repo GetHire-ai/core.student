@@ -622,12 +622,6 @@ const Header = () => {
                 Portfolio
               </MenuItem>
               <MenuItem
-                onClick={() => navigate("/blank/SkillManager")}
-                className="hover:bg-blue-100 hover:text-blue-700 transition-colors duration-200 px-4 py-2 rounded-lg"
-              >
-                My Skills
-              </MenuItem>
-              <MenuItem
                 onClick={handleLogout}
                 className="hover:bg-red-100 hover:text-red-700 transition-colors duration-200 px-4 py-2 rounded-lg"
               >

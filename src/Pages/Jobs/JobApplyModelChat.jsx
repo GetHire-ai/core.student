@@ -16,20 +16,28 @@ import LinearProgress from "@mui/material/LinearProgress";
 import Button from "@mui/material/Button";
 import { GetApi } from "../utilis/Api_Calling";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-
+import { useStudent } from "../../Context/StudentContext";
 const noticePeriodOptions = ["15 Days", "30 Days", "2 Months", "3 Months"];
 
 const JobApplyModelChat = ({ onOpen, onClose, onSubmit, job }) => {
+  const {
+    profile,
+    loading,
+    currentQuestion,
+    missingFields,
+    fieldToQuestionMap,
+  } = useStudent();
+  console.log(1);
   const [step, setStep] = useState(0);
   const [responses, setResponses] = useState([]);
-  const [resumePreview, setResumePreview] = useState(""); // New state for resume preview
+  const [resumePreview, setResumePreview] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [progress, setProgress] = useState(10);
   const progressRef = useRef(0);
   const [Loading, setLoading] = useState(true);
   const [studentprofile, setstudentprofile] = useState({});
   const [selectedValue, setSelectedValue] = useState("");
-  const [resumeFile, setResumeFile] = useState(null); // New state for resume file
+  const [resumeFile, setResumeFile] = useState(null);
 
   const navigate = useNavigate();
 
@@ -43,24 +51,23 @@ const JobApplyModelChat = ({ onOpen, onClose, onSubmit, job }) => {
       navigate("/blank/ai-tools/resume-builder");
     } else {
       setSelectedValue(event.target.value);
-      setResumePreview(selectedResume?.jobTitle || ""); // Set job title as preview
+      setResumePreview(selectedResume?.jobTitle || "");
       handleNextStep();
     }
   };
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
-    // Check file size (max 3MB) and type (only PDF)
     if (
       file &&
       file.size <= 3 * 1024 * 1024 &&
       file.type === "application/pdf"
     ) {
       setResumeFile(file);
-      setResumePreview(URL.createObjectURL(file)); // Use URL.createObjectURL to display the PDF
+      setResumePreview(URL.createObjectURL(file));
       handleNextStep();
     } else {
-      alert("Please upload a valid PDF file of size less than 3MB."); // Alert for invalid file
+      alert("Please upload a valid PDF file of size less than 3MB.");
     }
   };
 
@@ -105,6 +112,7 @@ const JobApplyModelChat = ({ onOpen, onClose, onSubmit, job }) => {
     if (step === 1)
       return `This job requires ${job.expRequired} years of experience. Do you have this experience?`;
     if (step === 2) return "What is your notice period?";
+    if (step === 3) return "Select Resume";
   };
 
   const checkRequirements = () => {
@@ -114,19 +122,6 @@ const JobApplyModelChat = ({ onOpen, onClose, onSubmit, job }) => {
 
     return { educationMet, experienceMet, noticePeriodMet };
   };
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setProgress((prevProgress) => {
-        if (prevProgress === 100) {
-          return 0;
-        }
-        return Math.min(prevProgress + 10, 100);
-      });
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
 
   return (
     <Dialog
@@ -178,6 +173,14 @@ const JobApplyModelChat = ({ onOpen, onClose, onSubmit, job }) => {
                 color="primary"
                 sx={{ alignSelf: "flex-end", mt: 1 }}
               />
+              {resumePreview && response?.question === "Select Resume" && (
+                <iframe
+                  src={resumePreview}
+                  width="100%"
+                  height="400px"
+                  title="Resume Preview"
+                />
+              )}
             </Box>
           ))}
 
@@ -271,30 +274,12 @@ const JobApplyModelChat = ({ onOpen, onClose, onSubmit, job }) => {
                     <MenuItem value="add_resume">Add Resume</MenuItem>
                   </Select>
                 </FormControl>
-
-                {/* Upload resume option */}
                 <Box mt={2}>
                   <input
                     type="file"
                     accept=".pdf"
                     onChange={handleFileChange}
                   />
-                </Box>
-
-                {/* Display resume preview */}
-                <Box mt={2}>
-                  {resumePreview ? (
-                    <iframe
-                      src={resumePreview}
-                      width="100%"
-                      height="400px"
-                      title="Resume Preview"
-                    />
-                  ) : (
-                    <p>
-                      <strong>Selected Resume:</strong> No resume selected
-                    </p>
-                  )}
                 </Box>
               </div>
             </Box>

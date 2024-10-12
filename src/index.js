@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { ToastContainer } from "react-toastify";
+import { StudentProvider } from "./Context/StudentContext";
 import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
 import "./styles/font.css";
@@ -11,7 +12,9 @@ import App from "./App";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App /> <ToastContainer />
+    <StudentProvider>
+      <App /> <ToastContainer />
+    </StudentProvider>
   </React.StrictMode>
 );
 reportWebVitals();

@@ -239,13 +239,13 @@ const JobViewDetails = () => {
                   <div className="flex flex-col text-[14px] font-[400] text-black text-opacity-[50%] mt-[5px] gap-2">
                     <div className="flex justify-start items-center flex-wrap gap-3 mt-4">
                       <span>
-                        <i className="fa-solid fa-briefcase mr-2"></i> 0-5 Years
+                        <i className="fa-solid fa-briefcase mr-2"></i> {Jobdetail?.minExp}-{Jobdetail?.maxExp} Years
                         &nbsp;&nbsp;
                       </span>
                       <span>
-                        {/* <i className="fa-solid fa-dollar-sign mr-2"></i>{" "} */}
-                        {/* {Jobdetail?.minSalary}-{Jobdetail?.maxSalary} salary */}
-                        10-12 LPA CTC &nbsp;&nbsp;
+                        <i className="fa-solid fa-dollar-sign mr-2"></i>{" "}
+                        {Jobdetail?.minSalary / 100000}-
+                        {Jobdetail?.maxSalary / 100000} LPA CTC &nbsp;&nbsp;
                       </span>
                     </div>
                     <div className="flex justify-start items-center flex-wrap gap-3 border-b-[1px] pb-3">
@@ -309,7 +309,6 @@ const JobViewDetails = () => {
                         <button
                           className="py-2 px-3 bg-[#256aac] text-white text-xs font-semibold rounded-3xl hover:bg-blue-900 "
                           disabled={isappiled}
-                          // onClick={() => setApplymodelResumeCheck(true)}
                           onClick={() => setChatModal(true)}
                         >
                           {isappiled ? "Already Applied" : "Quick Apply"}
@@ -434,43 +433,43 @@ const JobViewDetails = () => {
               </div>
               {AllJobs?.length > 0 ? (
                 AllJobs.map((job) => {
-                  const isJobApplied = appiledjobs?.includes(job._id);
+                  const isJobApplied = appiledjobs?.includes(job?._id);
                   return (
                     <div
-                      // onClick={() => jobDetail(job._id)}
-                      key={job._id}
+                      // onClick={() => jobDetail(job?._id)}
+                      key={job?._id}
                       className="bg-white rounded-3xl border-[1px] border-[#efecec] p-5 cursor-pointer"
                     >
                       <div className="mt-[8px]">
                         <div className="flex justify-between gap-[20px]">
                           <p className="text-xl font-medium lg:w-[476px] flex-wrap">
-                            {job.positionName}
+                            {job?.positionName}
                           </p>
                         </div>
                         <p className="text-gray-600 text-md font-normal">
-                          {job.Company?.Name}
+                          {job?.Company?.Name}
                         </p>
                         <div className="flex flex-col text-[14px] font-[400] text-black text-opacity-[50%] mt-[5px] gap-2">
                           <div className="flex justify-start items-center flex-wrap gap-3">
                             <span>
-                              <i className="fa-solid fa-briefcase mr-2"></i> 0-5
+                              <i className="fa-solid fa-briefcase mr-2"></i>{" "}
+                              {job?.minExp}-{job?.maxExp}
                               Years &nbsp; |
                             </span>
                             <span>
-                              {/* <i className="fa-solid fa-dollar-sign mr-2"></i>{" "} */}
-                              {/* {job.minSalary}-{job.maxSalary} salary &nbsp; | */}
-                              12-14 LPA CTC &nbsp; |
+                              {job?.minSalary / 100000}-
+                              {job?.maxSalary / 100000} LPA CTC &nbsp; |
                             </span>
                             <span>
                               <i className="fa-solid fa-location-dot mr-2"></i>{" "}
-                              {job.location} &nbsp; |
+                              {job?.location} &nbsp; |
                             </span>
                           </div>
                           <div className="flex justify-start items-center flex-wrap gap-3">
                             <span>
                               <i className="fa-solid fa-clipboard mr-2"></i>{" "}
                               Must have
-                              {job.skillAssessment?.map((skill) => (
+                              {job?.skillAssessment?.map((skill) => (
                                 <span className="mx-1" key={skill.skill}>
                                   {skill.skill},
                                 </span>
@@ -478,7 +477,7 @@ const JobViewDetails = () => {
                             </span>
                           </div>
                           <div className="flex justify-start items-center flex-wrap gap-3">
-                            {job.skillsRequired?.map((skill, index) => (
+                            {job?.skillsRequired?.map((skill, index) => (
                               <span key={index}>{skill} &nbsp;&nbsp; .</span>
                             ))}
                           </div>
@@ -489,7 +488,7 @@ const JobViewDetails = () => {
                                 className="w-[18px]"
                                 alt="Date Icon"
                               />{" "}
-                              {NewformatDate(job.createdAt)}
+                              {NewformatDate(job?.createdAt)}
                             </span>
                             <span className="cursor-pointer">
                               <i className="fa-solid fa-bookmark mr-3"></i> Save
@@ -509,27 +508,6 @@ const JobViewDetails = () => {
           </div>
         </div>
       )}
-
-      {/*
-      {Applymodel && (
-        <JobApplyModel
-          onOpen={jobapplymodelopen}
-          onClose={jobapplymodelclose}
-          Jobdetail={Jobdetail}
-        />
-      )}
-      {JobApplyModelResumeCheck && (
-        <JobApplyModelResumeCheck
-          onOpen={ApplymodelResumeCheck}
-          onClose={() => setApplymodelResumeCheck(false)}
-          openModal={() => {
-            setApplymodelResumeCheck(false);
-            setApplymodel(true);
-          }}
-          educationDetails={educationDetails}
-        />
-      )}
-      */}
       {chatModal && (
         <JobApplyModelChat
           job={Jobdetail}
