@@ -176,15 +176,10 @@ const RightChat = ({
           placeholder="Type a message..."
           fullWidth
           className="p-3 border border-gray-300 rounded-md"
-          onKeyPress={(e) => {
+          onKeyDown={(e) => {
             if (e.key === "Enter" && !e.shiftKey) {
               e.preventDefault();
               sendMessage();
-            }
-          }}
-          onKeyDown={(e) => {
-            if (e.shiftKey && e.key === "Enter") {
-              setMessage(message + "\n");
             }
           }}
         />

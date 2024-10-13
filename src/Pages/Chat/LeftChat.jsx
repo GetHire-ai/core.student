@@ -1,12 +1,5 @@
-import React, { useState } from "react";
-import {
-  Box,
-  InputBase,
-  List,
-  ListItem,
-  Typography,
-  CircularProgress,
-} from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Box, InputBase, List, ListItem, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { MdKeyboardArrowDown } from "react-icons/md";
 
@@ -20,10 +13,7 @@ const LeftChat = ({
   handleCompanyClick,
   searchQuery,
   setSearchQuery,
-  loadingCompanies,
-  companies,
-  messages,
-  currentConversationId,
+  conversations,
   currentCompany,
   onlineUsers,
 }) => {
@@ -39,6 +29,9 @@ const LeftChat = ({
       setActiveTab(tab);
       setShowDropdown(false);
     }
+  };
+  const isUserOnline = (companyId) => {
+    return onlineUsers?.some((user) => user?.userId === companyId);
   };
   return (
     <Box
@@ -87,77 +80,92 @@ const LeftChat = ({
           )}
         </div>
       </Typography>
-      {loadingCompanies ? (
-        <CircularProgress className="text-blue-900" />
-      ) : (
-        <List className="space-y-2 ">
-          <ListItem className="pb-4">
-            <SearchInput
-              placeholder="Search by name or email"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              inputProps={{ "aria-label": "search" }}
-              className="border border-gray-300 rounded-lg p-2 w-full"
-            />
-          </ListItem>
-          {companies
-            .filter((company) =>
-              company.Name.toLowerCase().includes(searchQuery.toLowerCase())
+      <List className="space-y-2 ">
+        <ListItem className="pb-4">
+          <SearchInput
+            placeholder="Search by name or email"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            inputProps={{ "aria-label": "search" }}
+            className="border border-gray-300 rounded-lg p-2 w-full"
+          />
+        </ListItem>
+        {conversations
+          .filter((conversation) =>
+            conversation?.participantDetails?.company?.Name?.toLowerCase().includes(
+              searchQuery.toLowerCase()
             )
-            .map((company) => {
-              const lastMessage = messages
-                .filter((msg) => msg.conversationId === currentConversationId)
-                .slice(-1)[0];
-
-              return (
-                <ListItem
-                  key={company._id}
-                  button
-                  selected={company._id === currentCompany?._id}
-                  onClick={() => handleCompanyClick(company._id, company)}
-                  className={`flex items-center p-3 rounded-lg ${
-                    company._id === currentCompany?._id
-                      ? "bg-blue-50"
-                      : "hover:bg-gray-200"
-                  }`}
-                >
-                  <img
-                    src={
-                      "https://static.vecteezy.com/system/resources/previews/009/383/461/non_2x/man-face-clipart-design-illustration-free-png.png" ||
-                      "default-profile.png"
-                    }
-                    alt={company.Name}
-                    className="w-8 h-8 mr-3"
-                  />
-                  <div className="flex-1">
-                    <div className="flex justify-between">
-                      <Typography
-                        variant="body1"
-                        className="text-gray-800 font-medium"
-                      >
-                        {company.Name}
-                      </Typography>
-                      <Typography variant="body2" className="text-gray-500">
-                        {company.lastActiveDate || "08 Apr"}
-                      </Typography>
-                    </div>
-                    <Typography variant="body2" className="text-gray-600">
-                      {onlineUsers[company._id] ? (
-                        <span className="ml-2 text-green-500"> ●Online</span>
-                      ) : (
-                        company.statusMessage || ""
-                      )}
-                    </Typography>
+          )
+          .map((conversation) => {
+            return (
+              <ListItem
+                key={conversation?._id}
+                selected={
+                  conversation?.participantDetails?.company?._id ===
+                  currentCompany?._id
+                }
+                onClick={() =>
+                  handleCompanyClick(
+                    conversation?.participantDetails?.company?._id,
+                    conversation?.participantDetails?.company,
+                    conversation
+                  )
+                }
+                className={`flex items-center p-3 rounded-lg cursor-pointer ${
+                  conversation?._id === currentCompany?._id
+                    ? "bg-blue-50"
+                    : "hover:bg-gray-200"
+                }`}
+              >
+                <img
+                  src={
+                    "https://static.vecteezy.com/system/resources/previews/009/383/461/non_2x/man-face-clipart-design-illustration-free-png.png" ||
+                    "default-profile.png"
+                  }
+                  alt={conversation?.participantDetails?.company?.Name}
+                  className="w-8 h-8 mr-3"
+                />
+                <div className="flex-1">
+                  <div className="flex justify-between">
                     <Typography
-                      variant="body2"
-                      className="text-gray-500 truncate"
-                    ></Typography>
+                      variant="body1"
+                      className="text-gray-800 font-medium"
+                    >
+                      {conversation?.participantDetails?.company?.Name}
+                    </Typography>
+                    <Typography variant="body2" className="text-gray-500">
+                      {new Date(conversation?.lastMessage?.timestamp)
+                        .toLocaleTimeString("en-US", {
+                          hour: "numeric",
+                          minute: "numeric",
+                          hour12: true,
+                        })
+                        .replace(/(AM|PM)/g, (match) => match.toUpperCase()) ||
+                        ""}
+                    </Typography>
                   </div>
-                </ListItem>
-              );
-            })}
-        </List>
-      )}
+                  <Typography variant="body2" className="text-gray-600">
+                    <span>
+                      {conversation?.lastMessage?.senderType === "Company" ? (
+                        <i className="mr-3"></i>
+                      ) : (
+                        <i className="fa-solid fa-check mr-3"> </i>
+                      )}
+                      {conversation?.lastMessage?.message || ""}
+                      {isUserOnline(
+                        conversation?.participantDetails?.company?._id
+                      ) && <span className="ml-2 text-green-500">●</span>}
+                    </span>
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    className="text-gray-500 truncate"
+                  ></Typography>
+                </div>
+              </ListItem>
+            );
+          })}
+      </List>
     </Box>
   );
 };
