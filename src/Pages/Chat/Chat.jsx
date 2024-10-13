@@ -24,14 +24,8 @@ const ChatComponent = () => {
   const socket = useSocket(studentId);
 
   useEffect(() => {
-    socket.on("userStatus", ({ userId, online }) => {
-      setOnlineUsers((prevUsers) => {
-        const updatedUsers = prevUsers.filter((user) => user.userId !== userId);
-        if (online) {
-          updatedUsers.push({ userId, online });
-        }
-        return updatedUsers;
-      });
+    socket.on("userStatus", (onlineUsers) => {
+      setOnlineUsers(onlineUsers);
     });
 
     socket.emit("getConversations", studentId);
@@ -91,7 +85,7 @@ const ChatComponent = () => {
             )
           );
         });
-      }, 100);
+      }, 500);
       setMessage("");
       scrollToBottom();
     }
@@ -140,7 +134,7 @@ const ChatComponent = () => {
   }, [messages]);
 
   const isUserOnline = (companyId) => {
-    return onlineUsers.some((user) => user.userId === companyId);
+    return onlineUsers?.some((user) => user?.userId === companyId);
   };
 
   return (
@@ -189,7 +183,7 @@ const ChatComponent = () => {
                     conversation?.participantDetails?.company?._id
                   ) && <span className="ml-2 text-green-500">●</span>}
                 </span>
-                <span>
+                <span className="text-xs">
                   {new Date(conversation?.lastMessage?.timestamp)
                     .toLocaleTimeString("en-US", {
                       hour: "numeric",
