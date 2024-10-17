@@ -6,6 +6,7 @@ import logo from "../../assets/Images/Gethire SVG.svg";
 import { IoIosArrowForward } from "react-icons/io";
 import { Construction } from "@mui/icons-material";
 import AIToolsModal from "../AI Tools/AIToolsModal";
+import { LinearProgress } from "@mui/material";
 const Home = ({ onSectionVisible, onSectionHidden }) => {
   const navigate = useNavigate();
   const path = useLocation();
@@ -174,7 +175,7 @@ const Home = ({ onSectionVisible, onSectionHidden }) => {
 
   const [selectedtab, setselectedtab] = useState("MyJobs");
   const [AllJobs, setAllJobs] = useState([]);
-  const [Loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [appiledjobs, setappiledjobs] = useState([]);
   const [allappiledjobs, setallappiledjobs] = useState([]);
   const [allinterview, setallinterview] = useState([]);
@@ -183,21 +184,21 @@ const Home = ({ onSectionVisible, onSectionHidden }) => {
 
   const Getstudentprofile = async () => {
     try {
+      setLoading(true);
       const Getjobdata = await GetApi(`api/StudentRoutes/GetStudentProfile`);
       setstudentprofile(Getjobdata?.data?.data);
       setLoading(false);
     } catch (error) {
       setLoading(false);
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  useEffect(() => {
-    Getstudentprofile();
-  }, []);
-
   const GetAllJobs = async () => {
     try {
+      setLoading(true);
       const Getjobdata = await GetApi(`api/AdminRoutes/GetAllJobs`);
       // console.log(Getjobdata?.data)
       setAllJobs(Getjobdata?.data?.data);
@@ -205,57 +206,74 @@ const Home = ({ onSectionVisible, onSectionHidden }) => {
     } catch (error) {
       setLoading(false);
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   const Getallappiledjobid = async () => {
     try {
+      setLoading(true);
       const res = await GetApi(
         `api/StudentRoutes/GetAllAppiledJobidsofaStudent`
       );
       setappiledjobs(res?.data?.data?.appliedJobIds);
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   const Getallappiledjob = async () => {
     try {
+      setLoading(true);
       const res = await GetApi(`api/StudentRoutes/GetAllAppiledJobsofaStudent`);
       setallappiledjobs(res?.data?.data);
       setSelectedJob(res?.data?.data[0]);
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   const Getallinterview = async () => {
     try {
+      setLoading(true);
       const res = await GetApi(
         `api/StudentRoutes/GetAllJobinterviewofaStudent`
       );
       setallinterview(res?.data?.data);
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   const GetAllTest = async () => {
     let id = localStorage.getItem("Studentid");
     try {
+      setLoading(true);
       const res = await GetApi(`api/testRoutes/result/multiid/${id}`);
       setAllTestResults(res.data.data);
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
+    setLoading(true);
+    Getstudentprofile();
     GetAllJobs();
     Getallappiledjobid();
     Getallappiledjob();
     Getallinterview();
     GetAllTest();
+    setLoading(false);
   }, []);
 
   const formatSalary = (salary) => {
@@ -330,11 +348,6 @@ const Home = ({ onSectionVisible, onSectionHidden }) => {
       });
     };
   }, [onSectionVisible, onSectionHidden]);
-
-  // for ai modal opener
-  // const [aiModal, setAiModal] = useState(false);
-
-  // this below is for search bar
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const skills = [
@@ -378,6 +391,11 @@ const Home = ({ onSectionVisible, onSectionHidden }) => {
   const [aiModal, setAiModal] = useState(false);
   return (
     <>
+      {loading && (
+        <div className="mt- min-w-[100vw] ml-[-25vw]">
+          <LinearProgress />
+        </div>
+      )}
       <div className="py-4 font-[Outfit] w-[100%] items-center mt-3">
         <div
           ref={sectionRefs.section1}
@@ -491,71 +509,13 @@ const Home = ({ onSectionVisible, onSectionHidden }) => {
             <div className="w-full  mt-[26px] flex  ">
               {selectedtab === "MyJobs" && (
                 <>
-                  {/* <div className="flex flex-col gap-4 w-1/2">
-                      {allappiledjobs.map((job, index) => (
-                        <div
-                          key={index}
-                          onClick={() => handleJobClick(job)}
-                          ref={sectionRefs.section2}
-                          id="section2"
-                          className="bg-[#fff] p-[14px] flex flex-col -ml-5  max-2xl:h-38 w-full  max-lg:w-48 max-sm:w-36 max-sm:h-40 rounded-[20px] shadow-xl hover:shadow-2xl cursor-pointer transition-transform transform hover:scale-105"
-                        >
-                          <div className="flex justify-between max-2xl:-mb-3 -mb-3  items-center gap-4 max-lg:gap-1 max-sm:gap-0">
-                            <p className="text-[15px] max-2xl:text-[14px] max-sm:text-[16px] font-[700]">
-                              {job.JobId.positionName}
-                            </p>
-                            <img
-                              src="/images/material-symbols-light_share.svg"
-                              alt="Share"
-                              className="w-[17px] h-[17px] max-lg:w-[15px] max-lg:h-[15px]"
-                            />
-                          </div>
-                          <div className="flex gap-[5px] max-2xl:-mb-4 -mb-4 mt-[18px] max-lg:gap-[6px]">
-                            <p className="text-black text-opacity-[60%] text-[12px] max-lg:text-[11px] max-sm:text-[10px] font-[500]">
-                              {job.CompanyId.Name}
-                            </p>
-                          </div>
-                          <div className="flex gap-[5px] max-2xl:-mb-3 -mb-3 mt-[20px] max-lg:gap-[6px]">
-                            <img
-                              src="/images/carbon_location.svg"
-                              className="w-[16px] h-[20px] max-lg:w-[15px] max-lg:h-[18px]"
-                              alt="Location"
-                            />
-                            <p className="text-black text-opacity-[60%] text-[12px] max-lg:text-[11px] max-sm:text-[10px] font-[500]">
-                              {job.JobId.location}
-                            </p>
-                          </div>
-                          <div className="flex mt-[20px] gap-4 max-2xl:gap-1 max-sm:gap-2 justify-between">
-                            <p className="text-black text-opacity-[60%] text-[12px] font-[500] max-lg:text-[13px] max-sm:text-[11px]">
-                              {job.JobId.time}
-                            </p>
-                            {job.status === "rejected" ? (
-                              <p className="text-red-500 max-lg:text-[13px] text-[12px] ">
-                                X {job.status}
-                              </p>
-                            ) : (
-                              <p className="text-blue-500 text-[11px] max-lg:text-[10px]">
-                                {job.status}
-                              </p>
-                            )}
-                          </div>
-                        </div>
-                      ))}
-                    </div> */}
                   <div
                     className="flex flex-col pl-7 gap-2 w-1/2 max-h-[calc(100vh-175px)] overflow-y-scroll "
                     style={{
-                      scrollbarWidth: "none", // For Firefox
-                      msOverflowStyle: "none", // For Internet Explorer and Edge
+                      scrollbarWidth: "none",
+                      msOverflowStyle: "none",
                     }}
                   >
-                    <style>
-                      {`
-                              .hide-scrollbar::-webkit-scrollbar {
-                                display: none;
-                              }
-                            `}
-                    </style>
                     {allappiledjobs.map((job, index) => (
                       <div
                         key={index}
@@ -658,17 +618,31 @@ const Home = ({ onSectionVisible, onSectionHidden }) => {
                               >
                                 <div className="relative flex items-center justify-center">
                                   <div
-                                    className={`w-3 h-3 rounded-full ${status === "Rejected" && isActive ? "bg-red-600" : isBeforeActive ? "bg-blue-600" : "bg-white border border-blue-600"}`}
+                                    className={`w-3 h-3 rounded-full ${
+                                      status === "Rejected" && isActive
+                                        ? "bg-red-600"
+                                        : isBeforeActive
+                                        ? "bg-blue-600"
+                                        : "bg-white border border-blue-600"
+                                    }`}
                                   ></div>
                                   {index < statuses.length - 1 && (
                                     <div
-                                      className={`absolute w-[2px] h-8 top-3/4 left-1/2 -translate-x-1/2 ${isBeforeActive ? "bg-blue-600" : "bg-gray-300"}`}
+                                      className={`absolute w-[2px] h-8 top-3/4 left-1/2 -translate-x-1/2 ${
+                                        isBeforeActive
+                                          ? "bg-blue-600"
+                                          : "bg-gray-300"
+                                      }`}
                                     ></div>
                                   )}
                                 </div>
                                 <div className="ml-4">
                                   <p
-                                    className={`text-[14px] ${isBeforeActive ? "text-blue-600" : "text-gray-500"}`}
+                                    className={`text-[14px] ${
+                                      isBeforeActive
+                                        ? "text-blue-600"
+                                        : "text-gray-500"
+                                    }`}
                                   >
                                     {status}
                                   </p>
@@ -778,7 +752,11 @@ const Home = ({ onSectionVisible, onSectionHidden }) => {
                               >
                                 <div className="flex-shrink-0 flex flex-col items-center -mb-3">
                                   <div
-                                    className={`w-3 h-3 ${item.passed ? "bg-blue-600" : "bg-white border border-gray-400"} rounded-full`}
+                                    className={`w-3 h-3 ${
+                                      item.passed
+                                        ? "bg-blue-600"
+                                        : "bg-white border border-gray-400"
+                                    } rounded-full`}
                                   ></div>
                                   {index < app.status.length - 1 && (
                                     <div className="w-px h-10 bg-gray-300"></div>
@@ -790,7 +768,11 @@ const Home = ({ onSectionVisible, onSectionHidden }) => {
                                   </h4>
                                   {item.feedback && (
                                     <p
-                                      className={`text-xs ${item.passed ? "text-green-600" : "text-gray-500"}`}
+                                      className={`text-xs ${
+                                        item.passed
+                                          ? "text-green-600"
+                                          : "text-gray-500"
+                                      }`}
                                     >
                                       {item.feedback}
                                     </p>
