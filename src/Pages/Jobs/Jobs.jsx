@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { GetApi } from "../utilis/Api_Calling";
 import LinearProgress from "@mui/material/LinearProgress";
 
@@ -7,22 +7,18 @@ import JobCard from "./JobCard";
 
 const Jobs = () => {
   const navigate = useNavigate();
-  const [value, setValue] = useState(50);
-
-  const handleChange = (event) => {
-    setValue(event.target.value);
-  };
-
-  const [showAll, setShowAll] = useState(false);
-
-  const handleToggle = () => {
-    setShowAll(!showAll);
-  };
-
   const [AllJobs, setAllJobs] = useState([]);
   const [Loading, setLoading] = useState(true);
   const [appiledjobs, setappiledjobs] = useState([]);
   const [totaljob, Settotaljob] = useState("");
+  const [profileFilter, setProfileFilter] = useState("");
+  const [locationFilter, setLocationFilter] = useState("");
+  const [workFromHomeFilter, setWorkFromHomeFilter] = useState(false);
+  const [partTimeFilter, setPartTimeFilter] = useState(false);
+  const [includeInternshipsFilter, setIncludeInternshipsFilter] =
+    useState(false);
+  const [salaryFilter, setSalaryFilter] = useState(0);
+  const [experienceFilter, setExperienceFilter] = useState("");
 
   const GetAllJobs = async () => {
     try {
@@ -52,33 +48,9 @@ const Jobs = () => {
     Getallappiledjob();
   }, []);
 
-  const formatSalary = (salary) => {
-    if (salary >= 1000) {
-      return (salary / 1000).toFixed(1) + "k";
-    } else {
-      return salary.toString();
-    }
-  };
-
-  function NewformatDate(dateString) {
-    const date = new Date(dateString);
-    const options = { day: "2-digit", month: "short", year: "2-digit" };
-    const formattedDate = date.toLocaleDateString("en-GB", options);
-    return formattedDate;
-  }
-
   const jobDetail = async (id) => {
     navigate(`/blank/JobViewDetails/${id}`);
   };
-
-  const [profileFilter, setProfileFilter] = useState("");
-  const [locationFilter, setLocationFilter] = useState("");
-  const [workFromHomeFilter, setWorkFromHomeFilter] = useState(false);
-  const [partTimeFilter, setPartTimeFilter] = useState(false);
-  const [includeInternshipsFilter, setIncludeInternshipsFilter] =
-    useState(false);
-  const [salaryFilter, setSalaryFilter] = useState(0);
-  const [experienceFilter, setExperienceFilter] = useState("");
 
   const applyFilters = (jobs) => {
     return jobs.filter((job) => {

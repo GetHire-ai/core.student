@@ -1,16 +1,27 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "react-circular-progressbar/dist/styles.css";
 import { GetApi } from "../utilis/Api_Calling";
 import logo from "../../assets/Images/Gethire SVG.svg";
 import { IoIosArrowForward } from "react-icons/io";
-import { Construction } from "@mui/icons-material";
 import AIToolsModal from "../AI Tools/AIToolsModal";
 import { LinearProgress } from "@mui/material";
 const Home = ({ onSectionVisible, onSectionHidden }) => {
   const navigate = useNavigate();
-  const path = useLocation();
-
+  const [selectedJob, setSelectedJob] = useState(allappiledjobs[0]);
+  const [selectedtab, setselectedtab] = useState("MyJobs");
+  const [random, setRandom] = useState(2);
+  const [loading, setLoading] = useState(true);
+  const [AllJobs, setAllJobs] = useState([]);
+  const [appiledjobs, setappiledjobs] = useState([]);
+  const [allappiledjobs, setallappiledjobs] = useState([]);
+  const [inputValue, setInputValue] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [aiModal, setAiModal] = useState(false);
+  const [allinterview, setallinterview] = useState([]);
+  const [allTestResults, setAllTestResults] = useState([]);
+  const [studentprofile, setstudentprofile] = useState({});
+  const [offset, setOffset] = useState(0);
   const applicationData = [
     {
       id: 1,
@@ -133,8 +144,6 @@ const Home = ({ onSectionVisible, onSectionHidden }) => {
       ],
     },
   ];
-
-  // dummy data for companies
   const companies = [
     {
       id: 1,
@@ -172,15 +181,22 @@ const Home = ({ onSectionVisible, onSectionHidden }) => {
       reviews: "1.5K+",
     },
   ];
-
-  const [selectedtab, setselectedtab] = useState("MyJobs");
-  const [AllJobs, setAllJobs] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [appiledjobs, setappiledjobs] = useState([]);
-  const [allappiledjobs, setallappiledjobs] = useState([]);
-  const [allinterview, setallinterview] = useState([]);
-  const [allTestResults, setAllTestResults] = useState([]);
-  const [studentprofile, setstudentprofile] = useState({});
+  const skills = [
+    "JavaScript",
+    "React",
+    "Node.js",
+    "CSS",
+    "HTML",
+    "Python",
+    "Java",
+    "C++",
+    "Management",
+    "Verbal",
+    "SQL",
+    "Express",
+    "GraphQL",
+    "Tailwind",
+  ];
 
   const Getstudentprofile = async () => {
     try {
@@ -265,39 +281,11 @@ const Home = ({ onSectionVisible, onSectionHidden }) => {
     }
   };
 
-  useEffect(() => {
-    setLoading(true);
-    Getstudentprofile();
-    GetAllJobs();
-    Getallappiledjobid();
-    Getallappiledjob();
-    Getallinterview();
-    GetAllTest();
-    setLoading(false);
-  }, []);
-
-  const formatSalary = (salary) => {
-    if (salary >= 1000) {
-      return (salary / 1000).toFixed(1) + "k";
-    } else {
-      return salary.toString();
-    }
-  };
-
-  const hasTakenTest = (jobId) => {
-    return allTestResults.some((test) => test.job === jobId);
-  };
-
-  // for jobs
-  const [selectedJob, setSelectedJob] = useState(allappiledjobs[0]);
-
-  // Handle job card click
   const handleJobClick = (job) => {
     setSelectedJob(job);
   };
   const cardsToShow = 3;
   const totalCards = companies.length;
-  const [offset, setOffset] = useState(0);
 
   const handleMove = () => {
     setOffset(
@@ -305,22 +293,30 @@ const Home = ({ onSectionVisible, onSectionHidden }) => {
     );
   };
 
-  // for generate the random number
-  const [random, setRandom] = useState(2);
-
-  useEffect(() => {
-    setRandom(Math.floor(Math.random() * 3) + 1);
-  }, []);
-
-  useEffect(() => {
-    // Optionally, you could fetch or process additional data when a job is selected
-  }, [selectedJob]);
-
-  // this belew is all for scrollable effect in the home , companies and all 4 sections
   const sectionRefs = {
     section1: useRef(null),
     section2: useRef(null),
     section3: useRef(null),
+  };
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setInputValue(value);
+
+    // Filter suggestions based on input value
+    if (value) {
+      const filteredSuggestions = skills.filter((skill) =>
+        skill.toLowerCase().includes(value.toLowerCase())
+      );
+      setSuggestions(filteredSuggestions);
+    } else {
+      setSuggestions([]);
+    }
+  };
+
+  const handleSuggestionClick = (suggestion) => {
+    setInputValue(suggestion);
+    setSuggestions([]);
   };
 
   useEffect(() => {
@@ -348,47 +344,18 @@ const Home = ({ onSectionVisible, onSectionHidden }) => {
       });
     };
   }, [onSectionVisible, onSectionHidden]);
-  const [inputValue, setInputValue] = useState("");
-  const [suggestions, setSuggestions] = useState([]);
-  const skills = [
-    "JavaScript",
-    "React",
-    "Node.js",
-    "CSS",
-    "HTML",
-    "Python",
-    "Java",
-    "C++",
-    "Management",
-    "Verbal",
-    "SQL",
-    "Express",
-    "GraphQL",
-    "Tailwind",
-  ];
 
-  const handleInputChange = (e) => {
-    const value = e.target.value;
-    setInputValue(value);
-
-    // Filter suggestions based on input value
-    if (value) {
-      const filteredSuggestions = skills.filter((skill) =>
-        skill.toLowerCase().includes(value.toLowerCase())
-      );
-      setSuggestions(filteredSuggestions);
-    } else {
-      setSuggestions([]);
-    }
-  };
-
-  const handleSuggestionClick = (suggestion) => {
-    setInputValue(suggestion);
-    setSuggestions([]);
-  };
-
-  // for ai modal opener
-  const [aiModal, setAiModal] = useState(false);
+  useEffect(() => {
+    setLoading(true);
+    Getstudentprofile();
+    GetAllJobs();
+    Getallappiledjobid();
+    Getallappiledjob();
+    Getallinterview();
+    GetAllTest();
+    setLoading(false);
+    setRandom(Math.floor(Math.random() * 3) + 1);
+  }, []);
   return (
     <>
       {loading && (
@@ -622,8 +589,8 @@ const Home = ({ onSectionVisible, onSectionHidden }) => {
                                       status === "Rejected" && isActive
                                         ? "bg-red-600"
                                         : isBeforeActive
-                                        ? "bg-blue-600"
-                                        : "bg-white border border-blue-600"
+                                          ? "bg-blue-600"
+                                          : "bg-white border border-blue-600"
                                     }`}
                                   ></div>
                                   {index < statuses.length - 1 && (

@@ -24,7 +24,7 @@ const Invite = () => {
   let handleReject = async (id) => {
     try {
       setLoading(true);
-      let res = await PostApi(`api/studentroutes/invitedjobs/reject/${id}`, {});
+      await PostApi(`api/studentroutes/invitedjobs/reject/${id}`, {});
       toast.success("Invite Rejected", { autoClose: 1000 });
       getInvitedJobs();
     } catch (error) {
