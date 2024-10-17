@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom/dist";
 const HeaderLayout = () => {
   return (
     <>
-      <div className="flex flex-col overflow-hidden">
+      <div className="flex flex-col overflow-hidden overflow-y-auto h-screen">
         <div className=" fixed w-full z-10">
           <Header />
         </div>

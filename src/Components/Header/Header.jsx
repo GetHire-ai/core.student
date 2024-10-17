@@ -324,7 +324,7 @@ const Header = () => {
       <div className="bg-[#fff] h-[70px] w-full flex justify-start items-center p-[10px] pl-20 shadow-md ">
         <div className="flex justify-center items-center text-[#2a5caa] mr-10">
           <Link to="/">
-            <img src={Logo} className="h-[2rem]" />
+            <img src={Logo} />
           </Link>
         </div>
         <div onClick={toggleNavbar} className="flex md:hidden">
