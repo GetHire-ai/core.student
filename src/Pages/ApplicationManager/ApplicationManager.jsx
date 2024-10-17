@@ -30,7 +30,6 @@ const ApplicationManager = () => {
   const [hoveredModalIndex, setHoveredModalIndex] = useState(null);
   const [value, setValue] = useState(0);
   const [interviewModal, setInterviewModal] = useState(false);
-  const [onboardingModal, setOnboardingModal] = useState(false);
   const [newDate, setNewDate] = useState("");
   const [newTime, setNewTime] = useState("");
   const [editing, setEditing] = useState(false); // To toggle edit mode
@@ -118,7 +117,7 @@ const ApplicationManager = () => {
       setInterviewModal(true);
       setSelectedInterview(job);
     } else if (tabOptions[value] === "Onboarding") {
-      setOnboardingModal(true);
+      navigate("/blank/onboard", { state: { jobId: job.JobId._id } });
     } else {
       navigate(`/blank/allrounds/${job?.JobId?._id}`);
     }
@@ -166,7 +165,7 @@ const ApplicationManager = () => {
       <div className="relative pl-3 min-h-screen">
         <Box sx={{ width: "100%", marginY: 2 }}>
           <Tabs
-            centered
+            // centered
             value={value}
             onChange={(event, newValue) => {
               setValue(newValue);

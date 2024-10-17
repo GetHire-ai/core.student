@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { GetApi } from "../utilis/Api_Calling";
-import { Triangle } from "react-loader-spinner";
+import LinearProgress from "@mui/material/LinearProgress";
 
 import JobCard from "./JobCard";
 
@@ -129,17 +129,7 @@ const Jobs = () => {
   return (
     <>
       {Loading ? (
-        <div className="bg-white flex justify-center pt-20 min-w-[100vw] text-2xl">
-          {/* Loading... */}
-          <Triangle
-            visible={true}
-            height="90"
-            width="80"
-            color="blue"
-            ariaLabel="triangle-loading"
-            wrapperStyle={{}}
-          />
-        </div>
+        <LinearProgress />
       ) : (
         <div
           className="flex flex-col justify-start min-h-screen  items-center w-full bg-[#f8f9fa] "

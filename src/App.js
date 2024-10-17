@@ -9,7 +9,7 @@ import Layout from "./Layouts/Layout";
 import Home from "./Pages/Home/Home";
 // import Notification from "./Pages/Notification/Notification";
 // import ApplicationManager from "./Pages/ApplicationManager/ApplicationManager";
-import IDashboard from './Pages/AI MockInterview/Dashboard.jsx'
+import IDashboard from "./Pages/AI MockInterview/Dashboard.jsx";
 import Training from "./Pages/Training/Training";
 import MyBoard from "./Pages/MyBoard/MyBoard";
 import CollegeBoard from "./Pages/MyBoard/CollegeBoard";
@@ -49,10 +49,10 @@ import MockInterview from "./Pages/AI Tools/MockInterview.jsx";
 
 import AITools from "./Pages/AiTools/AiTools.js";
 
-import Chat from "./Pages/Chat/Chat.jsx"
+import Chat from "./Pages/Chat/Chat.jsx";
 import Notification from "./Pages/Notification/Notification";
 import ApplicationManager from "./Pages/ApplicationManager/ApplicationManager";
-
+import Onboard from "./Pages/OnBoarding";
 // imporint all the pages of carrer blogs
 import CareerMain from "./Pages/CarearBlogs/CareerMain.jsx";
 import ArticlePage from "./Pages/CarearBlogs/ArticalPage.jsx";
@@ -70,7 +70,7 @@ import MainEvent from "./Pages/Events/MainEvent.jsx";
 import CoverLetterGenerator from "./Pages/AI Tools/CoverLetterGenerator.jsx";
 
 // importing invite
-import Invite from './Pages/Invite/Invite';
+import Invite from "./Pages/Invite/Invite";
 
 // importign main interships section
 import AllInternship from "./Pages/MainInternShip/AllRoundsInter.jsx";
@@ -179,18 +179,21 @@ const ProjectRoutes = () => {
           {/* all events section */}
           <Route path="/blank/mainEvent" element={<MainEvent />} />
           {/* cover letter */}
-          <Route path="/blank/ai-tools/coverLetterGen" element={<CoverLetterGenerator />} />
+          <Route
+            path="/blank/ai-tools/coverLetterGen"
+            element={<CoverLetterGenerator />}
+          />
           {/* invite page  */}
           <Route path="/blank/invite" element={<Invite />} />
           {/* imporitng main intership sections here */}
           <Route path="/blank/mainIntership" element={<AllInternship />} />
-
           <Route path="/blank/chats" element={<Chat />} />
           <Route path="/blank/notification" element={<Notification />} />
-          <Route path="/blank/applicationManager" element={<ApplicationManager />} />
-
-
-
+          <Route
+            path="/blank/applicationManager"
+            element={<ApplicationManager />}
+          />
+          <Route path="/blank/onboard" element={<Onboard />} />
           <Route
             path="/blank/start-interview/:jobId"
             element={<StartInterview />}

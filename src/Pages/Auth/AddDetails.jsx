@@ -92,7 +92,12 @@ const AddDetails = ({ Email, Number }) => {
       return;
     }
 
-    let data = jobData;
+    let newArr = [];
+    jobData.skills.map((skill) =>
+      newArr.push({ skill, Rate: "Beginner", score: 0 })
+    );
+
+    let data = { ...jobData, skills: newArr };
     try {
       console.log(data);
       const responce = await postformdataApi(

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { GetApi, PostApi } from "../utilis/Api_Calling";
 import { postformdataApi } from "../utilis/Api_Calling";
-import { ThreeDots } from "react-loader-spinner";
+import LinearProgress from "@mui/material/LinearProgress";
 import {
   Button,
   Box,
@@ -191,19 +191,7 @@ const JobViewDetails = () => {
   return (
     <>
       {Loading ? (
-        <div className="bg-white flex justify-center pt-20 min-w-[100vw] min-h-[100vh] text-2xl">
-          {/* Loading... */}
-          <ThreeDots
-            visible={true}
-            height="80"
-            width="80"
-            color="blue"
-            radius="9"
-            ariaLabel="three-dots-loading"
-            wrapperStyle={{}}
-            wrapperClass=""
-          />
-        </div>
+        <LinearProgress />
       ) : (
         <div className="w-full flex justify-center items-start gap-10 font-[poppins] bg-[#f8f9fa]">
           <div className="w-3/6 pt-5 mb-10">
@@ -239,7 +227,8 @@ const JobViewDetails = () => {
                   <div className="flex flex-col text-[14px] font-[400] text-black text-opacity-[50%] mt-[5px] gap-2">
                     <div className="flex justify-start items-center flex-wrap gap-3 mt-4">
                       <span>
-                        <i className="fa-solid fa-briefcase mr-2"></i> {Jobdetail?.minExp}-{Jobdetail?.maxExp} Years
+                        <i className="fa-solid fa-briefcase mr-2"></i>{" "}
+                        {Jobdetail?.minExp}-{Jobdetail?.maxExp} Years
                         &nbsp;&nbsp;
                       </span>
                       <span>
