@@ -1,35 +1,55 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { GetApi } from "../utilis/Api_Calling";
+import { GetApi, putformdataApi } from "../utilis/Api_Calling";
 import { toast } from "react-toastify";
-import Dummy from "./Dummy";
+import Sections from "./Sections";
 
 const OnBoarding = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const studentId = localStorage.getItem("Studentid");
   const [OnBoarding, setOnBoarding] = useState(null);
-  const getOnboard = async () => {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  const getOnboarding = async () => {
     try {
-      let res = await GetApi(
-        `api/studentroutes/onboard/${location?.state?.jobId}`
-      );
-      console.log(res?.data);
+      setLoading(true);
+      let url = `api/onboardroutes/${location?.state?.jobId}/${studentId}`;
+      const res = await GetApi(url);
       setOnBoarding(res?.data?.data);
-    } catch (error) {
-      console.error(error.response);
-      toast.error("unable to fetch onboard details", { autoClose: 1000 });
-      navigate("/");
+    } catch (err) {
+      setError("Failed to fetch data");
+      console.error(err?.response);
+    } finally {
+      setLoading(false);
     }
   };
+
+  const updateOnboarding = async (id, data) => {
+    try {
+      setLoading(true);
+      await putformdataApi(`api/onboardroutes/update/${id}`, data);
+      getOnboarding();
+      toast.success("Onboarding Updated", { autoClose: 1000 });
+    } catch (err) {
+      toast.error("Onboarding Updating Failed", { autoClose: 1000 });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    // getOnboard();
+    getOnboarding();
     if (!location.state) navigate("/");
   }, []);
 
   return (
-    <div>
-      <Dummy />
-    </div>
+    <Sections
+      loading={loading}
+      OnBoarding={OnBoarding}
+      updateOnboarding={updateOnboarding}
+    />
   );
 };
 
