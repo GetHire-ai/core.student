@@ -8,13 +8,13 @@ import AIToolsModal from "../AI Tools/AIToolsModal";
 import { LinearProgress } from "@mui/material";
 const Home = ({ onSectionVisible, onSectionHidden }) => {
   const navigate = useNavigate();
-  const [selectedJob, setSelectedJob] = useState(allappiledjobs[0]);
   const [selectedtab, setselectedtab] = useState("MyJobs");
   const [random, setRandom] = useState(2);
   const [loading, setLoading] = useState(true);
   const [AllJobs, setAllJobs] = useState([]);
   const [appiledjobs, setappiledjobs] = useState([]);
   const [allappiledjobs, setallappiledjobs] = useState([]);
+  const [selectedJob, setSelectedJob] = useState(allappiledjobs[0]);
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [aiModal, setAiModal] = useState(false);
@@ -867,8 +867,6 @@ const Home = ({ onSectionVisible, onSectionHidden }) => {
             </button>
           </div>
         )}
-
-        {/* for ai modal */}
         {aiModal && (
           <AIToolsModal open={aiModal} onClose={() => setAiModal(false)} />
         )}

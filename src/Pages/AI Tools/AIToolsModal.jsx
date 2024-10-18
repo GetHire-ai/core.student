@@ -3,14 +3,12 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-
-// importing imgs
-import Builder from "../../assets/Images/image-197 builder cpoy.png"
-import Analyzer from "../../assets/Images/analyzer.jpeg"
-import Career from "../../assets/Images/career.jpeg"
-import Moke from "../../assets/Images/moke interviw.jpeg"
-import Auto from "../../assets/Images/applyer.jpeg"
-import CoverLetter from "../../assets/Images/new cover letter.jpg"
+import Builder from "../../assets/Images/image-197 builder cpoy.png";
+import Analyzer from "../../assets/Images/analyzer.jpeg";
+import Career from "../../assets/Images/career.jpeg";
+import Moke from "../../assets/Images/moke interviw.jpeg";
+import Auto from "../../assets/Images/applyer.jpeg";
+import CoverLetter from "../../assets/Images/new cover letter.jpg";
 
 const AIToolsModal = ({ open, onClose }) => {
   return (
@@ -18,8 +16,12 @@ const AIToolsModal = ({ open, onClose }) => {
       <Box
         className="flex justify-center items-center h-screen p-4 font-[poppins]"
         onClick={onClose}
+        style={{
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+        }}
       >
-        <div 
+        <div
           className="bg-white rounded-lg overflow-y-auto max-h-[90vh] w-full max-w-4xl mx-auto"
           onClick={(e) => e.stopPropagation()}
         >
@@ -29,9 +31,7 @@ const AIToolsModal = ({ open, onClose }) => {
               Close
             </span>
           </div>
-          <Box
-            className="bg-[#e1ecfe] p-8 rounded-b-lg"
-          >
+          <Box className="bg-[#e1ecfe] p-8 rounded-b-lg">
             <div className="flex flex-wrap justify-around gap-4">
               <Card
                 desc={
@@ -133,7 +133,6 @@ const AIToolsModal = ({ open, onClose }) => {
 //   );
 // };
 
-
 const Card = ({ title, desc, link, onClose, img }) => {
   const navigate = useNavigate();
 
@@ -142,8 +141,8 @@ const Card = ({ title, desc, link, onClose, img }) => {
       className="bg-white p-5 rounded-xl shadow-md w-[30%] h-auto transform transition-transform duration-300 hover:scale-105 flex flex-col justify-between"
       sx={{
         border: "1px solid #e0e0e0",
-        '&:hover': {
-          boxShadow: '0 6px 20px rgba(0, 0, 0, 0.1)',
+        "&:hover": {
+          boxShadow: "0 6px 20px rgba(0, 0, 0, 0.1)",
         },
       }}
     >
@@ -161,22 +160,17 @@ const Card = ({ title, desc, link, onClose, img }) => {
         color="primary"
         className="bg-blue-600 text-white py-2 rounded-md shadow-sm hover:bg-blue-700 hover:shadow-lg transition-all duration-300 mt-auto"
         onClick={() => {
-          if (link !== '123') {
+          if (link !== "123") {
             navigate(link);
             onClose();
           }
         }}
-        disabled={link === '123'}
+        disabled={link === "123"}
       >
-        {link === '123' ? 'Coming Soon...' : 'Get Started'}
+        {link === "123" ? "Coming Soon..." : "Get Started"}
       </Button>
     </Box>
   );
 };
-
-
-
-
-
 
 export default AIToolsModal;
