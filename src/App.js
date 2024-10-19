@@ -7,8 +7,6 @@ import {
 } from "react-router-dom";
 import Layout from "./Layouts/Layout";
 import Home from "./Pages/Home/Home";
-// import Notification from "./Pages/Notification/Notification";
-// import ApplicationManager from "./Pages/ApplicationManager/ApplicationManager";
 import IDashboard from "./Pages/AI MockInterview/Dashboard.jsx";
 import Training from "./Pages/Training/Training";
 import MyBoard from "./Pages/MyBoard/MyBoard";
@@ -40,20 +38,16 @@ import EndInterview from "./Pages/Jobs/EndInterview";
 import Question from "./Pages/Jobs/Question";
 import Report from "./Pages/Jobs/Report";
 import Premium from "./Pages/Premium";
-// import Chat from "./Pages/Chat/Chat.jsx";
 import AllRounds from "./Pages/Jobs/AllRounds";
 import Todo from "./Pages/Todo/Index";
 import ResumeAnalyser from "./Pages/AI Tools/ResumeAnalyser.jsx";
 import ResumeBuilder from "./Pages/AI Tools/ResumeBuilder.jsx";
 import MockInterview from "./Pages/AI Tools/MockInterview.jsx";
-
 import AITools from "./Pages/AiTools/AiTools.js";
-
 import Chat from "./Pages/Chat/Chat.jsx";
 import Notification from "./Pages/Notification/Notification";
 import ApplicationManager from "./Pages/ApplicationManager/ApplicationManager";
 import Onboard from "./Pages/OnBoarding";
-// imporint all the pages of carrer blogs
 import CareerMain from "./Pages/CarearBlogs/CareerMain.jsx";
 import ArticlePage from "./Pages/CarearBlogs/ArticalPage.jsx";
 import CareerAdvise from "./Pages/CarearBlogs/CareerBarNavigate/CareerAdvise.jsx";
@@ -62,20 +56,11 @@ import HrInsight from "./Pages/CarearBlogs/CareerBarNavigate/HrInsight.jsx";
 import InterviewAdvice from "./Pages/CarearBlogs/CareerBarNavigate/InterviewAdvice.jsx";
 import News from "./Pages/CarearBlogs/CareerBarNavigate/News.jsx";
 import ResumeEdit from "./Pages/AI Tools/ResumeEdit.jsx";
-
-// importing events
 import MainEvent from "./Pages/Events/MainEvent.jsx";
-
-// importing coevr letter
 import CoverLetterGenerator from "./Pages/AI Tools/CoverLetterGenerator.jsx";
-
-// importing invite
 import Invite from "./Pages/Invite/Invite";
-
-// importign main interships section
 import AllInternship from "./Pages/MainInternShip/AllRoundsInter.jsx";
 import Jobs2 from "./Pages/Jobs/Jobs2.jsx";
-
 const ProjectRoutes = () => {
   const [loading, setLoading] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);

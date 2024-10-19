@@ -1,51 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-// ---------------------
-// ----------------
 import Typography from "@mui/material/Typography";
 import Dialog from "@mui/material/Dialog";
-// import * as React from 'react';
-// import Box from '@mui/material/Box';
-// import Button from '@mui/material/Button';
-// import Modal from '@mui/material/Modal';
-// -------------------
 import { FiAlignJustify } from "react-icons/fi";
 import InternshipModal from "../../Pages/Internship/InternshipModal";
 import Logo from "../../assets/Images/Gethire SVG.svg";
 import { Menu, MenuItem, IconButton } from "@mui/material";
 import InputBase from "@mui/material/InputBase";
-import SearchIcon from "@mui/icons-material/Search";
-import Popover from "@mui/material/Popover";
-// import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import { styled, alpha } from "@mui/material/styles";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { TbArrowsExchange2 } from "react-icons/tb";
 import { PiNotebookLight } from "react-icons/pi";
 import { IoSearchCircleSharp } from "react-icons/io5";
 import { BiMessage } from "react-icons/bi";
-import { IoMdNotificationsOutline } from "react-icons/io";
 import { MdOutlineSort } from "react-icons/md";
 import { MdOutlineNotifications } from "react-icons/md";
-import { FaRegStar } from "react-icons/fa";
 import AIToolsModal from "../../Pages/AI Tools/AIToolsModal";
-import { FaLocationArrow } from "react-icons/fa";
-
 import { GetApi } from "../../Pages/utilis/Api_Calling";
-
-// -----------------------
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
-// ---------------------
 
 const DropdownLink = styled(Link)(({ theme }) => ({
   display: "flex",
@@ -352,105 +322,15 @@ const Header = () => {
   return (
     <>
       <div className="bg-[#fff] h-[70px] w-full flex justify-start items-center p-[10px] pl-20 shadow-md ">
-        <div className="flex justify-center items-center text-[#2a5caa] mr-10">
+        <div className="flex justify-center items-center  mr-10">
           <Link to="/">
-            <img src={Logo} className="h-[2rem]" alt="" />
+            <img src={Logo} className="min-h-20 max-h-20" />
           </Link>
         </div>
         <div onClick={toggleNavbar} className="flex md:hidden">
           <FiAlignJustify size={"30px"} />
         </div>
         <div className=" hidden text-[18px] justify-center items-center font-[400] md:flex gap-[38px] max-2xl:gap-[33px] max-xl:gap[30px]  font-[Outfit] ">
-          {/* <Link to="/" className="hover:text-blue-700">Home</Link> */}
-          {/* <div
-                      // onClick={toggleInternshipDropDown}
-
-                      onMouseEnter={ () => {setShowInternshipDropDown(!showInternshipDropDown) ; setAnchorEl2(null)}}
-                      onMouseLeave={ () => {setShowInternshipDropDown(!showInternshipDropDown)}}
-                      className="relative cursor-pointer "
-
-                      onMouseEnter={() => {
-                        setShowInternshipDropDown(!showInternshipDropDown);
-                        setAnchorEl2(null);
-                      }}
-                      onMouseLeave={() => {
-                        setShowInternshipDropDown(!showInternshipDropDown);
-                      }}
-                      className="relative cursor-pointer hover:text-blue-700 hover:border-b-2 hover:border-blue-500  duration-100"
-
-                    >
-                      Internship
-                </div> */}
-
-          {/* {showInternshipDropDown && (
-                  <div
-                    className="bg-white shadow-xl -ml-[470px] flex top-[50px] absolute w-[485px] h-[431px] rounded-xl overflow-hidden transform transition-transform duration-300 ease-in-out hover:shadow-2xl"
-                    onMouseEnter={() => {
-                      setShowInternshipDropDown(true);
-                    }}
-                    onMouseLeave={() => {
-                      setShowInternshipDropDown(false);
-                    }}
-                  >
-                    <div className="py-5 w-[223px] text-[16px] font-medium pr-2">
-                      <p
-                        onClick={() => handleSelectInternshipOption("location")}
-                        className={`${
-                          selectInternshipOption === "location"
-                            ? "bg-[#4234a2] bg-opacity-20 rounded-tr-[39px] rounded-br-[39px] w-full flex items-center text-[#4234a2] font-semibold"
-                            : "hover:bg-gray-100 hover:rounded-tr-[39px] hover:rounded-br-[39px] text-gray-700"
-                        } px-4 py-3 cursor-pointer transition-all duration-200 ease-in-out`}
-                      >
-                        Top Location
-                      </p>
-                      <p
-                        onClick={() => handleSelectInternshipOption("profile")}
-                        className={`${
-                          selectInternshipOption === "profile"
-                            ? "bg-[#4234a2] bg-opacity-20 rounded-tr-[39px] rounded-br-[39px] w-full flex items-center text-[#4234a2] font-semibold"
-                            : "hover:bg-gray-100 hover:rounded-tr-[39px] hover:rounded-br-[39px] text-gray-700"
-                        } px-4 py-3 cursor-pointer transition-all duration-200 ease-in-out`}
-                      >
-                        Profile
-                      </p>
-                      <p
-                        onClick={() => handleSelectInternshipOption("categories")}
-                        className={`${
-                          selectInternshipOption === "categories"
-                            ? "bg-[#4234a2] bg-opacity-20 rounded-tr-[39px] rounded-br-[39px] w-full flex items-center text-[#4234a2] font-semibold"
-                            : "hover:bg-gray-100 hover:rounded-tr-[39px] hover:rounded-br-[39px] text-gray-700"
-                        } px-4 py-3 cursor-pointer transition-all duration-200 ease-in-out`}
-                      >
-                        Top Categories
-                      </p>
-                      <p
-                        onClick={() => handleSelectInternshipOption("moreInternship")}
-                        className={`${
-                          selectInternshipOption === "moreInternship"
-                            ? "bg-[#4234a2] bg-opacity-20 rounded-tr-[39px] rounded-br-[39px] w-full flex items-center text-[#4234a2] font-semibold"
-                            : "hover:bg-gray-100 hover:rounded-tr-[39px] hover:rounded-br-[39px] text-gray-700"
-                        } px-4 py-3 cursor-pointer transition-all duration-200 ease-in-out`}
-                      >
-                        Explore More Internships
-                      </p>
-                    </div>
-                    <div className="border-l border-gray-200 h-full"></div>
-                    <div className="py-[36px] px-[18px] overflow-auto w-[262px] scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-gray-300">
-                      <ul className="flex flex-col gap-4 text-[15px] cursor-pointer text-gray-600 font-medium">
-                        {internshipListItem().map((item, index) => (
-                          <li
-                            key={index}
-                            className="hover:text-[#4234a2] transition-colors duration-200 ease-in-out"
-                          >
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                )} */}
-
-          {/* making the section opportunities */}
           <div
             className="flex items-center p-1 font-medium text-lg h-10  text-blue-500 hover:cursor-pointer hover:text-blue-700 "
             onMouseEnter={() => {
@@ -472,27 +352,15 @@ const Header = () => {
             }}
             onMouseLeave={() => setMode(false)}
           >
-            {mode === false ? (
-              <div className="flex flex-row justify-center items-center gap-2 p-2 group max-2xl:gap-1 max-xl:gap-1 max-xl:w-28">
-                <p className="text-lg text-blue-500   max-2xl:text-base max-xl:text-xs">
-                  Switch Mode
-                </p>
-                <TbArrowsExchange2
-                  size={23}
-                  className="text-blue-500 max-2xl:w-5 max-xl:w-4 "
-                />
-              </div>
-            ) : (
-              <div className="flex flex-row justify-center items-center gap-2 p-2 group  max-2xl:gap-1 max-xl:gap-1 max-xl:w-28">
-                <p className="text-lg max-2xl:text-base group-hover:text-blue-700 max-xl:text-sm">
-                  Switch Mode
-                </p>
-                <TbArrowsExchange2
-                  size={23}
-                  className=" group-hover:text-blue-700 max-2xl:w-5 max-xl:w-4"
-                />
-              </div>
-            )}
+            <div className="flex flex-row  justify-center items-center gap-2 p-2 group max-2xl:gap-1 max-xl:gap-1 min-w-[150px]">
+              <p className="text-xs text-blue-500   max-2xl:text-base max-xl:text-xs">
+                Switch Mode
+              </p>
+              <TbArrowsExchange2
+                size={23}
+                className="text-blue-500 max-2xl:w-5 max-xl:w-4 "
+              />
+            </div>
           </div>
           <div className="flex items-center w-[350px] h-[50px] max-xl:h-[40px] max-xl:-mr-4 max-xl:-ml-5 max-xl:w-[220px] rounded-full border border-gray-300 bg-white shadow-md transition-shadow duration-300 cursor-pointer hover:shadow-lg overflow-hidden">
             <input
@@ -530,7 +398,7 @@ const Header = () => {
             </div>
           </div>
           <div
-            className="  border flex justify-center max-xl:text-[10px] hover:bg-blue-700 hover:text-white duration-300 items-center  rounded-2xl text-sm py-1 px-2 font-semibold text-blue-500 cursor-pointer"
+            className="w-[7rem] py-3 border flex justify-center max-xl:text-[10px] hover:bg-blue-300 hover:text-white duration-300 items-center  rounded-2xl text-sm px-2 font-semibold text-blue-500 cursor-pointer"
             onClick={() => setAiModal(true)}
           >
             <img
@@ -545,25 +413,10 @@ const Header = () => {
             />
             <p>AI Tools</p>
           </div>
-          {/* <Link to="/blank/bookmarked">
-              <img
-                src="/images/iconoir_bookmark.svg"
-                className="w-[24px] h-[24px]"
-                alt=""
-              />
-            </Link> */}
-
           <div className=" flex flex-row gap-6 justify-center items-center ">
             <Link to={"/blank/chats"}>
               <BiMessage size={25} color="#6082B6" />
-              {/* <img
-                          src="/images/tabler_message-2.svg"
-                          className="w-[24px] h-[24px]"
-                          alt=""
-                        /> */}
             </Link>
-            {/* <MdOutlineNotifications size={25} color="#6082B6" onClick={()=>{navigate('/Notification')}} />  */}
-            {/* <Link to={"/blank/notification"}> */}
             <Link>
               {/* <i className="fa-regular fa-bell cursor-pointer"></i> */}
               <MdOutlineNotifications
@@ -574,14 +427,6 @@ const Header = () => {
               />
             </Link>
           </div>
-
-          {/* </Link> */}
-          {/* <Link to={"/notification"}> */}
-          {/* <i className="fa-regular fa-bell cursor-pointer"></i> */}
-          {/* <MdOutlineNotifications size={25} color="#6082B6" /> */}
-          {/* </Link> */}
-          {/* </div> */}
-
           <div
             className=" inline-block text-left cursor-pointer"
             onMouseEnter={(event) => setAnchorEl(event.currentTarget)}
@@ -589,7 +434,7 @@ const Header = () => {
           >
             <DropdownLink
               // onClick={handleClick}
-              className="flex items-center space-x-2 cursor-pointer p-2 rounded-full hover:bg-gray-100 transition-colors duration-300"
+              className="flex items-center space-x-2 cursor-pointer p-2 rounded-full hover:bg-gray-100 transition-colors duration-300 mr-5"
             >
               <MdOutlineSort size={25} />
               <img
@@ -597,11 +442,6 @@ const Header = () => {
                 className="w-8 h-8 rounded-full border border-gray-300"
                 alt="User Avatar"
               />
-              {/* <img
-                    src="/images/bxs_up-arrow.svg"
-                    className="w-4 h-3"
-                    alt="Arrow"
-                  /> */}
             </DropdownLink>
 
             <Menu
@@ -775,32 +615,10 @@ const Header = () => {
           </div>
         </div>
       </div>
-
-      {/* for notifications */}
-      {/* {noti && (
-        <div className="fixed top-[50px] right-[5%] z-20 w-[300px] bg-white shadow-md rounded-lg overflow-hidden">
-          <div className="bg-blue-700 text-white p-4 font-bold">
-            Updated Messages
-          </div>
-          <div className="max-h-[320px] overflow-y-auto">
-            {loading ? (
-              <p className="p-4">Loading...</p>
-            ) : notifications.length > 0 ? (
-              notifications.map((notification, index) => (
-                <div key={index} className="p-4 border-b border-gray-200">
-                  {notification?.text || 'No message available'}
-                </div>
-              ))
-            ) : (
-              <p className="p-4">No notifications available.</p>
-            )}
-          </div>
-        </div>
-      )} */}
       {noti && (
         <>
           <div
-            className="fixed -top-[25px] left-[59%] z-20 w-[300px] bg-white shadow-md rounded-lg overflow-hidden relative cursor-pointer"
+            className="-top-[15px] left-[68%] z-20 w-[300px] bg-white shadow-md rounded-lg overflow-hidden relative cursor-pointer"
             onMouseEnter={() => SetNoti(true)}
             onMouseLeave={() => SetNoti(false)}
             onClick={() => navigate("/blank/notification")}
@@ -835,66 +653,6 @@ const Header = () => {
           </div>
         </>
       )}
-
-      {/* for opportunities section */}
-      {/* {opportunities && (
-            <div 
-              onMouseEnter={() => setOpportunities(true)} 
-              onMouseLeave={() => setOpportunities(false)}
-              className=" flex flex-col w-52 ml-56 -mt-5  bg-white shadow-md cursor-pointer"
-              style={{ minHeight: '50px' }}  // Ensures the div has a minimum height
-             >
-              <div className="w-full text-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md  -mb-3 cursor-pointer flex items-center justify-center"
-                  onMouseEnter={() => { setOpportunities(true)}} 
-                  // onMouseLeave={() => setAnchorEl2(false)}
-                >
-                  Jobs
-              </div>
-              <div 
-                  className="w-full text-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md  -mb-3 cursor-pointer flex items-center justify-center"
-                  style={{ minHeight: '50px' }}
-                  onMouseEnter={() => { setOpportunities(true) } } 
-                  // onMouseLeave={() => setShowInternshipDropDown(false)}
-                >
-                  Internships
-              </div>
-              <div 
-                  className="w-full hover:text-blue-600 text-lg text-gray-700 hover:bg-blue-50 rounded-md  -mb-3 cursor-pointer flex items-center justify-center"
-                  style={{ minHeight: '50px' }}
-                  onMouseEnter={() => { setOpportunities(true) } } 
-                >
-                  Events
-              </div>
-              <div 
-                  className="w-full hover:text-blue-600 text-lg text-gray-700 hover:bg-blue-50 rounded-md  -mb-3 cursor-pointer flex items-center justify-center"
-                  style={{ minHeight: '50px' }}
-                  onMouseEnter={() => { setOpportunities(true) } } 
-                >
-                  Invites
-              </div>
-              <div 
-                  className="w-full hover:text-blue-600 text-lg text-gray-700 hover:bg-blue-50 rounded-md  -mb-3 cursor-pointer flex items-center justify-center"
-                  style={{ minHeight: '50px' }}
-                  onMouseEnter={() => { setOpportunities(true) } } 
-                >
-                  My Applications
-              </div>
-              <div 
-                className="w-full text-lg gap-1  text-gray-800 hover:text-white bg-gradient-to-r from-blue-300 to-blue-500 hover:from-blue-600 hover:to-blue-800 rounded-lg px-1 py-2 cursor-pointer flex items-center justify-center shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl"
-                style={{ minHeight: '50px' }}
-                onMouseEnter={() => { setOpportunities(true); }}
-               >
-                <img src="https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg" alt="logo" 
-                 className=" w-5" />
-                <img src="https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg" alt="logo" 
-                 className=" w-3 -mt-3 -ml-2" />
-                 <div>
-                   <p>AI Recommended</p>
-                   <p className=" text-xs font-normal -mt-2">profile matched</p>
-                 </div>
-              </div>
-          </div> 
-             )} */}
       {opportunities && (
         <div
           onMouseEnter={() => setOpportunities(true)}
@@ -917,12 +675,6 @@ const Header = () => {
           >
             Internships
           </div>
-          {/* <div
-                          className="w-full text-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md mb-2 cursor-pointer flex items-center justify-center"
-                          onMouseEnter={() => setOpportunities(true)}
-                        >
-                          Events
-                        </div> */}
           <div
             className="w-full text-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md mb-2 cursor-pointer flex items-center justify-center"
             onMouseEnter={() => setOpportunities(true)}
@@ -960,126 +712,6 @@ const Header = () => {
         </div>
       )}
 
-      {/* <div 
-       {opportunities && (
-        <div
-          onMouseEnter={() => setOpportunities(true)}
-          onMouseLeave={() => setOpportunities(false)}
-          className=" w-52 ml-56 -mt-5  bg-white shadow-md cursor-pointer"
-          style={{ minHeight: "50px" }} // Ensures the div has a minimum height
-        >
-          <div
-            className="w-full text-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md px-2 py-1 cursor-pointer flex items-center justify-center"
-            onMouseEnter={() => {
-              setAnchorEl2(true);
-              setOpportunities(true);
-            }}
-            onMouseLeave={() => setAnchorEl2(false)}
-          >
-            Jobs
-          </div>
-          <div
-            className="w-full text-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md px-2 py-1 cursor-pointer flex items-center justify-center"
-            style={{ minHeight: "50px" }}
-            onMouseEnter={() => {
-              setShowInternshipDropDown(true);
-              setOpportunities(true);
-            }}
-            onMouseLeave={() => setShowInternshipDropDown(false)}
-          >
-            Internships
-          </div>
-          <div
-            className="w-full hover:text-blue-600 text-lg text-gray-700 hover:bg-blue-50 rounded-md px-2 py-1 cursor-pointer flex items-center justify-center"
-            style={{ minHeight: "50px" }}
-            onMouseEnter={() => {
-              setOpportunities(true);
-            }}
-          >
-            Events
-          </div>
-          <div
-            className="w-full hover:text-blue-600 text-lg text-gray-700 hover:bg-blue-50 rounded-md px-2 py-1 cursor-pointer flex items-center justify-center"
-            style={{ minHeight: "50px" }}
-            onMouseEnter={() => {
-              setOpportunities(true);
-            }}
-          >
-            Invites
-          </div>
-          <div
-            className="w-full hover:text-blue-600 text-lg text-gray-700 hover:bg-blue-50 rounded-md px-2 py-1 cursor-pointer flex items-center justify-center"
-            style={{ minHeight: "50px" }}
-            onMouseEnter={() => {
-              setOpportunities(true);
-            }}
-          >
-            My Applications
-          </div>
-          {/* <div 
->>>>>>> 9297fba37ae8c3dc5d91617ba9bddc8a6983224d
-                className="w-full hover:text-blue-600 text-lg text-gray-700 hover:bg-blue-50 rounded-md px-2 py-1 cursor-pointer flex items-center justify-center"
-                style={{ minHeight: '50px' }}
-                onMouseEnter={() => { setOpportunities(true) } } 
-              >
-                AI Recommended
-              </div> */}
-
-      {/* <p 
-                    className="text-lg text-gray-700 hover:bg-blue-50 rounded-md px-2 py-1 cursor-pointer"
-                    onMouseEnter={() => setShowInternshipDropDown(true)} 
-                    onMouseLeave={() => setShowInternshipDropDown(false)}
-                  >
-                    Internships
-                  </p>
-                  <p className="text-lg text-gray-700 hover:bg-blue-50 rounded-md px-2 py-1 cursor-pointer">Events</p>
-                  <p className="text-lg text-gray-700 hover:bg-blue-50 rounded-md px-2 py-1 cursor-pointer">Invites</p>
-                  <p className="text-lg text-gray-700 hover:bg-blue-50 rounded-md px-2 py-1 cursor-pointer">My Applications</p>
-                  <p className="text-lg text-gray-700 hover:bg-blue-50 rounded-md px-2 py-1 cursor-pointer">AI Recommended</p> */}
-      {/* </div> */}
-      {/* //  </div> */}
-
-      {/* for jobs */}
-      {/* { anchorEl2 && (
-               <div className=" -mt-[18%] ml-[25%] max-2xl:ml-[28%] max-2xl:-mt-[20%] " 
-                onMouseEnter={()=>{setAnchorEl2(true);setOpportunities(true)}} onMouseLeave={()=>{setAnchorEl2(false);}}>
-                     <div className=" bg-white shadow-xl w-[20%] rounded-lg ">
-                         <div
-                           className="p-4 flex flex-col "
-                           onMouseLeave={() => {setAnchorEl2(false); setOpportunities(false);}}
-                         >
-                           <Typography className="text-gray-800 text-sm font-medium">
-                            
-                           </Typography>
-                           <Link
-                             to="/blank/Jobs"
-                             className="mt-2 inline-block text-blue-600 hover:underline text-base font-semibold transition-all duration-200"
-                           >
-                             All Jobs
-                           </Link>
-                           <Link
-                             to="/blank/Jobs"
-                             className="mt-2 inline-block text-blue-600 hover:underline text-base font-semibold transition-all duration-200"
-                           >
-                             Recommended Jobs
-                           </Link>
-                           <Link
-                             to="/blank/Jobs"
-                             className="mt-2 inline-block text-blue-600 hover:underline text-base font-semibold transition-all duration-200"
-                           >
-                             Invites
-                           </Link>
-                           <Link
-                             to="/ApplicationManager"
-                             className="mt-2 inline-block text-blue-600 hover:underline text-base font-semibold transition-all duration-200"
-                           >
-                             Application Manage
-                           </Link>
-                         </div>
-                     </div>
-               </div>
-          )} */}
-      {/* for interships */}
       {showInternshipDropDown && (
         <div
           className="bg-white shadow-xl ml-[428px] flex top-[90px] absolute w-[485px] h-[431px] rounded-xl overflow-hidden transform transition-transform duration-300 ease-in-out hover:shadow-2xl"
@@ -1150,69 +782,6 @@ const Header = () => {
         </div>
       )}
 
-      {/* //for switch mode
-          {mode && (
-            <div
-              className=" flex flex-col items-center bg-gray-50 rounded-2xl -mt-5 ml-[30%]    max-w-xs mx-auto"
-              onMouseEnter={() => setMode(true)}
-              onMouseLeave={() => setMode(false)}
-            >
-              {workItems.map((item, index) => (
-                <div
-                  key={index}
-                  onClick={() => handleNavigation(item.link)}
-                  className="group flex flex-col p-2 bg-white hover:bg-purple-600 hover:text-white transform transition duration-100 cursor-pointer w-full rounded-md shadow-md"
-                >
-                  <div className="flex justify-between items-center w-full">
-                    <div className="flex items-center gap-2">
-                      <p className="text-sm font-semibold">{item.title}</p>
-                      <p className="text-lg">{item.icon}</p>
-                    </div>
-                    <div>
-                      <input
-                        type="radio"
-                        className="form-radio h-4 w-4 text-blue-500"
-                        disabled
-                      />
-                    </div>
-                  </div>
-                  <p className="mt-1 text-sm text-gray-600 group-hover:text-white">
-                    {item.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-          )}
-          {internshipModal && (
-            <InternshipModal
-              onOpen={toggleInternshipModalOpen}
-              onClose={toggleInternshipModalClose}
-            >
-              <div
-                className="w-full text-lg gap-1 text-gray-800 hover:text-white bg-gradient-to-r from-blue-300 to-blue-500 hover:from-blue-600 hover:to-blue-800 rounded-lg px-1 py-2 cursor-pointer flex items-center justify-center shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl"
-                style={{ minHeight: "50px" }}
-                onMouseEnter={() => {
-                  setOpportunities(true);
-                }}
-              >
-                <img
-                  src="https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg"
-                  alt="logo"
-                  className="w-5"
-                />
-                <img
-                  src="https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg"
-                  alt="logo"
-                  className="w-3 -mt-3 -ml-2"
-                />
-                <div>
-                  <p>AI Recommended</p>
-                  <p className="text-xs font-normal -mt-2">profile matched</p>
-                </div>
-              </div>
-            </InternshipModal>
-          )}
-           */}
       {anchorEl2 && (
         <div
           className=" -mt-[18%] ml-[25%] max-2xl:ml-[28%] max-2xl:-mt-[20%] "
@@ -1332,10 +901,9 @@ const Header = () => {
         </div>
       )}
 
-      {/* for switch mode */}
       {mode && (
         <div
-          className=" flex flex-col items-center bg-gray-50 rounded-2xl -mt-4 ml-[30%]    max-w-xs mx-auto"
+          className=" flex flex-col items-center bg-gray-50 rounded-2xl -mt-3 ml-[30%] max-w-xs mx-auto"
           onMouseEnter={() => setMode(true)}
           onMouseLeave={() => setMode(false)}
         >
@@ -1365,29 +933,6 @@ const Header = () => {
           ))}
         </div>
       )}
-
-      {/* for notifications */}
-      {/* {noti && (
-         <div className="w-64 z-20 bg-white ml-[60%] shadow-lg rounded-lg overflow-hidden">
-         <div className="p-4 bg-blue-700 text-white font-bold">
-           Updated Messages
-         </div>
-         <div className="h-80 overflow-y-auto">
-           {loading ? (
-             <p className="p-4">Loading...</p>
-           ) : notifications.length > 0 ? (
-             notifications.map((notification, index) => (
-               <div key={index} className="p-4 border-b border-gray-200">
-                 {notification?.text || 'No message available'}
-               </div>
-             ))
-           ) : (
-             <p className="p-4">No notifications available.</p>
-           )}
-         </div>
-       </div>
-      )} */}
-
       {internshipModal && (
         <InternshipModal
           onOpen={toggleInternshipModalOpen}
