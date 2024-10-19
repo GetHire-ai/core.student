@@ -407,7 +407,7 @@ const Home = ({ onSectionVisible, onSectionHidden }) => {
         <div className="grid lg:grid-cols-6 w-full -mt-7">
           <div className="bg-white w-full mt-[1px] col-start-1 col-end-7 px-[39px] py-[49px] rounded-[30px] border-[1px] border-[#efecec] ">
             <div className="text-[20px] flex w-full   font-[400] justify-start items-center text-[#545454] -mt-8">
-              <div className=" flex flex-row">
+              <div className=" flex flex-row font-[poppins]">
                 <div
                   onClick={() => {
                     setselectedtab("MyJobs");
@@ -467,13 +467,11 @@ const Home = ({ onSectionVisible, onSectionHidden }) => {
                   </ul>
                 )}
               </div>
-
-              {/* /> */}
               <p className="text-[16px] max-lg:text-[13px] font-[500] hover:cursor-pointer text-[#4234a2] ml-auto">
                 View all
               </p>
             </div>
-            <div className="w-full  mt-[26px] flex  ">
+            <div className="w-full  mt-[26px] flex font-[poppins]">
               {selectedtab === "MyJobs" && (
                 <>
                   <div
@@ -492,7 +490,7 @@ const Home = ({ onSectionVisible, onSectionHidden }) => {
                         className="bg-[#fff] p-[14px] flex flex-col -ml-5 max-2xl:h-38 w-full max-lg:w-48 max-sm:w-36 max-sm:h-40 rounded-[20px] shadow-xl hover:shadow-2xl cursor-pointer transition-transform transform hover:scale-105"
                       >
                         <div className="flex justify-between max-2xl:-mb-3 -mb-3 items-center gap-4 max-lg:gap-1 max-sm:gap-0">
-                          <p className="text-[15px] max-2xl:text-[14px] max-sm:text-[16px] font-[700]">
+                          <p className="text-[15px] max-2xl:text-[14px] max-sm:text-[16px] font-[400]">
                             {job.JobId.positionName}
                           </p>
                           <img
@@ -538,7 +536,7 @@ const Home = ({ onSectionVisible, onSectionHidden }) => {
                     <div className="w-full bg-[#fff] p-[24px] rounded-[20px] shadow-xl border border-[#d9d9d9]">
                       <div className="flex flex-row justify-between">
                         <div>
-                          <h2 className="text-[17px] font-[700] max-lg:text-[16px] max-2xl:text-[16px]">
+                          <h2 className="text-[17px] font-[500] max-lg:text-[16px] max-2xl:text-[16px]">
                             {selectedJob.JobId.positionName}
                           </h2>
                           <p className="text-[12px]">
@@ -589,8 +587,8 @@ const Home = ({ onSectionVisible, onSectionHidden }) => {
                                       status === "Rejected" && isActive
                                         ? "bg-red-600"
                                         : isBeforeActive
-                                          ? "bg-blue-600"
-                                          : "bg-white border border-blue-600"
+                                        ? "bg-blue-600"
+                                        : "bg-white border border-blue-600"
                                     }`}
                                   ></div>
                                   {index < statuses.length - 1 && (
@@ -815,7 +813,6 @@ const Home = ({ onSectionVisible, onSectionHidden }) => {
             </button>
           </div>
         )}
-        {/* src="https://static.jobscan.co/blog/uploads/How-to-write-a-resume.jpg" */}
         {random === 2 && (
           <div className="flex h-32 flex-col md:flex-row items-center justify-between mt-6 p-6 bg-gradient-to-r from-blue-200 to-blue-300 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300">
             <div className="flex items-center space-x-6">

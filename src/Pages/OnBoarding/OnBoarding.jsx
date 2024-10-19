@@ -17,6 +17,7 @@ const OnBoarding = () => {
       setLoading(true);
       let url = `api/onboardroutes/${location?.state?.jobId}/${studentId}`;
       const res = await GetApi(url);
+      console.log(res)
       setOnBoarding(res?.data?.data);
     } catch (err) {
       setError("Failed to fetch data");
@@ -45,14 +46,9 @@ const OnBoarding = () => {
     } else {
       getOnboarding();
     }
-  }, [location.state, studentId, navigate]);
+  }, []);
 
-  useEffect(() => {
-    if (error) {
-      toast.error(error, { autoClose: 2000 });
-      navigate("/error");
-    }
-  }, [error, navigate]);
+  
 
   return (
     <Sections
