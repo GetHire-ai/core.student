@@ -235,7 +235,7 @@ function Login() {
                   Phone
                 </button>
               </div>
-              <div className="justify-start ">
+              <div className="justify-start text-center">
                 <h2 className="text-[46px] text-gray-500 font-[600]">Login</h2>
                 <p className="font-[600] text-[20px] text-gray-500 mb-8">
                   Enter {activeTab === "email" ? "email" : "mobile number"} to

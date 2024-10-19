@@ -80,5 +80,5 @@
     "@storybook/react-vite": "^8.2.9",
     "tailwindcss": "^3.4.3"
   },
-  "proxy": "http://localhost:3001"
+ "proxy": "http://localhost:3001"
 }

@@ -244,7 +244,7 @@ function Signup() {
                         </button>
                       </div>
 
-                      <div className="justify-start">
+                      <div className="justify-start text-center">
                         <h2 className="text-[46px] text-gray-500 font-[600]">
                           Register
                         </h2>

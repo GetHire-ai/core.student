@@ -358,6 +358,23 @@ function EducationForm({ updateProfile }) {
     Getstudentprofile();
   }, []);
 
+  // const handleSaveEducation = () => {
+  //   if (editIndex !== null) {
+  //     const updateEducationList = [...educationList];
+  //     updateEducationList[editIndex] = formData;
+  //     setEducationList(updateEducationList);
+  //     updateProfile({ JobDetails: updateEducationList});
+  //   } else {
+  //     setEducationList([...educationList, formData]);
+  //     updateProfile({ JobDetails: [...educationList, formData] });
+  //   }
+  //   setFormVisible(false);
+  // };
+
+  // useEffect(() => {
+  //   getProjectDetails();
+  // }, []);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -380,13 +397,15 @@ function EducationForm({ updateProfile }) {
     e.preventDefault();
 
     if (editIndex !== null) {
-      const updatedEducationList = [...educationList];
-      updatedEducationList[editIndex] = formData;
-      setEducationList(updatedEducationList);
-      setEditIndex(null);
+      const updateEducationList = [...educationList];
+      updateEducationList[editIndex] = formData;
+      setEducationList(updateEducationList);
+      updateProfile({ JobDetails: updateEducationList});
     } else {
       setEducationList([...educationList, formData]);
+      updateProfile({ JobDetails: [...educationList, formData] });
     }
+    // setFormVisible(false);
 
     setFormData({
       school: "",
@@ -535,7 +554,9 @@ function EducationForm({ updateProfile }) {
                 <button
                   type="submit"
                   className="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700"
+                  // onClick={handleSaveEducation}
                 >
+
                   {editIndex !== null ? "Update" : "Save"}
                 </button>
                 <button
@@ -600,11 +621,11 @@ function EducationForm({ updateProfile }) {
       className="bg-gray-100 p-4 rounded-lg flex justify-between items-center shadow-sm"
     >
       <div className="flex items-start gap-3">
-        <img 
+        {/* <img 
           src="your-logo-url-here" 
           alt="School Logo" 
           className="w-12 h-12 object-contain" 
-        />
+        /> */}
         <div>
           <div className="text-base font-semibold">{education.school}</div>
           <div className="text-sm text-gray-600">

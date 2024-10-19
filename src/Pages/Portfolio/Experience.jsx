@@ -301,11 +301,11 @@ function Experience({ updateProfile }) {
               <div className="flex-1">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
-                    <img
+                    {/* <img
                       src="https://via.placeholder.com/50"
                       alt={experience.Organization}
                       className="mr-4 w-12 h-12 object-cover rounded-full"
-                    />
+                    /> */}
                     <div>
                       <h4 className="text-[18px] text-[#333333] font-serif">
                         {experience.Profile}
@@ -337,7 +337,7 @@ function Experience({ updateProfile }) {
                     </button>
                   </div>
                 </div>
-                <p className="mt-2 ml-16 text-black font-normal">{experience.Description}</p>
+                <p className="mt-2 text-black font-normal">{experience.Description}</p>
               </div>
             </li>
           ))}

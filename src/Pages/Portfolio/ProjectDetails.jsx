@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaPencilAlt, FaPlus, FaSave } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
+import { GetApi } from "../utilis/Api_Calling";
 
-function ProjectForm() {
+function ProjectForm({ updateProfile }) {
   const [formVisible, setFormVisible] = useState(false);
   const [projectList, setProjectList] = useState([]);
   const [formData, setFormData] = useState({
@@ -12,7 +13,36 @@ function ProjectForm() {
     startDate: '',
     endDate: '',
   });
+  const [showForm, setShowForm] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const getProjectDetails = async () => {
+    try {
+      const response = await GetApi(`api/StudentRoutes/GetStudentProfile`);
+      setProjectList(response?.data?.data?.Projects);
+    } catch (error) {
+      console.error(error);
+    }
+    setLoading(false);
+  };
+
+  const handleSaveProject = () => {
+    if (editIndex !== null) {
+      const updateProject = [...projectList];
+      updateProject[editIndex] = formData;
+      setProjectList(updateProject);
+      updateProfile({ Projects: updateProject });
+    } else {
+      setProjectList([...projectList, formData]);
+      updateProfile({ Projects: [...projectList, formData] });
+    }
+    setFormVisible(false);
+  };
+
+  useEffect(() => {
+    getProjectDetails();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -133,7 +163,11 @@ function ProjectForm() {
                 ></textarea>
               </div>
               <div className="mt-6 flex justify-between">
-                <button type="submit" className="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700">
+                <button
+                  type="submit"
+                  className="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700"
+                  onClick={handleSaveProject}
+                >
                   {editIndex !== null ? 'Update' : 'Save'}
                 </button>
                 <button
