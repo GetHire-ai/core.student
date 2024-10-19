@@ -40,9 +40,19 @@ const OnBoarding = () => {
   };
 
   useEffect(() => {
-    getOnboarding();
-    if (!location.state) navigate("/");
-  }, []);
+    if (!location.state || !studentId) {
+      navigate("/"); // Redirect if there's no jobId or studentId
+    } else {
+      getOnboarding();
+    }
+  }, [location.state, studentId, navigate]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error, { autoClose: 2000 });
+      navigate("/error");
+    }
+  }, [error, navigate]);
 
   return (
     <Sections

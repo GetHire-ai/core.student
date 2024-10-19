@@ -1,18 +1,71 @@
 import { useState } from "react";
-import { LinearProgress } from "@mui/material";
+import { Modal, LinearProgress } from "@mui/material";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle"; // Import checkmark icon
 
 const Sections = ({ loading, OnBoarding, updateOnboarding }) => {
+  // console.log(OnBoarding);
   const [activeSection, setActiveSection] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    fullName: "",
+    contactInformation: "",
+    residentialAddress: "",
+    email: "",
+    emergencyName: "",
+    emergencyRelationship: "",
+    emergencyPhone: "",
+    bankName: "",
+    accountNumber: "",
+    ifscCode: "",
+    employmentContract: null,
+    taxDocuments: null,
+    aadharCard: null,
+    panCard: null,
+    salarySlip: null,
+    bankStatement: null,
+  });
   const toggleSection = (section) => {
     setActiveSection(activeSection === section ? null : section);
+  };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handleFileChange = (e) => {
+    const { name, files } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: files[0],
+    }));
+  };
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
+  const triggerFileInput = (name) => {
+    document.getElementById(name).click();
+  };
+
+  const handleSubmit = () => {
+    console.log("Submitted Data: ", formData);
+    closeModal();
   };
 
   return (
     <>
-      <div className="bg-gray-100 min-h-screen  flex justify-center items-start p-5">
+      <div className="bg-gray-100 flex justify-center items-start min-h-[180vh] p-5 font-[poppins]">
         <div className="w-full max-w-5xl p-5">
           {/* <LinearProgress className="min-w-[100vw]"/> */}
-          {/* Section 1: Offer Review */}
+          <h2 className="text-center mb-2 text-3xl">OnBoarding Process </h2>
+          <h2 className="text-center mb-5 text-xl">
+            Job : {OnBoarding?.JobId?.positionName} at:{" "}
+            {OnBoarding?.JobId?.companyName}{" "}
+          </h2>
           <div className="bg-white p-5 mb-5 rounded-lg shadow-md border-l-4 border-blue-200 transition duration-400 ease-in-out">
             <div
               className="flex items-center justify-between text-xl font-semibold text-blue-700 cursor-pointer transition duration-300 ease-in-out hover:text-blue-800"
@@ -36,7 +89,10 @@ const Sections = ({ loading, OnBoarding, updateOnboarding }) => {
                 "Review your offer letter. You can check the details and reach
                 out via chat for any questions."
               </p>
-              <button className="bg-blue-600 text-white px-4 py-2 rounded-lg mt-3 hover:bg-blue-700 transition">
+              <button
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg mt-3 hover:bg-blue-700 transition cursor-pointer"
+                onClick={openModal}
+              >
                 View Offer Letter
               </button>
               <p className="mt-3 text-gray-600">
@@ -45,9 +101,22 @@ const Sections = ({ loading, OnBoarding, updateOnboarding }) => {
               <p className="mt-3 text-gray-700">
                 "If offer letter is acceptable, sign and upload it here."
               </p>
-              <button className="bg-blue-600 text-white px-4 py-2 rounded-lg mt-3 hover:bg-blue-700 transition">
+              <button
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg mt-3 hover:bg-blue-700 transition"
+                onClick={() => triggerFileInput("employmentContract")}
+              >
                 Upload
               </button>
+              {OnBoarding?.employmentContract && (
+                <CheckCircleIcon className="text-green-500 ml-2" />
+              )}
+              <input
+                type="file"
+                id="employmentContract"
+                name="employmentContract"
+                className="hidden"
+                onChange={handleFileChange}
+              />
             </div>
           </div>
 
@@ -78,11 +147,12 @@ const Sections = ({ loading, OnBoarding, updateOnboarding }) => {
                 <input
                   type="text"
                   className="w-full p-3 mb-3 rounded-md border border-gray-300"
-                  value="John Doe"
-                  disabled
+                  placeholder="John Doe"
+                  name="fullName"
+                  onChange={handleChange}
                 />
                 <label className="text-gray-600">
-                  <b>Contact Information</b>
+                  <b>contactInformation Information</b>
                 </label>
                 <p className="text-gray-500">
                   (Confirm your phone number and email.)
@@ -91,27 +161,27 @@ const Sections = ({ loading, OnBoarding, updateOnboarding }) => {
                   type="text"
                   className="w-full p-3 mb-3 rounded-md border border-gray-300"
                   placeholder="Phone Number"
+                  name="contactInformationInfo"
+                  onChange={handleChange}
                 />
                 <input
                   type="text"
+                  placeholder="Email residentialAddress"
                   className="w-full p-3 mb-3 rounded-md border border-gray-300"
-                  placeholder="Email Address"
                 />
-                <label className="text-gray-600">
-                  <b>Residential Address</b>
-                </label>
-                <p className="text-gray-500">
-                  (Provide your current address for official communication.)
-                </p>
+                <b>Residential residentialAddress</b>
+                <label className="text-gray-600"></label>
+                (Provide your current residentialAddress for official
+                <p className="text-gray-500">communication.)</p>
                 <textarea
+                  placeholder="Your residentialAddress here"
                   className="w-full p-3 mb-3 rounded-md border border-gray-300"
-                  placeholder="Your address here"
                 />
                 <label className="text-gray-600">
-                  <b>Emergency Contact</b>
+                  <b>Emergency contactInformation</b>
                 </label>
                 <p className="text-gray-500">
-                  (Enter emergency contact information.)
+                  (Enter emergency contactInformation information.)
                 </p>
                 <input
                   type="text"
@@ -159,32 +229,76 @@ const Sections = ({ loading, OnBoarding, updateOnboarding }) => {
                 <p className="text-gray-500">
                   (Please review and sign your employment contract.)
                 </p>
-                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg mt-3 hover:bg-blue-700 transition">
+                <button
+                  className="bg-blue-600 text-white px-4 py-2 rounded-lg mt-3 hover:bg-blue-700 transition"
+                  onClick={() => triggerFileInput("employmentContract")}
+                >
                   Sign Contract
                 </button>
-                <label className="mt-5 text-gray-600">
-                  <b>Tax Documents</b>
-                </label>
+                {formData.employmentContract && (
+                  <CheckCircleIcon className="text-green-500 ml-2" />
+                )}
+                <label className="mt-5 text-gray-600"></label>
                 <p className="text-gray-500">
                   (Upload your completed tax documents.)
                 </p>
-                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg mt-3 hover:bg-blue-700 transition">
+                <button
+                  className="bg-blue-600 text-white px-4 py-2 rounded-lg mt-3 hover:bg-blue-700 transition"
+                  onClick={() => triggerFileInput("aadharCard")}
+                >
                   Upload
                 </button>
-                <label className="mt-5 text-gray-600">
-                  <b>ID Proof</b>
-                </label>
-                <p className="text-gray-500">
-                  (Upload your ID proof (e.g., Passport, Driver's License).)
-                </p>
-                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg mt-3 hover:bg-blue-700 transition">
+                {formData.aadharCard && (
+                  <CheckCircleIcon className="text-green-500 ml-2" />
+                )}
+                <label className="mt-5 text-gray-600"></label>
+                <p className="text-gray-500">Upload your Aadhar Card.</p>
+                <button
+                  className="bg-blue-600 text-white px-4 py-2 rounded-lg mt-3 hover:bg-blue-700 transition"
+                  onClick={() => triggerFileInput("panCard")}
+                >
                   Upload
                 </button>
-                <label className="mt-5 text-gray-600">
-                  <b>Bank Details</b>
-                </label>
+                {formData.panCard && (
+                  <CheckCircleIcon className="text-green-500 ml-2" />
+                )}
+                <label className="mt-5 text-gray-600"></label>
+                <p className="text-gray-500">Upload your Pan Card.</p>
+                <button
+                  className="bg-blue-600 text-white px-4 py-2 rounded-lg mt-3 hover:bg-blue-700 transition"
+                  onClick={() => triggerFileInput("bankStatement")}
+                >
+                  Upload
+                </button>
+                {formData.bankStatement && (
+                  <CheckCircleIcon className="text-green-500 ml-2" />
+                )}
+                <label className="mt-5 text-gray-600"></label>
+                <p className="text-gray-500">Upload your Bank Statement.</p>
+                <button
+                  className="bg-blue-600 text-white px-4 py-2 rounded-lg mt-3 hover:bg-blue-700 transition"
+                  onClick={() => triggerFileInput("salarySlip")}
+                >
+                  Upload
+                </button>
+                {formData.salarySlip && (
+                  <CheckCircleIcon className="text-green-500 ml-2" />
+                )}
+                <label className="mt-5 text-gray-600"></label>
+                <p className="text-gray-500">Upload your Salary Slip.</p>
+                <button
+                  className="bg-blue-600 text-white px-4 py-2 rounded-lg mt-3 hover:bg-blue-700 transition"
+                  onClick={() => triggerFileInput("bankDoc")}
+                >
+                  Upload
+                </button>
+                {formData.bankDoc && (
+                  <CheckCircleIcon className="text-green-500 ml-2" />
+                )}
+                <label className="mt-5 text-gray-600"></label>
                 <p className="text-gray-500">
-                  (Provide your bank details for salary deposits.)
+                  (Provide your bank Passbook or cancel check for salary
+                  deposits.)
                 </p>
                 <input
                   type="text"
@@ -200,6 +314,48 @@ const Sections = ({ loading, OnBoarding, updateOnboarding }) => {
                   type="text"
                   className="w-full p-3 mb-3 rounded-md border border-gray-300"
                   placeholder="IFSC Code"
+                />
+                <input
+                  type="file"
+                  id="employmentContract"
+                  name="employmentContract"
+                  className="hidden"
+                  onChange={handleFileChange}
+                />
+                <input
+                  type="file"
+                  id="aadharCard"
+                  name="aadharCard"
+                  className="hidden"
+                  onChange={handleFileChange}
+                />
+                <input
+                  type="file"
+                  id="panCard"
+                  name="panCard"
+                  className="hidden"
+                  onChange={handleFileChange}
+                />
+                <input
+                  type="file"
+                  id="bankDoc"
+                  name="bankDoc"
+                  className="hidden"
+                  onChange={handleFileChange}
+                />
+                <input
+                  type="file"
+                  id="bankStatement"
+                  name="bankStatement"
+                  className="hidden"
+                  onChange={handleFileChange}
+                />
+                <input
+                  type="file"
+                  id="salarySlip"
+                  name="salarySlip"
+                  className="hidden"
+                  onChange={handleFileChange}
                 />
                 <button className="bg-blue-600 text-white px-4 py-2 rounded-lg mt-3 hover:bg-blue-700 transition">
                   Save & Continue
@@ -295,7 +451,10 @@ const Sections = ({ loading, OnBoarding, updateOnboarding }) => {
                   "Review all the sections above to ensure everything is
                   complete and accurate."
                 </p>
-                <button className="bg-blue-600 text-white p-2 rounded-lg">
+                <button
+                  className="bg-blue-600 text-white p-2 rounded-lg"
+                  onClick={handleSubmit}
+                >
                   Submit Onboarding Form
                 </button>
               </div>
@@ -303,6 +462,17 @@ const Sections = ({ loading, OnBoarding, updateOnboarding }) => {
           </div>
         </div>
       </div>
+      <Modal open={modalOpen} onClose={closeModal}>
+        <div className="bg-white p-10 w-full max-w-md mx-auto mt-20 rounded-lg shadow-lg">
+          <h2 className="text-xl font-semibold">Viewing {activeSection}</h2>
+          <button
+            className="bg-blue-600 text-white p-2 rounded-lg mt-3"
+            onClick={closeModal}
+          >
+            Close
+          </button>
+        </div>
+      </Modal>
     </>
   );
 };
