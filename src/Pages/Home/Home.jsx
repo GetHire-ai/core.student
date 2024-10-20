@@ -6,6 +6,8 @@ import logo from "../../assets/Images/Gethire SVG.svg";
 import { IoIosArrowForward } from "react-icons/io";
 import AIToolsModal from "../AI Tools/AIToolsModal";
 import { LinearProgress } from "@mui/material";
+import AppliedJobs from "./AppliedJobs";
+import InterviewJobs from "./InterviewJobs";
 const Home = ({ onSectionVisible, onSectionHidden }) => {
   const navigate = useNavigate();
   const [selectedtab, setselectedtab] = useState("MyJobs");
@@ -22,128 +24,7 @@ const Home = ({ onSectionVisible, onSectionHidden }) => {
   const [allTestResults, setAllTestResults] = useState([]);
   const [studentprofile, setstudentprofile] = useState({});
   const [offset, setOffset] = useState(0);
-  const applicationData = [
-    {
-      id: 1,
-      jobTitle: "Human Resource Intern",
-      company: "GoodSpace",
-      status: [
-        {
-          stage: "Applied",
-          passed: true,
-          date: "26 Jul, 2024",
-          feedback: "Shortlisted",
-        },
-        {
-          stage: "AI Interview",
-          passed: false,
-          date: "26 Jul, 2024",
-          feedback: "...Pending",
-        },
-        { stage: "Recruiter viewed your application", passed: true },
-      ],
-    },
-    {
-      id: 2,
-      jobTitle: "Software Developer Intern",
-      company: "TechStart",
-      status: [
-        {
-          stage: "Applied",
-          passed: true,
-          date: "20 Jul, 2024",
-          feedback: "Shortlisted",
-        },
-        {
-          stage: "Technical Interview",
-          passed: true,
-          date: "22 Jul, 2024",
-          feedback: "Passed",
-        },
-        {
-          stage: "Final Interview",
-          passed: false,
-          date: "25 Jul, 2024",
-          feedback: "...Pending",
-        },
-      ],
-    },
-    {
-      id: 3,
-      jobTitle: "Marketing Intern",
-      company: "BrandBoost",
-      status: [
-        {
-          stage: "Applied",
-          passed: true,
-          date: "15 Jul, 2024",
-          feedback: "Shortlisted",
-        },
-        {
-          stage: "HR Interview",
-          passed: true,
-          date: "18 Jul, 2024",
-          feedback: "Passed",
-        },
-        {
-          stage: "Offer Sent",
-          passed: false,
-          date: "20 Jul, 2024",
-          feedback: "...Pending",
-        },
-      ],
-    },
-    {
-      id: 4,
-      jobTitle: "Finance Analyst Intern",
-      company: "WealthManage",
-      status: [
-        {
-          stage: "Applied",
-          passed: true,
-          date: "10 Jul, 2024",
-          feedback: "Shortlisted",
-        },
-        {
-          stage: "Assessment",
-          passed: true,
-          date: "12 Jul, 2024",
-          feedback: "Passed",
-        },
-        {
-          stage: "HR Interview",
-          passed: false,
-          date: "15 Jul, 2024",
-          feedback: "...Pending",
-        },
-      ],
-    },
-    {
-      id: 5,
-      jobTitle: "Content Writer Intern",
-      company: "WriteUp",
-      status: [
-        {
-          stage: "Applied",
-          passed: true,
-          date: "28 Jun, 2024",
-          feedback: "Shortlisted",
-        },
-        {
-          stage: "Writing Test",
-          passed: true,
-          date: "30 Jun, 2024",
-          feedback: "Passed",
-        },
-        {
-          stage: "Interview",
-          passed: false,
-          date: "02 Jul, 2024",
-          feedback: "...Pending",
-        },
-      ],
-    },
-  ];
+
   const companies = [
     {
       id: 1,
@@ -412,7 +293,7 @@ const Home = ({ onSectionVisible, onSectionHidden }) => {
                   onClick={() => {
                     setselectedtab("MyJobs");
                   }}
-                  className={`pb-[6px] text-md px-[20px] hover:cursor-pointer ${
+                  className={`pb-[6px] text-[1.1rem] px-[20px] hover:cursor-pointer ${
                     selectedtab === "MyJobs"
                       ? "border-b-[3px] text-[#5356e9]  border-[#5356e9] "
                       : "border-b-[3px] border-[#D9D9D9]"
@@ -424,7 +305,7 @@ const Home = ({ onSectionVisible, onSectionHidden }) => {
                   onClick={() => {
                     setselectedtab("MyInterview");
                   }}
-                  className={`pb-[6px] pl-[14px] text-md pr-[27px] hover:cursor-pointer ${
+                  className={`pb-[6px] pl-[14px] text-[1.1rem] pr-[27px] hover:cursor-pointer ${
                     selectedtab === "MyInterview"
                       ? "border-b-[3px] text-[#5356e9]  border-[#5356e9]"
                       : "border-b-[3px] border-[#D9D9D9]"
@@ -473,313 +354,21 @@ const Home = ({ onSectionVisible, onSectionHidden }) => {
             </div>
             <div className="w-full  mt-[26px] flex font-[poppins]">
               {selectedtab === "MyJobs" && (
-                <>
-                  <div
-                    className="flex flex-col pl-7 gap-2 w-1/2 max-h-[calc(100vh-175px)] overflow-y-scroll "
-                    style={{
-                      scrollbarWidth: "none",
-                      msOverflowStyle: "none",
-                    }}
-                  >
-                    {allappiledjobs.map((job, index) => (
-                      <div
-                        key={index}
-                        onClick={() => handleJobClick(job)}
-                        ref={sectionRefs.section2}
-                        id="section2"
-                        className="bg-[#fff] p-[14px] flex flex-col -ml-5 max-2xl:h-38 w-full max-lg:w-48 max-sm:w-36 max-sm:h-40 rounded-[20px] shadow-xl hover:shadow-2xl cursor-pointer transition-transform transform hover:scale-105"
-                      >
-                        <div className="flex justify-between max-2xl:-mb-3 -mb-3 items-center gap-4 max-lg:gap-1 max-sm:gap-0">
-                          <p className="text-[15px] max-2xl:text-[14px] max-sm:text-[16px] font-[400]">
-                            {job.JobId.positionName}
-                          </p>
-                          <img
-                            src="/images/material-symbols-light_share.svg"
-                            alt="Share"
-                            className="w-[17px] h-[17px] max-lg:w-[15px] max-lg:h-[15px]"
-                          />
-                        </div>
-                        <div className="flex gap-[5px] max-2xl:-mb-4 -mb-4 mt-[18px] max-lg:gap-[6px]">
-                          <p className="text-black text-opacity-[60%] text-[12px] max-lg:text-[11px] max-sm:text-[10px] font-[500]">
-                            {job.CompanyId.Name}
-                          </p>
-                        </div>
-                        <div className="flex gap-[5px] max-2xl:-mb-3 -mb-3 mt-[20px] max-lg:gap-[6px]">
-                          <img
-                            src="/images/carbon_location.svg"
-                            className="w-[16px] h-[20px] max-lg:w-[15px] max-lg:h-[18px]"
-                            alt="Location"
-                          />
-                          <p className="text-black text-opacity-[60%] text-[12px] max-lg:text-[11px] max-sm:text-[10px] font-[500]">
-                            {job.JobId.location}
-                          </p>
-                        </div>
-                        <div className="flex mt-[20px] gap-4 max-2xl:gap-1 max-sm:gap-2 justify-between">
-                          <p className="text-black text-opacity-[60%] text-[12px] font-[500] max-lg:text-[13px] max-sm:text-[11px]">
-                            {job.JobId.time}
-                          </p>
-                          {job.status === "rejected" ? (
-                            <p className="text-red-500 max-lg:text-[13px] text-[12px] ">
-                              X {job.status}
-                            </p>
-                          ) : (
-                            <p className="text-blue-500 text-[11px] max-lg:text-[10px]">
-                              {job.status}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  {selectedJob && (
-                    <div className="w-full bg-[#fff] p-[24px] rounded-[20px] shadow-xl border border-[#d9d9d9]">
-                      <div className="flex flex-row justify-between">
-                        <div>
-                          <h2 className="text-[17px] font-[500] max-lg:text-[16px] max-2xl:text-[16px]">
-                            {selectedJob.JobId.positionName}
-                          </h2>
-                          <p className="text-[12px]">
-                            {selectedJob.CompanyId.Name}
-                          </p>
-                          <p className="text-[10px]">
-                            {selectedJob.JobId.location}
-                          </p>
-                        </div>
-                        <div>
-                          <button
-                            className="bg-blue-600 p-3 text-[11px] h-9 flex items-center max-2xl:text-[10px] max-2xl:p-1 max-2xl:rounded-lg max-2xl:h-7 rounded-md shadow-lg text-white max-lg:p-2 hover:bg-blue-900 hover:shadow-2xl"
-                            onClick={() =>
-                              navigate(
-                                `/blank/JobViewDetails/${selectedJob?.JobId._id}`
-                              )
-                            }
-                          >
-                            View Jobs
-                          </button>
-                        </div>
-                      </div>
-                      <hr className="border-t-2 border-gray-300 my-2" />
-                      <p className="text-[16px] max-2xl:text-[15px]">
-                        Application Status
-                      </p>
-
-                      <div className="ml-4 mt-4">
-                        {["pending", "shortlisted", "selected", "rejected"].map(
-                          (status, index, statuses) => {
-                            const currentIndex = statuses.findIndex(
-                              (s) =>
-                                s.toLowerCase() ===
-                                selectedJob?.status?.toLowerCase()
-                            );
-                            const isActive = index === currentIndex;
-                            const isBeforeActive = index <= currentIndex;
-                            const isPending = index > currentIndex;
-
-                            return (
-                              <div
-                                key={index}
-                                className="flex items-center mb-4"
-                              >
-                                <div className="relative flex items-center justify-center">
-                                  <div
-                                    className={`w-3 h-3 rounded-full ${
-                                      status === "Rejected" && isActive
-                                        ? "bg-red-600"
-                                        : isBeforeActive
-                                        ? "bg-blue-600"
-                                        : "bg-white border border-blue-600"
-                                    }`}
-                                  ></div>
-                                  {index < statuses.length - 1 && (
-                                    <div
-                                      className={`absolute w-[2px] h-8 top-3/4 left-1/2 -translate-x-1/2 ${
-                                        isBeforeActive
-                                          ? "bg-blue-600"
-                                          : "bg-gray-300"
-                                      }`}
-                                    ></div>
-                                  )}
-                                </div>
-                                <div className="ml-4">
-                                  <p
-                                    className={`text-[14px] ${
-                                      isBeforeActive
-                                        ? "text-blue-600"
-                                        : "text-gray-500"
-                                    }`}
-                                  >
-                                    {status}
-                                  </p>
-                                  {isPending && (
-                                    <p className="text-[12px] text-red-400">
-                                      Pending...
-                                    </p>
-                                  )}
-                                  {isActive &&
-                                    !isPending &&
-                                    status !== "Rejected" && (
-                                      <p className="text-[12px] text-gray-400">
-                                        On 26 Jul, 2024
-                                      </p>
-                                    )}
-                                  {status === "Rejected" && isActive && (
-                                    <p className="text-[12px] text-red-600">
-                                      Rejected on 26 Jul, 2024
-                                    </p>
-                                  )}
-                                </div>
-                              </div>
-                            );
-                          }
-                        )}
-                      </div>
-
-                      <div className="flex items-center mt-5">
-                        <div>
-                          <p className="text-[15px] font-extralight">
-                            Our Suggested Product
-                          </p>
-                          <div className="ml-4 mt-2">
-                            <p className="text-red-500 text-[16px]">
-                              Profile Boost
-                            </p>
-                            <p className="font-extralight text-[13px]">
-                              Your application would be shown on the priority
-                              list to the recruiter
-                            </p>
-                            <div className="flex flex-row gap-6 mt-2">
-                              <button className="hover:text-blue-500 text-[14px] hover:scale-105 duration-300">
-                                Buy Now
-                              </button>
-                              <button className="text-red-400 hover:scale-105 text-sm duration-300">
-                                Explore
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </>
+                <AppliedJobs
+                  allappiledjobs={allappiledjobs}
+                  sectionRefs={sectionRefs}
+                  handleJobClick={handleJobClick}
+                  selectedJob={selectedJob}
+                  navigate={navigate}
+                  loading={loading}
+                />
               )}
               {selectedtab === "MyInterview" && (
-                <div className="p-4 w-full  -mt-8">
-                  <div
-                    className="grid grid-cols-1 w-full gap-6 items-center mx-auto max-h-screen overflow-y-auto"
-                    style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-                  >
-                    <style>
-                      {`
-                            ::-webkit-scrollbar {
-                              display: none;
-                            }
-                          `}
-                    </style>
-
-                    {applicationData.map((app) => (
-                      <div
-                        key={app.id}
-                        className="bg-white shadow-lg rounded-lg p-4 w-full border w-3/4"
-                      >
-                        {/* Job Title and Company */}
-                        <div className="flex justify-between items-start">
-                          <div>
-                            <h2 className="text-[15px] font-semibold">
-                              {app.jobTitle}
-                            </h2>
-                            <p className="text-gray-500 text-[13px]">
-                              {app.company}
-                            </p>
-                          </div>
-                          <button
-                            onClick={() =>
-                              navigate(
-                                `/blank/${app.jobTitle.replace(/\s+/g, "")}`
-                              )
-                            }
-                            className="text-blue-600 border border-blue-600 rounded-full px-3 py-1 text-xs hover:bg-blue-50"
-                          >
-                            View Job
-                          </button>
-                        </div>
-
-                        {/* Application Status */}
-                        <div className="mt-1">
-                          <h3 className="text-[14px] font-medium">
-                            Application Status
-                          </h3>
-                          <div className="mt-2 space-y-4">
-                            {app.status.map((item, index) => (
-                              <div
-                                key={index}
-                                className="flex items-start space-x-3 "
-                              >
-                                <div className="flex-shrink-0 flex flex-col items-center -mb-3">
-                                  <div
-                                    className={`w-3 h-3 ${
-                                      item.passed
-                                        ? "bg-blue-600"
-                                        : "bg-white border border-gray-400"
-                                    } rounded-full`}
-                                  ></div>
-                                  {index < app.status.length - 1 && (
-                                    <div className="w-px h-10 bg-gray-300"></div>
-                                  )}
-                                </div>
-                                <div className="flex-grow -mb-3">
-                                  <h4 className="text-sm font-medium">
-                                    {item.stage}
-                                  </h4>
-                                  {item.feedback && (
-                                    <p
-                                      className={`text-xs ${
-                                        item.passed
-                                          ? "text-green-600"
-                                          : "text-gray-500"
-                                      }`}
-                                    >
-                                      {item.feedback}
-                                    </p>
-                                  )}
-                                  {item.date && (
-                                    <p className="text-gray-500 text-xs">
-                                      On {item.date}
-                                    </p>
-                                  )}
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-
-                        {/* Suggested Product */}
-                        <div className="mt-4">
-                          <h4 className="text-md font-medium">
-                            Our Suggested Product
-                          </h4>
-                          <div className="mt-1 bg-yellow-50 border border-yellow-200 p-3 rounded-lg">
-                            <h5 className="text-red-600 font-semibold">
-                              Profile Boost
-                            </h5>
-                            <p className="text-gray-500 text-xs">
-                              Your application would be shown on priority list
-                              to the recruiters.
-                            </p>
-                            <div className="mt-2 flex space-x-3">
-                              <button className="text-blue-600 text-xs">
-                                Buy Now
-                              </button>
-                              <button className="text-blue-600 text-xs">
-                                Explore
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                <InterviewJobs
+                  allinterview={allinterview}
+                  navigate={navigate}
+                  loading={loading}
+                />
               )}
             </div>
           </div>
