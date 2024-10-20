@@ -367,6 +367,7 @@ const Home = ({ onSectionVisible, onSectionHidden }) => {
                 <InterviewJobs
                   allinterview={allinterview}
                   navigate={navigate}
+                  Getallinterview={Getallinterview}
                   loading={loading}
                 />
               )}

@@ -2,6 +2,12 @@ import React, { useEffect } from "react";
 import { Stepper, Step, StepLabel, StepConnector } from "@mui/material";
 import { styled } from "@mui/system";
 
+const CustomStepConnector = styled(StepConnector)({
+  "& .MuiStepConnector-line": {
+    borderColor: "#ccc",
+    // borderWidth: 2,
+  },
+});
 const AppliedJobs = ({
   allappiledjobs,
   sectionRefs,
@@ -10,17 +16,6 @@ const AppliedJobs = ({
   navigate,
   loading,
 }) => {
-  useEffect(() => {
-    console.log(selectedJob);
-  }, [selectedJob]);
-
-  const CustomStepConnector = styled(StepConnector)({
-    "& .MuiStepConnector-line": {
-      borderColor: "#ccc",
-      // borderWidth: 2,
-    },
-  });
-
   // Function to get the formatted date for each step
   const getStepDate = (step) => {
     switch (step) {
