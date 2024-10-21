@@ -107,9 +107,8 @@ const Portfolio = () => {
       <div className="lg:w-1/4 w-full">
         <Sidebar />
       </div>
-
       <div className="lg:w-3/4 w-full lg:ml-8 mt-4">
-        <nav className="flex flex-wrap space-x-6 p-4  pb-5 rounded justify-start gap-[2.5%] ">
+        <nav className="flex flex-wrap p-2 pb-5 rounded justify-between gap-[2%] ">
           {[
             "about",
             "skills",
