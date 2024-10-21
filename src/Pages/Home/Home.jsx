@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "react-circular-progressbar/dist/styles.css";
 import { GetApi } from "../utilis/Api_Calling";
 import logo from "../../assets/Images/Gethire SVG.svg";
@@ -13,10 +13,8 @@ const Home = ({ onSectionVisible, onSectionHidden }) => {
   const [selectedtab, setselectedtab] = useState("MyJobs");
   const [random, setRandom] = useState(2);
   const [loading, setLoading] = useState(true);
-  const [AllJobs, setAllJobs] = useState([]);
-  const [appiledjobs, setappiledjobs] = useState([]);
   const [allappiledjobs, setallappiledjobs] = useState([]);
-  const [selectedJob, setSelectedJob] = useState(allappiledjobs[0]);
+  const [selectedJob, setSelectedJob] = useState(null);
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [aiModal, setAiModal] = useState(false);
@@ -93,41 +91,12 @@ const Home = ({ onSectionVisible, onSectionHidden }) => {
     }
   };
 
-  const GetAllJobs = async () => {
-    try {
-      setLoading(true);
-      const Getjobdata = await GetApi(`api/AdminRoutes/GetAllJobs`);
-      // console.log(Getjobdata?.data)
-      setAllJobs(Getjobdata?.data?.data);
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const Getallappiledjobid = async () => {
-    try {
-      setLoading(true);
-      const res = await GetApi(
-        `api/StudentRoutes/GetAllAppiledJobidsofaStudent`
-      );
-      setappiledjobs(res?.data?.data?.appliedJobIds);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const Getallappiledjob = async () => {
     try {
       setLoading(true);
       const res = await GetApi(`api/StudentRoutes/GetAllAppiledJobsofaStudent`);
       setallappiledjobs(res?.data?.data);
-      setSelectedJob(res?.data?.data[0]);
+      setSelectedJob(res?.data?.data[0]);      
     } catch (error) {
       console.error(error);
     } finally {
@@ -229,8 +198,6 @@ const Home = ({ onSectionVisible, onSectionHidden }) => {
   useEffect(() => {
     setLoading(true);
     Getstudentprofile();
-    GetAllJobs();
-    Getallappiledjobid();
     Getallappiledjob();
     Getallinterview();
     GetAllTest();
@@ -457,7 +424,6 @@ const Home = ({ onSectionVisible, onSectionHidden }) => {
         {aiModal && (
           <AIToolsModal open={aiModal} onClose={() => setAiModal(false)} />
         )}
-
         <div
           ref={sectionRefs.section3}
           id="section3"
