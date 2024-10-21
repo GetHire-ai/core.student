@@ -3,7 +3,7 @@ import ResumeBuilerForm from "./ResumeBuilderForm";
 import { useParams } from "react-router-dom";
 import { GetApi } from "../utilis/Api_Calling";
 const ResumeEdit = () => {
-  const [resumeData, setResumeData] = useState("");
+  const [resumeData, setResumeData] = useState({});
   const { id } = useParams();
   let getAiResume = async () => {
     try {

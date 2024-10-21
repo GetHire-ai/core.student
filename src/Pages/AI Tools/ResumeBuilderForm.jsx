@@ -77,8 +77,9 @@ function SectionedForm({ resumeData, setResumeData }) {
     if (currentWebLink.name && currentWebLink.url) {
       setResumeData((prevData) => ({
         ...prevData,
-        webLinks: [...prevData.webLinks, currentWebLink],
+        webLinks: [...(prevData.webLinks || []), currentWebLink],
       }));
+      console.log(resumeData);
       setCurrentWebLink({ name: "", url: "" });
     }
   };
@@ -86,7 +87,7 @@ function SectionedForm({ resumeData, setResumeData }) {
   const handleAddExp = () => {
     setResumeData((prevData) => ({
       ...prevData,
-      workExperience: [...prevData.workExperience, currentWorkExp],
+      workExperience: [...(prevData.workExperience || []), currentWorkExp],
     }));
     setCurrentWorkExp({
       title: "",
@@ -94,7 +95,6 @@ function SectionedForm({ resumeData, setResumeData }) {
       duration: "",
       currentlyWorking: false,
     });
-    console.log(resumeData);
   };
 
   const handleAddCategory = () => {
@@ -103,7 +103,7 @@ function SectionedForm({ resumeData, setResumeData }) {
     }
     setResumeData((prev) => ({
       ...prev,
-      skills: [...prev.skills, { category: newCategory, skill: [] }],
+      skills: [...(prev.skills || []), { category: newCategory, skill: [] }],
     }));
     setNewCategory("");
   };
@@ -143,7 +143,7 @@ function SectionedForm({ resumeData, setResumeData }) {
     setResumeData((prev) => ({
       ...prev,
       education: [
-        ...prev.education,
+        ...(prev.education || []),
         { name: "", authority: "", URL: "", date: "" },
       ],
     }));
@@ -166,7 +166,7 @@ function SectionedForm({ resumeData, setResumeData }) {
     setResumeData((prev) => ({
       ...prev,
       certificates: [
-        ...prev.certificates,
+        ...(prev.certificates || []),
         { name: "", authority: "", URL: "", date: "" },
       ],
     }));
